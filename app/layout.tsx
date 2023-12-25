@@ -8,17 +8,17 @@ import { SpeedInsights } from '@vercel/speed-insights/next';
 import { PreloadResources } from './preload';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://leerob.io'),
+  metadataBase: new URL('https://frvncisco.me'),
   title: {
-    default: 'Lee Robinson',
-    template: '%s | Lee Robinson',
+    default: 'Francisco Santana',
+    template: '%s | Francisco Santana',
   },
-  description: 'Developer, writer, and creator.',
+  description: 'UI/UX Engineer',
   openGraph: {
-    title: 'Lee Robinson',
-    description: 'Developer, writer, and creator.',
-    url: 'https://leerob.io',
-    siteName: 'Lee Robinson',
+    title: 'Francisco Santana',
+    description: 'UI/UX Engineer',
+    url: 'https://frvncisco.me',
+    siteName: 'Francisco Santana',
     locale: 'en_US',
     type: 'website',
   },
@@ -32,10 +32,6 @@ export const metadata: Metadata = {
       'max-image-preview': 'large',
       'max-snippet': -1,
     },
-  },
-  twitter: {
-    title: 'Lee Robinson',
-    card: 'summary_large_image',
   },
   verification: {
     google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
