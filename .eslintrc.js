@@ -22,6 +22,11 @@ module.exports = {
 		'react',
 		'@typescript-eslint'
 	],
+	'settings': {
+		'react': {
+			'version': 'detect'
+		}
+	},
 	'rules': {
 		'eol-last': 'off',
 		'react/jsx-uses-react': 'off',
