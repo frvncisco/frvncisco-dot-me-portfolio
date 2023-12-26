@@ -8,7 +8,7 @@ module.exports = {
 		'eslint:recommended',
 		'plugin:react/recommended',
 		'plugin:@typescript-eslint/recommended',
-		'plugin:@next/next/recommended'
+		'plugin:@next/next/recommended',
 	],
 	'parser': '@typescript-eslint/parser',
 	'parserOptions': {
@@ -23,6 +23,7 @@ module.exports = {
 		'@typescript-eslint'
 	],
 	'rules': {
+		'eol-last': 'off',
 		'react/jsx-uses-react': 'off',
 		'react/react-in-jsx-scope': 'off',
 		'indent': [
