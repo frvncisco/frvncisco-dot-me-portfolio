@@ -13,7 +13,7 @@ const Badge = (props) =>{
 export default function Page() {
   return (
     <section>
-      <h1 className="font-bold text-3xl md:text-5xl tracking-tight mt-2 mb-8">frvncisco.dev is under construction 🏗️</h1>
+      <h1 className="font-bold text-3xl md:text-5xl tracking-tight mt-2 mb-8">frvncisco.me is under construction 🏗️</h1>
       <h2 className="font-medium text-md mb-5 tracking-tighter">hola! I&apos;m Francisco Santana👋 — Frontend Engineer, Currently working @ <Badge href="https://www.niche.com/about/">	<img
         alt="Next.js logomark"
         src="/niche-logo.ico"
