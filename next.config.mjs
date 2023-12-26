@@ -2,7 +2,7 @@ import { sql } from '@vercel/postgres'
 
 const nextConfig = {
 	experimental: {
-		ppr: true,
+		ppr: false,
 	},
 	async redirects() {
 		if (!process.env.POSTGRES_URL) {
