@@ -5,52 +5,52 @@ import { Suspense } from 'react'
 import Form from './form'
 
 export const metadata = {
-	title: 'Guestbook',
-	description: 'Sign my guestbook and leave your mark.',
+  title: 'Guestbook',
+  description: 'Sign my guestbook and leave your mark.',
 }
 
 export default function GuestbookPage() {
-	return (
-		<section>
-			<h1 className="font-medium text-2xl mb-8 tracking-tighter">
+  return (
+    <section>
+      <h1 className="font-medium text-2xl mb-8 tracking-tighter">
         sign my guestbook
-			</h1>
-			<Suspense>
-				<GuestbookForm />
-				<GuestbookEntries />
-			</Suspense>
-		</section>
-	)
+      </h1>
+      <Suspense>
+        <GuestbookForm />
+        <GuestbookEntries />
+      </Suspense>
+    </section>
+  )
 }
 
 async function GuestbookForm() {
-	const session = await auth()
+  const session = await auth()
 
-	return session?.user ? (
-		<>
-			<Form />
-			<SignOut />
-		</>
-	) : (
-		<SignIn />
-	)
+  return session?.user ? (
+    <>
+      <Form />
+      <SignOut />
+    </>
+  ) : (
+    <SignIn />
+  )
 }
 
 async function GuestbookEntries() {
-	const entries = await getGuestbookEntries()
+  const entries = await getGuestbookEntries()
 
-	if (entries.length === 0) {
-		return null
-	}
+  if (entries.length === 0) {
+    return null
+  }
 
-	return entries.map((entry) => (
-		<div key={entry.id} className="flex flex-col space-y-1 mb-4">
-			<div className="w-full text-sm break-words">
-				<span className="text-neutral-600 dark:text-neutral-400 mr-1">
-					{entry.created_by}:
-				</span>
-				{entry.body}
-			</div>
-		</div>
-	))
+  return entries.map((entry) => (
+    <div key={entry.id} className="flex flex-col space-y-1 mb-4">
+      <div className="w-full text-sm break-words">
+        <span className="text-neutral-600 dark:text-neutral-400 mr-1">
+          {entry.created_by}:
+        </span>
+        {entry.body}
+      </div>
+    </div>
+  ))
 }
