@@ -3,6 +3,7 @@ export default function robots() {
 		rules: [
 			{
 				userAgent: '*',
+				disallow: '/resume.pdf',
 			},
 		],
 		sitemap: 'https://frvncisco.me/sitemap.xml',
