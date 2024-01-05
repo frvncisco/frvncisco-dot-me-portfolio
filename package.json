@@ -4,10 +4,9 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev --turbo",
-		"build": "npm run setup && next build",
+		"build": "next build",
 		"build-only": "next build",
 		"start": "next start",
-		"setup": "node ./setup.mjs",
 		"lint": "npx eslint .",
 		"lint:fix": "npm run lint -- --fix",
 		"prettier": "npx prettier . --check",

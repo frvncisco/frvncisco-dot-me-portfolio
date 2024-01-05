@@ -1,5 +1,3 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleerob%2Fleerob.io)
-
 # frvncisco.me
 
 - **Framework**: [Next.js](https://nextjs.org/)
@@ -9,19 +7,39 @@
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
 - **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
 
-## Running Locally
+## 🛠️ Installation & Setup
 
-This application requires Node.js v18.17+.
+1. Install and use the correct version of Node using NVM
 
-```bash
-git clone https://github.com/leerob/leerob.io.git
-cd leerob.io
+```sh
+nvm install
+```
+
+2. Install dependencies
+
+```sh
 bun install
-bun run setup # Remove all of my personal information
+```
+
+3. Start the development server
+
+```sh
 bun dev
 ```
 
-Create a `.env.local` file similar to [`.env.example`](https://github.com/leerob/leerob.io/blob/main/.env.example).
+## 🚀 Build and run for production
+
+1. Generate a full static production build
+
+```sh
+npm run build
+```
+
+2. Preview the site as it'll appear once deployed
+
+```sh
+npm run start
+```
 
 ## Database Schema
 
