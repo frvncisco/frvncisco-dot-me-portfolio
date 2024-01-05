@@ -2,7 +2,7 @@ import 'styles/global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-// import { Navbar } from './components/nav'
+import { Navbar } from './components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { PreloadResources } from './preload'
@@ -57,7 +57,7 @@ export default function RootLayout({
 		>
 			<body className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col antialiased md:flex-row lg:mx-auto">
 				<main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
-					{/* <Navbar /> */}
+					<Navbar />
 					{children}
 					<Analytics />
 					<SpeedInsights />
