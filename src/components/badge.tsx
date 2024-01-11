@@ -1,4 +1,3 @@
-
 const Badge = (props) => {
 	return (
 		<a

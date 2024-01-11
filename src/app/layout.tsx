@@ -56,7 +56,7 @@ export default function RootLayout({
 			<body>
 				<main>
 					<Providers>
-						<div className="antialiased flex flex-col min-h-screen">
+						<div className="flex min-h-screen flex-col antialiased">
 							<Navbar />
 							{children}
 						</div>

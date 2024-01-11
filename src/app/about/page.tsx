@@ -5,7 +5,9 @@ export default function Page() {
 			<p className="prose prose-neutral dark:prose-invert">
 				Hi I&apos;m Francisco Santana
 			</p>
-			<p className="prose prose-neutral dark:prose-invert">I&apos;m a design-minded frontend engineer</p>
+			<p className="prose prose-neutral dark:prose-invert">
+				I&apos;m a design-minded frontend engineer
+			</p>
 		</section>
 	)
 }
