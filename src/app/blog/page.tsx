@@ -6,7 +6,7 @@ import { getBlogPosts } from 'app/db/blog'
 
 export const metadata = {
 	title: 'Blog',
-	description: 'Read my thoughts on software development, design, and more.',
+	description: 'Read my thoughts on development, design, and more.',
 }
 
 export default function BlogPage() {
@@ -14,9 +14,7 @@ export default function BlogPage() {
 
 	return (
 		<section>
-			<h1 className="mb-8 text-2xl font-medium tracking-tighter">
-				read my blog
-			</h1>
+			<h1 className="mb-8 text-2xl font-medium tracking-tighter">Blog</h1>
 			{allBlogs
 				.sort((a, b) => {
 					if (

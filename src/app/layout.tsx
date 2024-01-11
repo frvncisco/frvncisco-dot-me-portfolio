@@ -2,10 +2,11 @@ import 'styles/global.css'
 import type { Metadata } from 'next'
 import { GeistSans } from 'geist/font/sans'
 import { GeistMono } from 'geist/font/mono'
-import { Navbar } from './components/nav'
+import { Navbar } from '../components/nav'
 import { Analytics } from '@vercel/analytics/react'
 import { SpeedInsights } from '@vercel/speed-insights/next'
 import { PreloadResources } from './preload'
+import { Providers } from './context/providers'
 
 export const metadata: Metadata = {
 	metadataBase: new URL('https://frvncisco.me'),
@@ -49,16 +50,17 @@ export default function RootLayout({
 	return (
 		<html
 			lang="en"
-			className={cx(
-				'bg-white text-black dark:bg-[#111010] dark:text-white',
-				GeistSans.variable,
-				GeistMono.variable,
-			)}
+			suppressHydrationWarning
+			className={cx(GeistSans.variable, GeistMono.variable)}
 		>
-			<body className="mx-4 mb-40 mt-8 flex max-w-2xl flex-col antialiased md:flex-row lg:mx-auto">
-				<main className="mt-6 flex min-w-0 flex-auto flex-col px-2 md:px-0">
-					<Navbar />
-					{children}
+			<body>
+				<main>
+					<Providers>
+						<div className="antialiased flex flex-col min-h-screen">
+							<Navbar />
+							{children}
+						</div>
+					</Providers>
 					<Analytics />
 					<SpeedInsights />
 					<PreloadResources />

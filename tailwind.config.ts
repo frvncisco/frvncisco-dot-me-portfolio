@@ -1,9 +1,21 @@
-import type { Config } from 'tailwindcss'
 import typography from '@tailwindcss/typography'
 
+/** @type {import('tailwindcss').Config} */
 export default {
-	content: ['./app/**/*.{ts,tsx}', './content/**/*.mdx', './public/**/*.svg'],
+	darkMode: ['class', '[data-theme="dark"]'],
+	content: [
+		'./app/**/*.{ts,tsx}',
+		'./content/**/*.mdx',
+		'./public/**/*.svg',
+		'./src/**/*.{js,ts,jsx,tsx,mdx}',
+	],
 	theme: {
+		screens: {
+			mobile: '640px',
+			tablet: '768px',
+			laptop: '1024px',
+			desktop: '1280px',
+		},
 		extend: {
 			fontFamily: {
 				sans: ['var(--font-geist-sans)'],
@@ -23,4 +35,4 @@ export default {
 		hoverOnlyWhenSupported: true,
 	},
 	plugins: [typography],
-} satisfies Config
+}

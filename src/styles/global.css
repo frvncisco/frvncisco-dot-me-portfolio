@@ -2,32 +2,74 @@
 @tailwind components;
 @tailwind utilities;
 
-::selection {
-	background-color: #47a3f3;
-	color: #fefefe;
-}
+@layer base {
+	* {
+		@apply box-border;
+	}
 
-:root {
-	--sh-class: #2d5e9d;
-	--sh-identifier: #354150;
-	--sh-sign: #8996a3;
-	--sh-string: #007f7a;
-	--sh-keyword: #e02518;
-	--sh-comment: #a19595;
-	--sh-jsxliterals: #6266d1;
-}
-
-@media (prefers-color-scheme: dark) {
 	:root {
+		--background: white;
+		--foreground: black;
+
+		/* sugar-high css */
+		--sh-class: #2d5e9d;
+		--sh-identifier: #354150;
+		--sh-sign: #8996a3;
+		--sh-string: #007f7a;
+		--sh-keyword: #e02518;
+		--sh-comment: #a19595;
+		--sh-jsxliterals: #6266d1;
+	}
+
+	[data-theme='dark'] {
+		--background: #0022ff;
+		--foreground: white;
+
+		/* sugar-high css */
 		--sh-class: #4c97f8;
 		--sh-identifier: white;
 		--sh-keyword: #f47067;
 		--sh-string: #0fa295;
 	}
+
+	html,
+	body {
+		min-width: 360px;
+	}
+
+	body {
+		background: var(--background);
+		color: var(--foreground);
+	}
 }
 
-html {
-	min-width: 360px;
+@layer components {
+	.navigation {
+		background: var(--background);
+		@apply sticky top-0 mb-8 h-20 border-b border-black/[.3] dark:border-white/[.3];
+	}
+
+	.navigation-wrapper {
+		@apply container mx-auto grid h-full max-w-5xl auto-cols-max grid-flow-col justify-between px-4;
+	}
+
+	nav {
+		@apply flex h-full w-full;
+	}
+
+	.nav-item {
+		@apply relative flex h-full items-center transition-all  hover:text-neutral-800  dark:hover:text-neutral-200;
+		padding: theme(spacing.1) theme(spacing.2);
+	}
+
+	.theme-toggle {
+		@apply flex h-9 w-9 items-center justify-center rounded-lg bg-gray-100 ring-gray-200 transition-all hover:ring-2 dark:bg-white/[.3];
+	}
+}
+
+::selection {
+	background-color: #47a3f3;
+	color: #fefefe;
 }
 
 .prose .anchor {
@@ -131,4 +173,11 @@ table {
 
 .title {
 	text-wrap: balance;
+}
+
+.wrapper {
+	@apply container mx-auto;
+	padding-left: theme(spacing.4);
+	padding-right: theme(spacing.4);
+	max-width: theme(maxWidth.5xl);
 }
