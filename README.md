@@ -14,14 +14,14 @@
 This application requires Node.js v18.17+.
 
 ```bash
-git clone https://github.com/leerob/leerob.io.git
-cd leerob.io
+git clone https://github.com/frvncisco/frvncisco-dot-me-portfolio.git
+cd frvncisco-dot-me-portfolio.io
 bun install
 bun run setup # Remove all of my personal information
 bun dev
 ```
 
-Create a `.env.local` file similar to [`.env.example`](https://github.com/leerob/leerob.io/blob/main/.env.example).
+Create a `.env.local` file similar to [`.env.example`](https://github.com/frvncisco/frvncisco-dot-me-portfolio/blob/main/.env.example).
 
 ## Database Schema
 
