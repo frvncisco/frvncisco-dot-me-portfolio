@@ -26,8 +26,12 @@ const ThemeToggle = () => {
 				setTheme(theme === 'light' ? 'dark' : 'light')
 			}}
 		>
-			{theme === 'dark' && <SunIcon className="h-5 w-5" />}
-			{theme === 'light' && <MoonIcon className="h-5 w-5" />}
+			{mounted &&
+				(theme === 'dark' ? (
+					<SunIcon className="h-5 w-5" />
+				) : (
+					<MoonIcon className="h-5 w-5" />
+				))}
 		</button>
 	)
 }
