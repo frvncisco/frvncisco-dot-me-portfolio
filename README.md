@@ -1,28 +1,29 @@
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleerob%2Fleerob.io)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fleerob%2Fnext-mdx-blog)
 
-# frvncisco.me
+# next-mdx-blog
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://vercel.com/postgres)
-- **Authentication**: [NextAuth.js](https://next-auth.js.org)
+This is a blog template built with:
+
+- **Framework**: [Next.js](https://nextjs.org)
 - **Deployment**: [Vercel](https://vercel.com)
 - **Styling**: [Tailwind CSS](https://tailwindcss.com)
 - **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+- **Database** (Optional): [Postgres](https://vercel.com/postgres)
 
 ## Running Locally
 
 This application requires Node.js v18.17+.
 
 ```bash
-git clone https://github.com/frvncisco/frvncisco-dot-me-portfolio.git
-cd frvncisco-dot-me-portfolio.io
-bun install
-bun dev
+git clone https://github.com/leerob/next-mdx-blog.git
+cd next-mdx-blog
+pnpm install
+pnpm dev
 ```
 
-Create a `.env.local` file similar to [`.env.example`](https://github.com/frvncisco/frvncisco-dot-me-portfolio/blob/main/.env.example).
+## Database (Optional)
 
-## Database Schema
+Create a `.env.local` file with your `POSTGRES_URL` environment variable to store redirects.
 
 ```sql
 CREATE TABLE redirects (
@@ -31,24 +32,4 @@ CREATE TABLE redirects (
   destination VARCHAR(255) NOT NULL,
   permanent BOOLEAN NOT NULL
 );
-
-CREATE TABLE guestbook (
-  id SERIAL PRIMARY KEY,
-  email VARCHAR(255) NOT NULL,
-  body TEXT NOT NULL,
-  created_by VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP NOT NULL,
-  updated_at TIMESTAMP
-);
-
-CREATE TABLE views (
-  slug VARCHAR(255) PRIMARY KEY,
-  count INT NOT NULL
-);
 ```
-
-## License
-
-1. You are free to use this code as inspiration.
-2. Please do not copy it directly.
-3. Crediting the author is appreciated.

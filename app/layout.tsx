@@ -1,69 +1,65 @@
-import 'styles/global.css'
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-// import { Navbar } from './components/nav'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { PreloadResources } from './preload'
+import './globals.css';
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/react';
+
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://frvncisco.me'),
+  metadataBase: new URL('https://next-mdx-blog.vercel.app'),
+  alternates: {
+    canonical: '/'
+  },
   title: {
-    default: 'Francisco Santana',
-    template: '%s | Francisco Santana',
+    default: 'John Smith',
+    template: '%s | John Smith'
   },
-  description: 'UI/UX Engineer',
-  openGraph: {
-    title: 'Francisco Santana',
-    description: 'UI/UX Engineer',
-    url: 'https://frvncisco.me',
-    siteName: 'Francisco Santana',
-    locale: 'en_US',
-    type: 'website',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
-      index: true,
-      follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
-    },
-  },
-  verification: {
-    google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
-    yandex: '14d2e73487fa6c71',
-  },
-}
-
-const cx = (...classes) => classes.filter(Boolean).join(' ')
+  description: 'My portfolio, blog, and personal website.'
+};
 
 export default function RootLayout({
-  children,
-}: {
+  children
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html
-      lang="en"
-      className={cx(
-        'text-black bg-white dark:text-white dark:bg-[#111010]',
-        GeistSans.variable,
-        GeistMono.variable
-      )}
-    >
-      <body className="antialiased max-w-2xl mb-40 flex flex-col md:flex-row mx-4 mt-8 lg:mx-auto">
-        <main className="flex-auto min-w-0 mt-6 flex flex-col px-2 md:px-0">
-          {/* <Navbar /> */}
-          {children}
+    <html lang="en" className={`${inter.className}`}>
+      <body className="antialiased tracking-tight">
+        <div className="min-h-screen flex flex-col justify-between pt-0 md:pt-8 p-8 dark:bg-zinc-950 bg-white text-gray-900 dark:text-zinc-200">
+          <main className="max-w-[60ch] mx-auto w-full space-y-6">
+            {children}
+          </main>
+          <Footer />
           <Analytics />
-          <SpeedInsights />
-          <PreloadResources />
-        </main>
+        </div>
       </body>
     </html>
-  )
+  );
+}
+
+function Footer() {
+  const links = [
+    { name: '@johnsmith', url: 'https://x.com/johnsmith' },
+    { name: 'youtube', url: 'https://www.youtube.com/@johnsmith' },
+    { name: 'linkedin', url: 'https://www.linkedin.com/in/johnsmith' },
+    { name: 'github', url: 'https://github.com/johnsmith' }
+  ];
+
+  return (
+    <footer className="mt-12 text-center">
+      <div className="flex justify-center space-x-4 tracking-tight">
+        {links.map((link) => (
+          <a
+            key={link.name}
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-400 dark:text-gray-500 hover:text-blue-500 transition-colors duration-200"
+          >
+            {link.name}
+          </a>
+        ))}
+      </div>
+    </footer>
+  );
 }
