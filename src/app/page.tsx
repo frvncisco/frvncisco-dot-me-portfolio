@@ -19,7 +19,7 @@ export default function Page() {
           <div className="gap-4 flex flex-col">
             <BlurFadeText
               delay={BLUR_FADE_DELAY}
-              className="text-3xl font-semibold tracking-tighter sm:text-4xl lg:text-5xl"
+              className="font-serif text-4xl font-semibold tracking-tight [font-synthesis-weight:none] sm:text-5xl lg:text-6xl"
               yOffset={8}
               text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
             />

@@ -120,6 +120,17 @@
     @apply bg-background text-foreground;
   }
 
+  /* Instrument Serif ships a single 400 weight; don't fake-bold it. */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-serif);
+    font-synthesis-weight: none;
+  }
+
   /* Shiki dual theme support */
   .shiki,
   .shiki span {
@@ -146,15 +157,15 @@
   }
 
   .prose h1 {
-    @apply text-2xl! font-semibold! tracking-tight! leading-tight!;
+    @apply text-3xl! font-semibold! tracking-tight! leading-tight!;
   }
 
   .prose h2 {
-    @apply text-xl! font-semibold! tracking-tight! leading-tight!;
+    @apply text-2xl! font-semibold! tracking-tight! leading-tight!;
   }
 
   .prose h3 {
-    @apply text-lg! font-semibold! tracking-tight! leading-tight!;
+    @apply text-xl! font-semibold! tracking-tight! leading-tight!;
   }
 
   .prose h4 {

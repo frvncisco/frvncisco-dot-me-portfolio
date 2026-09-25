@@ -44,7 +44,7 @@ export default function HackathonsSection() {
                   <time className="text-xs text-muted-foreground">{hackathon.dates}</time>
                 )}
                 {hackathon.title && (
-                  <h3 className="font-semibold leading-none">{hackathon.title}</h3>
+                  <h3 className="text-xl font-semibold leading-none">{hackathon.title}</h3>
                 )}
                 {hackathon.location && (
                   <p className="text-sm text-muted-foreground">{hackathon.location}</p>
