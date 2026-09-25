@@ -1,71 +1,101 @@
-import 'styles/global.css'
-import type { Metadata } from 'next'
-import { GeistSans } from 'geist/font/sans'
-import { GeistMono } from 'geist/font/mono'
-import { Navbar } from '../components/nav'
-import { Analytics } from '@vercel/analytics/react'
-import { SpeedInsights } from '@vercel/speed-insights/next'
-import { PreloadResources } from './preload'
-import { Providers } from './context/providers'
+import Navbar from "@/components/navbar";
+import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { DATA } from "@/data/resume";
+import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+import { IBM_Plex_Mono, Inter, Instrument_Serif } from "next/font/google";
+import "./globals.css";
+import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-serif",
+});
+
+const plexMono = IBM_Plex_Mono({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-mono",
+});
 
 export const metadata: Metadata = {
-	metadataBase: new URL('https://frvncisco.me'),
-	title: {
-		default: 'Francisco Santana',
-		template: '%s | Francisco Santana',
-	},
-	description: 'UI/UX Engineer',
-	openGraph: {
-		title: 'Francisco Santana',
-		description: 'UI/UX Engineer',
-		url: 'https://frvncisco.me',
-		siteName: 'Francisco Santana',
-		locale: 'en_US',
-		type: 'website',
-	},
-	robots: {
-		index: true,
-		follow: true,
-		googleBot: {
-			index: true,
-			follow: true,
-			'max-video-preview': -1,
-			'max-image-preview': 'large',
-			'max-snippet': -1,
-		},
-	},
-	verification: {
-		google: 'eZSdmzAXlLkKhNJzfgwDqWORghxnJ8qR9_CHdAh5-xw',
-		yandex: '14d2e73487fa6c71',
-	},
-}
-
-const cx = (...classes) => classes.filter(Boolean).join(' ')
+  metadataBase: new URL(DATA.url),
+  title: {
+    default: DATA.name,
+    template: `%s | ${DATA.name}`,
+  },
+  description: DATA.description,
+  openGraph: {
+    title: `${DATA.name}`,
+    description: DATA.description,
+    url: DATA.url,
+    siteName: `${DATA.name}`,
+    locale: "en_US",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  twitter: {
+    title: `${DATA.name}`,
+    card: "summary_large_image",
+  },
+  verification: {
+    google: "",
+    yandex: "",
+  },
+};
 
 export default function RootLayout({
-	children,
-}: {
-	children: React.ReactNode
-}) {
-	return (
-		<html
-			lang="en"
-			suppressHydrationWarning
-			className={cx(GeistSans.variable, GeistMono.variable)}
-		>
-			<body>
-				<main>
-					<Providers>
-						<div className="flex min-h-screen flex-col antialiased">
-							<Navbar />
-							{children}
-						</div>
-					</Providers>
-					<Analytics />
-					<SpeedInsights />
-					<PreloadResources />
-				</main>
-			</body>
-		</html>
-	)
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en" suppressHydrationWarning>
+      <body
+        className={cn(
+          "min-h-screen bg-background font-sans antialiased relative",
+          inter.variable,
+          instrumentSerif.variable,
+          plexMono.variable
+        )}
+      >
+        <ThemeProvider attribute="class" defaultTheme="light">
+          <TooltipProvider delayDuration={0}>
+            <div className="absolute inset-0 top-0 left-0 right-0 h-[100px] overflow-hidden z-0">
+              <FlickeringGrid
+                className="h-full w-full"
+                squareSize={2}
+                gridGap={2}
+                style={{
+                  maskImage: "linear-gradient(to bottom, black, transparent)",
+                  WebkitMaskImage: "linear-gradient(to bottom, black, transparent)",
+                }}
+              />
+            </div>
+            <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
+              {children}
+            </div>
+            <Navbar />
+          </TooltipProvider>
+        </ThemeProvider>
+      </body>
+    </html>
+  );
 }

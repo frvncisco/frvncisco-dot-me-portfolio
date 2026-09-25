@@ -1,36 +1,36 @@
+import BlurFade from "@/components/magicui/blur-fade";
+import BlurFadeText from "@/components/magicui/blur-fade-text";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { DATA } from "@/data/resume";
+
+const BLUR_FADE_DELAY = 0.04;
+
 export default function Page() {
-	return (
-		<section className="wrapper">
-			<h1 className="mb-8 mt-2 text-3xl font-bold tracking-tight tablet:text-5xl">
-				Hola, I&apos;m Francisco!
-			</h1>
-			<h2 className="text-md mb-5 font-medium tracking-tighter">
-				Welcome to my little corner on the interwebs. 👨🏾‍💻
-			</h2>
-			<p className="prose prose-neutral mb-5 dark:prose-invert">
-				I&apos;m a design-minded software developer in Atlanta. Currently
-				working @
-			</p>
-			<p className="prose prose-neutral mb-8 dark:prose-invert">
-				Connect with me on{' '}
-				<a
-					href="https://www.linkedin.com/in/santanafrancisco/"
-					target={'_blank'}
-					rel="noopener noreferrer"
-					className="underline"
-				>
-					Linkedin
-				</a>{' '}
-				or download my{' '}
-				<a
-					href="resume.pdf"
-					target={'_blank'}
-					rel="noopener noreferrer"
-					className="underline"
-				>
-					resume
-				</a>
-			</p>
-		</section>
-	)
+  return (
+    <main className="min-h-[calc(100dvh-9rem)] sm:min-h-[calc(100dvh-12rem)] flex flex-col relative">
+      <section id="hero" className="flex flex-1 flex-col justify-center">
+        <div className="mx-auto w-full max-w-2xl flex flex-col gap-12 md:gap-16">
+          <BlurFade delay={BLUR_FADE_DELAY}>
+            <Avatar className="size-24 md:size-32 border rounded-full shadow-lg ring-4 ring-muted">
+              <AvatarImage alt={DATA.name} src={DATA.avatarUrl} />
+              <AvatarFallback>{DATA.initials}</AvatarFallback>
+            </Avatar>
+          </BlurFade>
+          <div className="gap-4 flex flex-col">
+            <BlurFadeText
+              delay={BLUR_FADE_DELAY}
+              className="font-serif text-4xl font-semibold tracking-tight [font-synthesis-weight:none] sm:text-5xl lg:text-6xl"
+              yOffset={8}
+              text={`Hi, I'm ${DATA.name.split(" ")[0]}`}
+            />
+            <BlurFadeText
+              className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
+              delay={BLUR_FADE_DELAY}
+              text={DATA.description}
+            />
+          </div>
+        </div>
+      </section>
+    </main>
+  );
 }

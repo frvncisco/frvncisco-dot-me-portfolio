@@ -1,64 +1,47 @@
-# frvncisco.me
+<div align="center">
+<img alt="Portfolio" src="https://github.com/dillionverma/portfolio/assets/16860528/57ffca81-3f0a-4425-b31d-094f61725455" width="90%">
+</div>
 
-- **Framework**: [Next.js](https://nextjs.org/)
-- **Database**: [Postgres](https://vercel.com/postgres)
-- **Authentication**: [NextAuth.js](https://next-auth.js.org)
-- **Deployment**: [Vercel](https://vercel.com)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com)
-- **Analytics**: [Vercel Analytics](https://vercel.com/analytics)
+# Portfolio [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fdillionverma%2Fportfolio)
 
-## 🛠️ Installation & Setup
+Built with next.js, [shadcn/ui](https://ui.shadcn.com/), and [magic ui](https://magicui.design/), deployed on Vercel.
 
-1. Install and use the correct version of Node using NVM
+# Features
 
-```sh
-nvm install
-```
+- Setup only takes a few minutes by editing the [single config file](./src/data/resume.tsx)
+- Built using Next.js 14, React, Typescript, Shadcn/UI, TailwindCSS, Framer Motion, Magic UI
+- Includes a blog
+- Responsive for different devices
+- Optimized for Next.js and Vercel
 
-2. Install dependencies
+# Getting Started Locally
 
-```sh
-bun install
-```
+1. Clone this repository to your local machine:
 
-3. Start the development server
+   ```bash
+   git clone https://github.com/dillionverma/portfolio
+   ```
 
-```sh
-bun dev
-```
+2. Move to the cloned directory
 
-## 🚀 Build and run for production
+   ```bash
+   cd portfolio
+   ```
 
-1. Generate a full static production build
+3. Install dependencies:
 
-```sh
-npm run build
-```
+   ```bash
+   pnpm install
+   ```
 
-2. Preview the site as it'll appear once deployed
+4. Start the local Server:
 
-```sh
-npm run start
-```
+   ```bash
+   pnpm dev
+   ```
 
-## Database Schema
+5. Open the [Config file](./src/data/resume.tsx) and make changes
 
-```sql
-CREATE TABLE redirects (
-  id SERIAL PRIMARY KEY,
-  source VARCHAR(255) NOT NULL,
-  destination VARCHAR(255) NOT NULL,
-  permanent BOOLEAN NOT NULL
-);
+# License
 
-CREATE TABLE views (
-  slug VARCHAR(255) PRIMARY KEY,
-  count INT NOT NULL
-);
-```
-
-## License
-
-1. You are free to use this code as inspiration.
-2. Please do not copy it directly.
-3. Crediting the author is appreciated.
+Licensed under the [MIT license](https://github.com/dillionverma/portfolio/blob/main/LICENSE.md).
