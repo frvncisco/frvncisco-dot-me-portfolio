@@ -1,5 +1,5 @@
 import { Icons } from "@/components/icons";
-import { BriefcaseIcon, HomeIcon, NotebookIcon, UserIcon } from "lucide-react";
+import { BriefcaseIcon, HomeIcon, MailIcon, NotebookIcon, UserIcon } from "lucide-react";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { NextjsIconDark } from "@/components/ui/svgs/nextjsIconDark";
 import { Typescript } from "@/components/ui/svgs/typescript";
@@ -40,6 +40,7 @@ export const DATA = {
     { href: "/", icon: HomeIcon, label: "Home" },
     { href: "/about", icon: UserIcon, label: "About" },
     { href: "/work", icon: BriefcaseIcon, label: "Work" },
+    { href: "/contact", icon: MailIcon, label: "Contact" },
     { href: "/blog", icon: NotebookIcon, label: "Blog" },
   ],
   contact: {
