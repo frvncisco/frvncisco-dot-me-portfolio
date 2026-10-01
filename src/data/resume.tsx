@@ -26,12 +26,12 @@ export const DATA = {
 		{ name: 'Docker', icon: Docker },
 	],
 	navbar: [
-		{ href: '/', icon: HomeIcon, label: 'Home' },
-		{ href: '/about', icon: UserIcon, label: 'About' },
-		{ href: '/work', icon: BriefcaseIcon, label: 'Work' },
-		{ href: '/contact', icon: MailIcon, label: 'Contact' },
-		{ href: '/blog', icon: NotebookIcon, label: 'Blog' },
-	],
+		{ href: '/', icon: HomeIcon, label: 'Home', flag: null },
+		{ href: '/about', icon: UserIcon, label: 'About', flag: null },
+		{ href: '/work', icon: BriefcaseIcon, label: 'Work', flag: 'work' },
+		{ href: '/contact', icon: MailIcon, label: 'Contact', flag: 'contact' },
+		{ href: '/blog', icon: NotebookIcon, label: 'Blog', flag: 'blog' },
+	] as const,
 	contact: {
 		email: 'hello@example.com',
 		tel: '+123456789',
@@ -55,13 +55,13 @@ export const DATA = {
 				url: 'https://dub.sh/dillion-twitter',
 				icon: Icons.x,
 
-				navbar: true,
+				navbar: false,
 			},
 			Youtube: {
 				name: 'Youtube',
 				url: 'https://dub.sh/dillion-youtube',
 				icon: Icons.youtube,
-				navbar: true,
+				navbar: false,
 			},
 			email: {
 				name: 'Send Email',

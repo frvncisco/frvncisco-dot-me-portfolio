@@ -2,8 +2,10 @@ import BlurFade from "@/components/magicui/blur-fade";
 import { allPosts } from "content-collections";
 import Link from "next/link";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { ChevronRight } from "lucide-react";
+import { FEATURE_FLAGS } from "@/lib/flags";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -27,6 +29,10 @@ export default async function BlogPage({
 }: {
   searchParams: Promise<{ page?: string }>;
 }) {
+  if (!FEATURE_FLAGS.blog) {
+    notFound();
+  }
+
   const { page: pageParam } = await searchParams;
 
   const posts = allPosts;

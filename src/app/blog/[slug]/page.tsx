@@ -7,6 +7,7 @@ import { MDXContent } from "@content-collections/mdx/react";
 import { mdxComponents } from "@/mdx-components";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { FEATURE_FLAGS } from "@/lib/flags";
 
 function getSortedPosts() {
   return [...allPosts].sort((a, b) => {
@@ -18,6 +19,10 @@ function getSortedPosts() {
 }
 
 export async function generateStaticParams() {
+  if (!FEATURE_FLAGS.blog) {
+    return [];
+  }
+
   return allPosts.map((post) => ({
     slug: post._meta.path.replace(/\.mdx$/, ""),
   }));
@@ -79,6 +84,10 @@ export default async function Blog({
     slug: string;
   }>;
 }) {
+  if (!FEATURE_FLAGS.blog) {
+    notFound();
+  }
+
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
   const currentIndex = sortedPosts.findIndex(
