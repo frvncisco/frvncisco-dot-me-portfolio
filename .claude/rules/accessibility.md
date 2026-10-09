@@ -1,18 +1,41 @@
----
-paths:
-  - "src/**/*.tsx"
-  - "content/**/*.mdx"
----
 # Accessibility
 
-Target WCAG 2.1 AA. The main known gap is reduced-motion support (see Motion).
+## WCAG 2.2 Compliance
+- Target WCAG 2.2 Level AA for all user-facing features.
+- Test with at least two screen readers (NVDA + VoiceOver or JAWS).
+- Run automated accessibility checks (axe-core, Lighthouse) in CI.
+- Conduct manual keyboard-only testing for all interactive flows.
 
-- **One `h1` per page.** Every route has exactly one (the hero uses `<BlurFadeText as="h1">`). New pages must too, and headings must not skip levels.
-- **Icon-only controls need an accessible name.** Dock links and the theme toggle carry `aria-label`; do the same for any new icon-only link or button, and give decorative icons `aria-hidden`. A link that only duplicates another link (like a project card's video thumbnail) is `aria-hidden` with `tabIndex={-1}`.
-- **Images:** meaningful `alt` text; empty `alt=""` for purely decorative images. Logos use the company name.
-- **Contrast** must hold in both light and dark themes. Don't rely on `text-muted-foreground` for essential text on top of the `FlickeringGrid`.
-- **Focus:** keep a visible focus ring on interactive elements (existing code uses `focus-visible:ring-2`). Don't remove outlines.
-- **Motion:** `BlurFade`, `BlurFadeText` and `FlickeringGrid` animate continuously and don't yet honor `prefers-reduced-motion`. Respect it in any new animation, and add it to these when you touch them.
-- **Links** that open a new tab use `rel="noopener noreferrer"` and make that clear in the label when it isn't obvious.
-- **Blog posts:** don't put a `#` heading in the MDX body (the page already renders the title as an `h1`); start at `##`.
-- Don't set `user-scalable=no` or lock zoom.
+## Semantic HTML
+- Use correct heading hierarchy: one `<h1>` per page, sequential `<h2>`-`<h6>`.
+- Use `<nav>`, `<main>`, `<aside>`, `<header>`, `<footer>` for page landmarks.
+- Use `<button>` for actions, `<a>` for navigation. Never use `<div>` with `onClick` for either.
+- Use `<ul>`/`<ol>` for lists, `<table>` for tabular data with `<thead>`, `<th>`, and `scope`.
+- Use `<form>`, `<label>`, `<fieldset>`, and `<legend>` for form structures.
+
+## ARIA
+- Prefer native HTML elements over ARIA attributes. ARIA is a last resort.
+- Every ARIA role must have the required properties (e.g., `role="slider"` needs `aria-valuemin`, `aria-valuemax`, `aria-valuenow`).
+- Use `aria-label` or `aria-labelledby` on elements without visible text labels.
+- Use `aria-live="polite"` for dynamic content updates (toasts, search results, status messages).
+- Use `aria-expanded`, `aria-controls`, and `aria-haspopup` for interactive disclosure widgets.
+- Never use `aria-hidden="true"` on focusable elements.
+
+## Keyboard Navigation
+- All interactive elements must be reachable via Tab key in logical order.
+- Provide visible focus indicators with a minimum 3:1 contrast ratio.
+- Support Escape to close modals, dropdowns, and overlays.
+- Trap focus within modal dialogs. Restore focus to trigger element on close.
+- Implement arrow key navigation for menus, tabs, and listboxes.
+
+## Visual Design
+- Minimum color contrast: 4.5:1 for normal text, 3:1 for large text (18px+ or 14px+ bold).
+- Do not convey information through color alone. Use text labels, icons, or patterns.
+- Support `prefers-reduced-motion` to disable or reduce animations.
+- Support `prefers-color-scheme` for dark mode compatibility.
+- Minimum touch target size: 44x44 CSS pixels for mobile interfaces.
+
+## Media
+- Provide `alt` text for all images. Use empty `alt=""` for decorative images.
+- Provide captions for video content and transcripts for audio content.
+- Do not auto-play audio or video. If unavoidable, provide a pause control within the first 3 seconds.
