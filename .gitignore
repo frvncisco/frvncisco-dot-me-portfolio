@@ -38,3 +38,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .content-collections
+
+# claude code (local only)
+.claude/launch.json
+.claude/settings.local.json
+.claude/worktrees/
+CLAUDE.local.md
