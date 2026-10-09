@@ -1,5 +1,4 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -33,11 +32,6 @@ export default function WorkPage() {
       <section id="projects">
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ProjectsSection />
-        </BlurFade>
-      </section>
-      <section id="hackathons">
-        <BlurFade delay={BLUR_FADE_DELAY * 3}>
-          <HackathonsSection />
         </BlurFade>
       </section>
     </main>

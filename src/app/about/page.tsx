@@ -90,11 +90,15 @@ export default function AboutPage() {
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
-                    <span>
-                      {education.start} - {education.end}
-                    </span>
-                  </div>
+                  {(education.start || education.end) && (
+                    <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
+                      <span>
+                        {[education.start, education.end]
+                          .filter(Boolean)
+                          .join(" - ")}
+                      </span>
+                    </div>
+                  )}
                 </Link>
               </BlurFade>
             ))}

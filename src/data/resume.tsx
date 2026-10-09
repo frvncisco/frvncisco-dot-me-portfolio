@@ -7,6 +7,25 @@ import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Typescript } from "@/components/ui/svgs/typescript";
 import { BriefcaseIcon, HomeIcon, MailIcon, NotebookIcon, UserIcon } from "lucide-react";
 
+type Hackathon = {
+	title: string
+	dates?: string
+	location?: string
+	description?: string
+	image?: string
+	mlh?: string
+	links?: { title: string; href: string; icon: React.ReactNode }[]
+}
+
+type Education = {
+	school: string
+	href: string
+	degree: string
+	logoUrl?: string
+	start?: string
+	end?: string
+}
+
 export const DATA = {
 	name: 'Francisco Santana',
 	initials: 'FS',
@@ -93,7 +112,6 @@ export const DATA = {
 			href: 'https://uwaterloo.ca',
 			degree: 'Google UX Design',
 			logoUrl: '/waterloo.png',
-			end: '2024',
 		},
 		{
 			school: 'University of New Hampshire',
@@ -101,7 +119,7 @@ export const DATA = {
 			degree: "Bachelor's Degree of Computer Science",
 			logoUrl: '/waterloo.png',
 		},
-	],
+	] as Education[],
 	projects: [
 		{
 			title: 'Chat Collect',
@@ -226,4 +244,5 @@ export const DATA = {
 				'https://pub-83c5db439b40468498f97946200806f7.r2.dev/automatic-chat.mp4',
 		},
 	],
-} as const
+	hackathons: [] as Hackathon[],
+}
