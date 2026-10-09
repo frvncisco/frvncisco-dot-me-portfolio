@@ -1,4 +1,3 @@
-"use client";
 import { LogoImage } from "@/components/logo-image";
 import {
   Accordion,
