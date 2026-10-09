@@ -123,7 +123,7 @@ export default async function Blog({
   }).replace(/</g, "\\u003c");
 
   return (
-    <section id="blog">
+    <main id="blog">
       <script
         type="application/ld+json"
         suppressHydrationWarning
@@ -197,6 +197,6 @@ export default async function Blog({
           )}
         </div>
       </nav>
-    </section>
+    </main>
   );
 }
