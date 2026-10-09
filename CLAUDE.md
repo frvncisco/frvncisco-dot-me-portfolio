@@ -39,4 +39,4 @@ Lorem ipsum summary/description/work text, Dillion Verma's projects (with his li
 
 ## Workflow
 
-Plan first for anything beyond a small fix. Branch flow is feature branch to `dev` (staging) to `main`. See `.claude/rules/git-workflow.md`. Review diffs with the `code-reviewer` agent.
+Plan first for anything beyond a small fix. Branch flow is feature branch to `dev` (staging) to `main`. See `.claude/rules/git-workflow.md`. Skills: `/commit` (conventional commits) and `/pr-review`. Review diffs with the `code-reviewer` agent. Always pass `-R frvncisco/frvncisco-dot-me-portfolio` to `gh` (extra remotes confuse its default repo).
