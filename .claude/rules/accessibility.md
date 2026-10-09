@@ -5,10 +5,10 @@ paths:
 ---
 # Accessibility
 
-Target WCAG 2.1 AA. Known gaps are listed so they aren't made worse:
+Target WCAG 2.1 AA. The main known gap is reduced-motion support (see Motion).
 
-- **One `h1` per page.** `/`, `/about`, `/work` and `/contact` currently have none (the hero text is a styled `BlurFadeText`, sections use `h2`). New pages must have exactly one `h1`, and headings must not skip levels.
-- **Icon-only controls need an accessible name.** The dock links in `navbar.tsx` and the theme toggle show a tooltip but have no `aria-label`; add one when touching them. Decorative icons get `aria-hidden`.
+- **One `h1` per page.** Every route has exactly one (the hero uses `<BlurFadeText as="h1">`). New pages must too, and headings must not skip levels.
+- **Icon-only controls need an accessible name.** Dock links and the theme toggle carry `aria-label`; do the same for any new icon-only link or button, and give decorative icons `aria-hidden`. A link that only duplicates another link (like a project card's video thumbnail) is `aria-hidden` with `tabIndex={-1}`.
 - **Images:** meaningful `alt` text; empty `alt=""` for purely decorative images. Logos use the company name.
 - **Contrast** must hold in both light and dark themes. Don't rely on `text-muted-foreground` for essential text on top of the `FlickeringGrid`.
 - **Focus:** keep a visible focus ring on interactive elements (existing code uses `focus-visible:ring-2`). Don't remove outlines.
