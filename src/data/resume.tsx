@@ -83,41 +83,41 @@ export const DATA = {
 	work: [
 		{
 			company: 'Niche',
-			href: 'https://atomic.finance',
+			href: 'https://www.niche.com',
 			badges: [],
 			location: 'Remote',
 			title: 'Frontend Software Engineer',
-			logoUrl: '/atomic.png',
+			logoUrl: '/niche.png',
 			start: 'May 2021',
 			end: 'Oct 2022',
 			description:
-				'Implemented the Bitcoin discreet log contract (DLC) protocol specifications as an open source Typescript SDK. Dockerized all microservices and setup production kubernetes cluster. Architected a data lake using AWS S3 and Athena for historical backtesting of bitcoin trading strategies. Built a mobile app using react native and typescript.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed auctor risus. Fusce vitae porttitor leo. Mauris eget mollis neque.',
 		},
 		{
 			company: 'Blackhawk Network',
 			badges: [],
-			href: 'https://shopify.com',
+			href: 'https://www.blackhawknetwork.com',
 			location: 'Remote',
 			title: 'Fullstack Software Engineer',
-			logoUrl: '/shopify.svg',
+			logoUrl: '/blackhawk.png',
 			start: 'January 2021',
 			end: 'April 2021',
 			description:
-				'Implemented a custom Kubernetes controller in Go to automate the deployment of MySQL and ProxySQL custom resources in order to enable 2,000+ internal developers to instantly deploy their app databases to production. Wrote several scripts in Go to automate MySQL database failovers while maintaining master-slave replication topologies and keeping Zookeeper nodes consistent with changes.',
+				'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed auctor risus. Fusce vitae porttitor leo. Mauris eget mollis neque.',
 		},
 	],
 	education: [
 		{
 			school: 'Coursera',
-			href: 'https://uwaterloo.ca',
+			href: 'https://www.coursera.org',
 			degree: 'Google UX Design',
-			logoUrl: '/waterloo.png',
+			logoUrl: '/coursera.png',
 		},
 		{
 			school: 'University of New Hampshire',
-			href: 'https://uwaterloo.ca',
+			href: 'https://www.unh.edu',
 			degree: "Bachelor's Degree of Computer Science",
-			logoUrl: '/waterloo.png',
+			logoUrl: '/unh.png',
 		},
 	] as Education[],
 	projects: [

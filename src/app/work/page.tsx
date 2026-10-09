@@ -29,11 +29,11 @@ export default function WorkPage() {
 
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
-      <section id="projects">
+      <div>
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ProjectsSection />
         </BlurFade>
-      </section>
+      </div>
     </main>
   );
 }
