@@ -28,11 +28,6 @@ export default function Page() {
 						text={`Hey! 👋  I'm ${DATA.name.split(' ')[0]}, a Frontend Engineer building user-centric, visually captivating
 digital interfaces`}
 					/>
-					{/* <BlurFadeText
-            className="text-muted-foreground max-w-[600px] md:text-lg lg:text-xl"
-            delay={BLUR_FADE_DELAY}
-            text={DATA.description}
-          /> */}
 				</div>
 			</section>
 		</main>

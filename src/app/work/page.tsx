@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { FEATURE_FLAGS } from "@/lib/flags";
 
-const description = "Projects I've built and hackathons I've competed in.";
+const description = "Projects I've built.";
 
 export const metadata: Metadata = {
   title: "Work",
