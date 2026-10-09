@@ -67,6 +67,8 @@ export function ProjectCard({
           target="_blank"
           rel="noopener noreferrer"
           className="block"
+          aria-hidden="true"
+          tabIndex={-1}
         >
           {video ? (
             <video
