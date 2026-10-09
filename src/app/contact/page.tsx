@@ -1,6 +1,8 @@
 import BlurFade from "@/components/magicui/blur-fade";
 import ContactSection from "@/components/section/contact-section";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { FEATURE_FLAGS } from "@/lib/flags";
 
 const description = "Get in touch.";
 
@@ -21,6 +23,10 @@ export const metadata: Metadata = {
 const BLUR_FADE_DELAY = 0.04;
 
 export default function ContactPage() {
+  if (!FEATURE_FLAGS.contact) {
+    notFound();
+  }
+
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
       <section id="contact">

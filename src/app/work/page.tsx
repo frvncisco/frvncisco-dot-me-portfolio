@@ -1,9 +1,10 @@
 import BlurFade from "@/components/magicui/blur-fade";
-import HackathonsSection from "@/components/section/hackathons-section";
 import ProjectsSection from "@/components/section/projects-section";
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { FEATURE_FLAGS } from "@/lib/flags";
 
-const description = "Projects I've built and hackathons I've competed in.";
+const description = "Projects I've built.";
 
 export const metadata: Metadata = {
   title: "Work",
@@ -22,18 +23,17 @@ export const metadata: Metadata = {
 const BLUR_FADE_DELAY = 0.04;
 
 export default function WorkPage() {
+  if (!FEATURE_FLAGS.work) {
+    notFound();
+  }
+
   return (
     <main className="min-h-dvh flex flex-col gap-14 relative">
-      <section id="projects">
+      <div>
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ProjectsSection />
         </BlurFade>
-      </section>
-      <section id="hackathons">
-        <BlurFade delay={BLUR_FADE_DELAY * 3}>
-          <HackathonsSection />
-        </BlurFade>
-      </section>
+      </div>
     </main>
   );
 }

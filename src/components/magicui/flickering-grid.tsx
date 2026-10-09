@@ -229,6 +229,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
     >
       <canvas
         ref={canvasRef}
+        aria-hidden
         className="pointer-events-none"
         style={{
           width: canvasSize.width,

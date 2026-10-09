@@ -1,5 +1,5 @@
 import { allPosts } from "content-collections";
-import { formatDate } from "@/lib/utils";
+import { absoluteUrl, formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -7,6 +7,7 @@ import { MDXContent } from "@content-collections/mdx/react";
 import { mdxComponents } from "@/mdx-components";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { FEATURE_FLAGS } from "@/lib/flags";
 
 function getSortedPosts() {
   return [...allPosts].sort((a, b) => {
@@ -18,6 +19,10 @@ function getSortedPosts() {
 }
 
 export async function generateStaticParams() {
+  if (!FEATURE_FLAGS.blog) {
+    return [];
+  }
+
   return allPosts.map((post) => ({
     slug: post._meta.path.replace(/\.mdx$/, ""),
   }));
@@ -56,7 +61,7 @@ export async function generateMetadata({
       ...(image && {
         images: [
           {
-            url: `${DATA.url}${image}`,
+            url: absoluteUrl(image, DATA.url),
           },
         ],
       }),
@@ -66,7 +71,7 @@ export async function generateMetadata({
       title,
       description,
       ...(image && {
-        images: [`${DATA.url}${image}`],
+        images: [absoluteUrl(image, DATA.url)],
       }),
     },
   };
@@ -79,6 +84,10 @@ export default async function Blog({
     slug: string;
   }>;
 }) {
+  if (!FEATURE_FLAGS.blog) {
+    notFound();
+  }
+
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
   const currentIndex = sortedPosts.findIndex(
@@ -104,7 +113,7 @@ export default async function Blog({
     dateModified: post.publishedAt,
     description: post.summary,
     image: post.image
-      ? `${DATA.url}${post.image}`
+      ? absoluteUrl(post.image, DATA.url)
       : `${DATA.url}/blog/${slug}/opengraph-image`,
     url: `${DATA.url}/blog/${slug}`,
     author: {
