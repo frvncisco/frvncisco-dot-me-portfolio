@@ -15,3 +15,8 @@ export function formatDate(date: string | Date) {
     timeZone: "UTC",
   });
 }
+
+// Frontmatter images may be absolute (e.g. Unsplash) or site-relative; only prefix the latter.
+export function absoluteUrl(path: string, base: string) {
+  return /^https?:\/\//.test(path) ? path : new URL(path, base).toString();
+}
