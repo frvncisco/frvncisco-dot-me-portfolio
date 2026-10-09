@@ -1,4 +1,6 @@
 import { FlickeringGrid } from "@/components/magicui/flickering-grid";
+import { Button } from "@/components/ui/button";
+import { DATA } from "@/data/resume";
 
 export default function ContactSection() {
   return (
@@ -22,9 +24,12 @@ export default function ContactSection() {
           Get in Touch
         </h1>
         <p className="mx-auto max-w-lg text-muted-foreground text-balance">
-          Want to chat? Just shoot me a message and I&apos;ll respond whenever
+          Want to chat? Just shoot me a message and I&rsquo;ll respond whenever
           I can. I will ignore all soliciting.
         </p>
+        <Button asChild>
+          <a href={`mailto:${DATA.contact.email}`}>{DATA.contact.email}</a>
+        </Button>
       </div>
     </div>
   );

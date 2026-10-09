@@ -17,8 +17,8 @@ export function ModeToggle({ className }: { className?: string }) {
       className={cn(className)}
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
     >
-      <SunIcon className="h-full w-full" aria-hidden />
-      <MoonIcon className="hidden h-full w-full" aria-hidden />
+      <SunIcon className="h-full w-full dark:hidden" aria-hidden />
+      <MoonIcon className="hidden h-full w-full dark:block" aria-hidden />
     </Button>
   );
 }

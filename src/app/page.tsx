@@ -23,10 +23,9 @@ export default function Page() {
 					<BlurFadeText
 						as="h1"
 						delay={BLUR_FADE_DELAY}
-						className="font-serif text-4xl font-semibold tracking-tight [font-synthesis-weight:none] sm:text-5xl lg:text-6xl"
+						className="font-serif text-balance text-4xl font-semibold tracking-tight [font-synthesis-weight:none] sm:text-5xl lg:text-6xl"
 						yOffset={8}
-						text={`Hey! 👋  I'm ${DATA.name.split(' ')[0]}, a Frontend Engineer building user-centric, visually captivating
-digital interfaces`}
+						text={`Hey! 👋 I'm ${DATA.name.split(' ')[0]}, a Frontend Engineer building user-centric, visually captivating digital interfaces`}
 					/>
 				</div>
 			</section>

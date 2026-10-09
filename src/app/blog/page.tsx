@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { paginate, normalizePage } from "@/lib/pagination";
 import { ChevronRight } from "lucide-react";
 import { FEATURE_FLAGS } from "@/lib/flags";
+import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
   title: "Blog",
@@ -80,13 +81,13 @@ export default async function BlogPage({
                           <span className="group-hover:text-foreground transition-colors">
                             {post.title}
                             <ChevronRight
-                              className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-all duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                              className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-[opacity,translate] duration-200 group-hover:opacity-100 group-hover:translate-x-0"
                               aria-hidden
                             />
                           </span>
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {post.publishedAt}
+                          {formatDate(post.publishedAt)}
                         </p>
                       </div>
                     </Link>
@@ -99,7 +100,10 @@ export default async function BlogPage({
           {/* Pagination Controls */}
           {pagination.totalPages > 1 && (
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
-              <div className="flex gap-3 flex-row items-center justify-between mt-8">
+              <nav
+                aria-label="Pagination"
+                className="flex gap-3 flex-row items-center justify-between mt-8"
+              >
                 <div className="text-sm text-muted-foreground">
                   Page {pagination.page} of {pagination.totalPages}
                 </div>
@@ -112,7 +116,7 @@ export default async function BlogPage({
                       Previous
                     </Link>
                   ) : (
-                    <span className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
+                    <span aria-disabled="true" className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
                       Previous
                     </span>
                   )}
@@ -124,12 +128,12 @@ export default async function BlogPage({
                       Next
                     </Link>
                   ) : (
-                    <span className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
+                    <span aria-disabled="true" className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
                       Next
                     </span>
                   )}
                 </div>
-              </div>
+              </nav>
             </BlurFade>
           )}
         </>
