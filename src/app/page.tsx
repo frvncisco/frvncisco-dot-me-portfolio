@@ -21,6 +21,7 @@ export default function Page() {
 			<section id="hero" className="relative z-10 flex flex-1 flex-col justify-center">
 				<div className="mx-auto w-full max-w-2xl flex flex-col gap-4">
 					<BlurFadeText
+						as="h1"
 						delay={BLUR_FADE_DELAY}
 						className="font-serif text-4xl font-semibold tracking-tight [font-synthesis-weight:none] sm:text-5xl lg:text-6xl"
 						yOffset={8}
