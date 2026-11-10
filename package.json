@@ -11,7 +11,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "lint:fix": "eslint --fix"
+    "lint:fix": "eslint --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "@content-collections/mdx": "^0.2.2",
@@ -46,7 +48,10 @@
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
     "eslint-config-next": "16.4.6",
+    "eslint-config-prettier": "^10.1.8",
     "postcss": "^8.5.32",
+    "prettier": "3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "typescript": "^6.0.3",
     "zod": "^4.6.7"
   },
