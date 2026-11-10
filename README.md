@@ -70,6 +70,7 @@ public/           static assets and OG fonts
 ## Tooling notes
 
 - ESLint is pinned to 9.x and TypeScript to 6.0.x until `eslint-plugin-react` and `typescript-eslint` support the newer majors.
+- `pnpm.overrides` in `package.json` raises four transitive dependencies past their parents' ranges to fix security advisories: `postcss-selector-parser` (via `@tailwindcss/typography`), `minimatch` (via `typescript-estree`), `toml` (via `remark-mdx-frontmatter`) and `uuid` (via `mdx-bundler`). Remove an override once its parent package allows the fixed version.
 - Fonts: Instrument Serif (headings), Inter (body), IBM Plex Mono (code).
 - Project guidance for AI coding agents lives in [`CLAUDE.md`](./CLAUDE.md) and [`.claude/`](./.claude).
 

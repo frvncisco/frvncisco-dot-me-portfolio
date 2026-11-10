@@ -29,7 +29,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 - **Homepage**: a `FlickeringGrid` is `fixed inset-0` on `/` only (not in the layout). The hero `main` height subtracts the layout padding (`min-h-[calc(100dvh-9rem)] sm:min-h-[calc(100dvh-12rem)]`) so the page fits one screen.
 - **Tailwind v4** is configured in CSS (`@import "tailwindcss"`, `@theme inline` in `globals.css`). There is no `tailwind.config.ts`; `components.json` still names one, which is stale.
 - **Dark mode** is the `.dark` class (`next-themes`, default light). Colors come from CSS variables; avoid hard-coded colors.
-- **Pins**: `eslint` stays on 9.x (eslint-plugin-react crashes on 10) and `typescript` on 6.0.x (typescript-eslint needs <6.1). Don't bump without checking.
+- **Pins**: `eslint` stays on 9.x (eslint-plugin-react crashes on 10) and `typescript` on 6.0.x (typescript-eslint needs <6.1). Don't bump without checking. `pnpm.overrides` forces patched versions of four transitive deps for security advisories (see README "Tooling notes"); drop each once its parent's range allows the fix, and re-run `pnpm audit` after dependency changes.
 - `next.config.mjs` sends `X-Frame-Options: DENY`, so the site can't be loaded in an iframe.
 - `next dev` regenerates the Next.js block in `AGENTS.md`/`CLAUDE.md`; leave them committed so the tree stays clean.
 
