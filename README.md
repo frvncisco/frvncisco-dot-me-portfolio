@@ -31,6 +31,7 @@ Open <http://localhost:3000>.
 | `pnpm build` | Production build (type-checks the whole project) |
 | `pnpm start` | Serve the production build |
 | `pnpm lint` | Run ESLint (`pnpm lint:fix` to autofix) |
+| `pnpm format` | Format the repo with Prettier (`pnpm format:check` to check only) |
 | `pnpm exec tsc --noEmit` | Type-check only |
 
 ## Feature flags
