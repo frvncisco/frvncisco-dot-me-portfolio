@@ -1,6 +1,7 @@
 # Git workflow
 
 - **Branch flow:** feature branch -> `dev` (staging, flags on) -> `main`. Open PRs against `dev`; promote `dev` to `main` with its own PR. Don't push directly to `dev` or `main`.
+- **Merge method:** use "Create a merge commit", not squash or rebase. `.git-blame-ignore-revs` lists formatting commits by SHA, and squash or rebase merges rewrite those SHAs, so blame would stop skipping them. Merge commits also keep the small per-change commits this workflow asks for.
 - **Old history:** the pre-reset `main` is tagged `archive/pre-reset`. Don't delete the tag.
 - **Commits:** follow the `commit` skill (`.claude/skills/commit`): conventional format `type(scope): subject` (imperative, no period, about 50 characters), body only when the subject isn't enough. Small, logical commits; separate unrelated changes (e.g. content edits vs code fixes). Stage specific paths rather than everything (see below). End with the `Co-Authored-By` trailer for the assisting model when one is configured.
 - **Hooks:** no Husky/lint-staged hooks are installed, so the verification gate in `testing.md` is the check. Don't use `--no-verify` to hide a failing gate.

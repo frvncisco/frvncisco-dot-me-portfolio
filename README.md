@@ -6,13 +6,13 @@ Built with [Next.js](https://nextjs.org) 16 (App Router), React 19, TypeScript, 
 
 ## Pages
 
-| Route | Contents | Gated by |
-| --- | --- | --- |
-| `/` | Hero | always on |
-| `/about` | About, work experience, education, skills | always on |
-| `/work` | Projects | `FEATURE_WORK` |
-| `/contact` | Contact | `FEATURE_CONTACT` |
-| `/blog`, `/blog/[slug]` | MDX blog | `FEATURE_BLOG` |
+| Route                   | Contents                                  | Gated by          |
+| ----------------------- | ----------------------------------------- | ----------------- |
+| `/`                     | Hero                                      | always on         |
+| `/about`                | About, work experience, education, skills | always on         |
+| `/work`                 | Projects                                  | `FEATURE_WORK`    |
+| `/contact`              | Contact                                   | `FEATURE_CONTACT` |
+| `/blog`, `/blog/[slug]` | MDX blog                                  | `FEATURE_BLOG`    |
 
 ## Getting started
 
@@ -25,13 +25,14 @@ pnpm dev
 
 Open <http://localhost:3000>.
 
-| Command | What it does |
-| --- | --- |
-| `pnpm dev` | Start the dev server |
-| `pnpm build` | Production build (type-checks the whole project) |
-| `pnpm start` | Serve the production build |
-| `pnpm lint` | Run ESLint (`pnpm lint:fix` to autofix) |
-| `pnpm exec tsc --noEmit` | Type-check only |
+| Command                  | What it does                                                      |
+| ------------------------ | ----------------------------------------------------------------- |
+| `pnpm dev`               | Start the dev server                                              |
+| `pnpm build`             | Production build (type-checks the whole project)                  |
+| `pnpm start`             | Serve the production build                                        |
+| `pnpm lint`              | Run ESLint (`pnpm lint:fix` to autofix)                           |
+| `pnpm format`            | Format the repo with Prettier (`pnpm format:check` to check only) |
+| `pnpm exec tsc --noEmit` | Type-check only                                                   |
 
 ## Feature flags
 
@@ -77,9 +78,11 @@ public/           static assets and OG fonts
   - `uuid` <11.1.1, today through `mdx-bundler`
 
   Remove an override once no parent needs it. `pnpm audit` is part of the verification gate.
+
 - The project targets Node 24: `.nvmrc`, `engines` (`24.x`, which also sets the Vercel runtime) and `@types/node` (^24). Moving to Node 26 means changing all three together.
 - `packageManager` pins pnpm 10.34.9, so corepack uses the version that wrote the lockfile.
 - Fonts: Instrument Serif (headings), Inter (body), IBM Plex Mono (code).
+- Commits that only reformat are listed in `.git-blame-ignore-revs`. GitHub's blame view skips them automatically. For local `git blame`, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
 - Project guidance for AI coding agents lives in [`CLAUDE.md`](./CLAUDE.md) and [`.claude/`](./.claude).
 
 ## License

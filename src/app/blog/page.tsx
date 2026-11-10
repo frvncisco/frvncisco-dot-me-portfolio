@@ -54,8 +54,13 @@ export default async function BlogPage({
   return (
     <main id="blog">
       <BlurFade delay={BLUR_FADE_DELAY}>
-        <h1 className="text-2xl font-semibold tracking-tight mb-2">Blog <span className="ml-1 bg-card border border-border rounded-md px-2 py-1 text-muted-foreground text-sm">{sortedPosts.length} posts</span></h1>
-        <p className="text-sm text-muted-foreground mb-8">
+        <h1 className="mb-2 text-2xl font-semibold tracking-tight">
+          Blog{" "}
+          <span className="ml-1 rounded-md border border-border bg-card px-2 py-1 text-sm text-muted-foreground">
+            {sortedPosts.length} posts
+          </span>
+        </h1>
+        <p className="mb-8 text-sm text-muted-foreground">
           My thoughts on software development, life, and more.
         </p>
       </BlurFade>
@@ -70,18 +75,18 @@ export default async function BlogPage({
                 return (
                   <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>
                     <Link
-                      className="flex items-start gap-x-2 group cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="group flex cursor-pointer items-start gap-x-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                       href={`/blog/${slug}`}
                     >
-                      <span className="text-xs font-mono tabular-nums font-medium mt-[5px]">
+                      <span className="mt-[5px] font-mono text-xs font-medium tabular-nums">
                         {String(indexNumber).padStart(2, "0")}.
                       </span>
-                      <div className="flex flex-col gap-y-2 flex-1">
-                        <p className="tracking-tight text-lg font-medium">
-                          <span className="group-hover:text-foreground transition-colors">
+                      <div className="flex flex-1 flex-col gap-y-2">
+                        <p className="text-lg font-medium tracking-tight">
+                          <span className="transition-colors group-hover:text-foreground">
                             {post.title}
                             <ChevronRight
-                              className="ml-1 inline-block size-4 stroke-3 text-muted-foreground opacity-0 -translate-x-2 transition-[opacity,translate] duration-200 group-hover:opacity-100 group-hover:translate-x-0"
+                              className="ml-1 inline-block size-4 -translate-x-2 stroke-3 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 group-hover:translate-x-0 group-hover:opacity-100"
                               aria-hidden
                             />
                           </span>
@@ -102,7 +107,7 @@ export default async function BlogPage({
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
               <nav
                 aria-label="Pagination"
-                className="flex gap-3 flex-row items-center justify-between mt-8"
+                className="mt-8 flex flex-row items-center justify-between gap-3"
               >
                 <div className="text-sm text-muted-foreground">
                   Page {pagination.page} of {pagination.totalPages}
@@ -111,24 +116,30 @@ export default async function BlogPage({
                   {pagination.hasPreviousPage ? (
                     <Link
                       href={`/blog?page=${pagination.page - 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       Previous
                     </Link>
                   ) : (
-                    <span aria-disabled="true" className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
+                    <span
+                      aria-disabled="true"
+                      className="flex h-8 w-fit cursor-not-allowed items-center justify-center rounded-lg border border-border px-2 text-sm opacity-50"
+                    >
                       Previous
                     </span>
                   )}
                   {pagination.hasNextPage ? (
                     <Link
                       href={`/blog?page=${pagination.page + 1}`}
-                      className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg hover:bg-accent/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+                      className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       Next
                     </Link>
                   ) : (
-                    <span aria-disabled="true" className="h-8 w-fit px-2 flex items-center justify-center text-sm border border-border rounded-lg opacity-50 cursor-not-allowed">
+                    <span
+                      aria-disabled="true"
+                      className="flex h-8 w-fit cursor-not-allowed items-center justify-center rounded-lg border border-border px-2 text-sm opacity-50"
+                    >
                       Next
                     </span>
                   )}
@@ -139,10 +150,8 @@ export default async function BlogPage({
         </>
       ) : (
         <BlurFade delay={BLUR_FADE_DELAY * 2}>
-          <div className="flex flex-col items-center justify-center py-12 px-4 border border-border rounded-xl">
-            <p className="text-muted-foreground text-center">
-              No blog posts yet. Check back soon!
-            </p>
+          <div className="flex flex-col items-center justify-center rounded-xl border border-border px-4 py-12">
+            <p className="text-center text-muted-foreground">No blog posts yet. Check back soon!</p>
           </div>
         </BlurFade>
       )}

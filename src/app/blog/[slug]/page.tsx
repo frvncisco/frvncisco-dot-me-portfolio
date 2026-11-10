@@ -42,12 +42,7 @@ export async function generateMetadata({
     return undefined;
   }
 
-  let {
-    title,
-    publishedAt: publishedTime,
-    summary: description,
-    image,
-  } = post;
+  let { title, publishedAt: publishedTime, summary: description, image } = post;
 
   return {
     title,
@@ -90,9 +85,7 @@ export default async function Blog({
 
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
-  const currentIndex = sortedPosts.findIndex(
-    (p) => p._meta.path.replace(/\.mdx$/, "") === slug
-  );
+  const currentIndex = sortedPosts.findIndex((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
   const post = sortedPosts[currentIndex];
 
   if (!post) {
@@ -102,8 +95,7 @@ export default async function Blog({
   const previousPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
 
-  const getSlug = (post: (typeof sortedPosts)[0]) =>
-    post._meta.path.replace(/\.mdx$/, "");
+  const getSlug = (post: (typeof sortedPosts)[0]) => post._meta.path.replace(/\.mdx$/, "");
 
   const jsonLdContent = JSON.stringify({
     "@context": "https://schema.org",
@@ -131,69 +123,70 @@ export default async function Blog({
           __html: jsonLdContent,
         }}
       />
-      <div className="flex justify-start gap-4 items-center">
-        <Link href="/blog" className="text-sm text-muted-foreground hover:text-foreground transition-colors border border-border rounded-lg px-2 py-1 inline-flex items-center gap-1 mb-6 group" aria-label="Back to Blog">
-          <ChevronLeft className="size-3 group-hover:-translate-x-px transition-transform" />
+      <div className="flex items-center justify-start gap-4">
+        <Link
+          href="/blog"
+          className="group mb-6 inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
+          aria-label="Back to Blog"
+        >
+          <ChevronLeft className="size-3 transition-transform group-hover:-translate-x-px" />
           Back to Blog
         </Link>
       </div>
       <div className="flex flex-col gap-4">
-        <h1 className="title font-semibold text-3xl md:text-4xl tracking-tighter leading-tight">
+        <h1 className="title text-3xl leading-tight font-semibold tracking-tighter md:text-4xl">
           {post.title}
         </h1>
-        <p className="text-sm text-muted-foreground">
-          {formatDate(post.publishedAt)}
-        </p>
+        <p className="text-sm text-muted-foreground">{formatDate(post.publishedAt)}</p>
       </div>
       <div className="my-6 flex w-full items-center">
         <div
-          className="flex-1 h-px bg-border"
+          className="h-px flex-1 bg-border"
           style={{
-            maskImage:
-              "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+            maskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
             WebkitMaskImage:
               "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
           }}
         />
       </div>
-      <article className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
+      <article className="prose max-w-full font-sans leading-relaxed text-pretty text-muted-foreground dark:prose-invert">
         <MDXContent code={post.mdx} components={mdxComponents} />
       </article>
 
-      <nav className="mt-12 pt-8 max-w-2xl">
-        <div className="flex flex-col sm:flex-row justify-between gap-4">
+      <nav className="mt-12 max-w-2xl pt-8">
+        <div className="flex flex-col justify-between gap-4 sm:flex-row">
           {previousPost ? (
             <Link
               href={`/blog/${getSlug(previousPost)}`}
-              className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors"
+              className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 transition-colors hover:bg-accent/50"
             >
               <span className="flex items-center gap-1 text-xs text-muted-foreground">
                 <ChevronLeft className="size-3" />
                 Previous
               </span>
-              <span className="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+              <span className="text-sm font-medium wrap-break-word whitespace-normal transition-colors group-hover:text-foreground">
                 {previousPost.title}
               </span>
             </Link>
           ) : (
-            <div className="hidden sm:block flex-1" />
+            <div className="hidden flex-1 sm:block" />
           )}
 
           {nextPost ? (
             <Link
               href={`/blog/${getSlug(nextPost)}`}
-              className="group flex-1 flex flex-col gap-1 p-4 rounded-lg border border-border hover:bg-accent/50 transition-colors text-right"
+              className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 text-right transition-colors hover:bg-accent/50"
             >
               <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
                 Next
                 <ChevronRight className="size-3" />
               </span>
-              <span className="text-sm font-medium group-hover:text-foreground transition-colors whitespace-normal wrap-break-word">
+              <span className="text-sm font-medium wrap-break-word whitespace-normal transition-colors group-hover:text-foreground">
                 {nextPost.title}
               </span>
             </Link>
           ) : (
-            <div className="hidden sm:block flex-1" />
+            <div className="hidden flex-1 sm:block" />
           )}
         </div>
       </nav>

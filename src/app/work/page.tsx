@@ -28,7 +28,7 @@ export default function WorkPage() {
   }
 
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="relative flex min-h-dvh flex-col gap-14">
       <div>
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ProjectsSection />

@@ -17,7 +17,7 @@ You review changes to a Next.js 16 / React 19 / Tailwind v4 / shadcn portfolio s
 
 - **Correctness:** logic errors, broken edge cases, wrong types, server/client boundary mistakes (`"use client"` missing or needlessly broad), build-time vs request-time assumptions (feature flags are read at build time).
 - **Feature flags:** any new or changed `/blog`, `/work` or `/contact` route calls `notFound()` when its flag is off; the dock entry in `DATA.navbar` has the right `flag`; `.env.example` and `src/lib/flags.ts` stay in sync.
-- **Data and types:** edits to `src/data/resume.tsx` keep every consumer compiling (the whole project type-checks, including unimported components), respect the file's tabs and single-quote style, and don't reintroduce removed fields (`X` social entry, a non-empty `hackathons`).
+- **Data and types:** edits to `src/data/resume.tsx` keep every consumer compiling (the whole project type-checks, including unimported components), pass `pnpm format:check`, and don't reintroduce removed fields (`X` social entry, a non-empty `hackathons`).
 - **Styling:** theme tokens and `cn()` rather than hard-coded colors; both light and dark work; Instrument Serif is 400-only (no faux bold); Tailwind v4 CSS config, not a `tailwind.config`.
 - **Accessibility:** one `h1` per page, heading order, `aria-label` on icon-only controls, alt text, focus states, contrast, reduced motion.
 - **Blog content:** frontmatter fields, no `#` title in the body, site-relative `image` paths.

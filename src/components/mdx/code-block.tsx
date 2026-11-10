@@ -68,14 +68,10 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
   };
 
   return (
-    <div className="group relative rounded-xl overflow-hidden border border-border">
-      <pre
-        ref={preRef}
-        {...props}
-        className={cn("p-0! m-0! overflow-x-auto", props.className)}
-      >
+    <div className="group relative overflow-hidden rounded-xl border border-border">
+      <pre ref={preRef} {...props} className={cn("m-0! overflow-x-auto p-0!", props.className)}>
         {title && (
-          <div className="p-3 text-xs font-medium border-b border-border rounded-t-xl bg-muted/50 text-foreground">
+          <div className="rounded-t-xl border-b border-border bg-muted/50 p-3 text-xs font-medium text-foreground">
             {title}
           </div>
         )}
@@ -84,27 +80,23 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
           onClick={handleCopy}
           variant="outline"
           size="icon"
-          className={cn("absolute size-8 text-primary cursor-pointer right-3 opacity-100 lg:opacity-0 lg:group-hover:opacity-100 transition-opacity rounded-md border border-border shadow-none", title ? "top-13" : "top-3", props.className)}
+          className={cn(
+            "absolute right-3 size-8 cursor-pointer rounded-md border border-border text-primary opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
+            title ? "top-13" : "top-3",
+            props.className,
+          )}
           aria-label="Copy code"
         >
           {copied ? <Check className="size-4" /> : <Copy className="size-4" />}
         </Button>
         {html && (
           <div className="p-3">
-            <code
-              className={`shiki ${className}`}
-              dangerouslySetInnerHTML={{ __html: html }}
-            />
+            <code className={`shiki ${className}`} dangerouslySetInnerHTML={{ __html: html }} />
           </div>
         )}
 
-        {!html && (
-          <div className="p-4">
-            {children}
-          </div>
-        )}
-      </pre >
-    </div >
+        {!html && <div className="p-4">{children}</div>}
+      </pre>
+    </div>
   );
 }
-
