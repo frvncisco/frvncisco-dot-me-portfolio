@@ -9,7 +9,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 ## Commands
 
 - `pnpm dev` / `pnpm build` / `pnpm start`, `pnpm lint`, `pnpm exec tsc --noEmit`.
-- Verification gate before calling work done: `tsc --noEmit`, `lint`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports.
+- Verification gate before calling work done: `tsc --noEmit`, `lint`, `pnpm audit`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports.
 - Stop `next dev` before `next build` (they share `.next`).
 - pnpm comes from corepack, pinned by `packageManager` (`pnpm@10.34.9`) in `package.json`. Without the pin, corepack falls back to pnpm 12, which the corepack in Node 24.2 can't run (`MODULE_NOT_FOUND .../bin/pnpm.cjs`). Put Node 24 on PATH first (`export PATH=~/.nvm/versions/node/v24.2.0/bin:$PATH`; `.nvmrc` is `24`). `.claude/launch.json` starts the dev server via `./node_modules/.bin/next dev`.
 
@@ -29,7 +29,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 - **Homepage**: a `FlickeringGrid` is `fixed inset-0` on `/` only (not in the layout). The hero `main` height subtracts the layout padding (`min-h-[calc(100dvh-9rem)] sm:min-h-[calc(100dvh-12rem)]`) so the page fits one screen.
 - **Tailwind v4** is configured in CSS (`@import "tailwindcss"`, `@theme inline` in `globals.css`). There is no `tailwind.config.ts`; `components.json` still names one, which is stale.
 - **Dark mode** is the `.dark` class (`next-themes`, default light). Colors come from CSS variables; avoid hard-coded colors.
-- **Pins**: `eslint` stays on 9.x (eslint-plugin-react crashes on 10) and `typescript` on 6.0.x (typescript-eslint needs <6.1). Don't bump without checking. `pnpm.overrides` forces patched versions of four transitive deps for security advisories (see README "Tooling notes"); drop each once its parent's range allows the fix, and re-run `pnpm audit` after dependency changes.
+- **Pins**: `eslint` stays on 9.x (eslint-plugin-react crashes on 10) and `typescript` on 6.0.x (typescript-eslint needs <6.1). Don't bump without checking. `pnpm.overrides` forces patched versions of four transitive deps for security advisories. Each override is keyed on the vulnerable range (`pkg@<fixed`), not on a parent (see README "Tooling notes"); drop one once nothing resolves into its range. `@types/node` stays on ^24 to match `engines` and `.nvmrc`.
 - `next.config.mjs` sends `X-Frame-Options: DENY`, so the site can't be loaded in an iframe.
 - `next dev` regenerates the Next.js block in `AGENTS.md`/`CLAUDE.md`; leave them committed so the tree stays clean.
 

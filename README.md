@@ -70,7 +70,15 @@ public/           static assets and OG fonts
 ## Tooling notes
 
 - ESLint is pinned to 9.x and TypeScript to 6.0.x until `eslint-plugin-react` and `typescript-eslint` support the newer majors.
-- `pnpm.overrides` in `package.json` raises four transitive dependencies past their parents' ranges to fix security advisories: `postcss-selector-parser` (via `@tailwindcss/typography`), `minimatch` (via `typescript-estree`), `toml` (via `remark-mdx-frontmatter`) and `uuid` (via `mdx-bundler`). Remove an override once its parent package allows the fixed version.
+- `pnpm.overrides` in `package.json` fixes security advisories in four transitive dependencies. Each override is keyed on the vulnerable version range, so it applies to any parent that pulls in an affected version:
+  - `postcss-selector-parser` <6.1.5, today through `@tailwindcss/typography`
+  - `minimatch` 7 to 11.0.0, today through `typescript-estree`
+  - `toml` <5.0.1, today through `remark-mdx-frontmatter`
+  - `uuid` <11.1.1, today through `mdx-bundler`
+
+  Remove an override once no parent needs it. `pnpm audit` is part of the verification gate.
+- The project targets Node 24: `.nvmrc`, `engines` (`24.x`, which also sets the Vercel runtime) and `@types/node` (^24). Moving to Node 26 means changing all three together.
+- `packageManager` pins pnpm 10.34.9, so corepack uses the version that wrote the lockfile.
 - Fonts: Instrument Serif (headings), Inter (body), IBM Plex Mono (code).
 - Project guidance for AI coding agents lives in [`CLAUDE.md`](./CLAUDE.md) and [`.claude/`](./.claude).
 
