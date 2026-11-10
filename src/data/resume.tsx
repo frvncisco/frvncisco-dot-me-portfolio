@@ -36,7 +36,7 @@ export const DATA = {
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed auctor risus. Fusce vitae porttitor leo. Mauris eget mollis neque. Pellentesque dignissim quam vel lorem vehicula, eu viverra dui lobortis.',
 	summary:
 		'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam sed auctor risus. Fusce vitae porttitor leo. Mauris eget mollis neque. Pellentesque dignissim quam vel lorem vehicula, eu viverra dui lobortis. Donec ut purus quis tellus semper tempus. Curabitur eget varius nisi, vitae viverra justo. Nullam hendrerit fermentum eros, sit amet vulputate lectus porttitor nec. Nam id dolor a dolor scelerisque molestie finibus a erat. Proin felis nunc, imperdiet et fermentum et, tincidunt in leo. Donec id libero non dolor mattis placerat. Aliquam erat volutpat. Vivamus id quam in augue sagittis rutrum sit amet vitae magna. Phasellus at est vitae ante convallis tempus. Sed luctus rutrum neque, eu tristique risus maximus eget. Integer et libero non eros venenatis interdum. Ut sit amet felis et nisi cursus fermentum. Fusce malesuada, ante vitae tempor vehicula, leo lacus pulvinar tellus, quis porttitor mauris tellus non quam. Nullam vitae nibh mollis, venenatis orci in, aliquet urna. Aenean interdum metus massa, ac suscipit massa viverra vitae.',
-	avatarUrl: '/me.png',
+	avatarUrl: '/me.jpeg',
 	skills: [
 		{ name: 'React', icon: ReactLight },
 		{ name: 'Next.js', icon: NextjsIconDark },
