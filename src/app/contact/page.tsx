@@ -28,7 +28,7 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="relative flex min-h-dvh flex-col gap-14">
       <section id="contact">
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ContactSection />

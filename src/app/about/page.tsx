@@ -7,8 +7,7 @@ import Link from "next/link";
 import Markdown from "react-markdown";
 import { ArrowUpRight } from "lucide-react";
 
-const description =
-  "Background, work experience, education, and skills.";
+const description = "Background, work experience, education, and skills.";
 
 export const metadata: Metadata = {
   title: "About",
@@ -28,17 +27,15 @@ const BLUR_FADE_DELAY = 0.04;
 
 export default function AboutPage() {
   return (
-    <main className="min-h-dvh flex flex-col gap-14 relative">
+    <main className="relative flex min-h-dvh flex-col gap-14">
       <section id="about">
         <div className="flex min-h-0 flex-col gap-y-4">
           <BlurFade delay={BLUR_FADE_DELAY}>
             <h1 className="text-2xl font-bold">About</h1>
           </BlurFade>
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
-            <div className="prose max-w-full text-pretty font-sans leading-relaxed text-muted-foreground dark:prose-invert">
-              <Markdown>
-                {DATA.summary}
-              </Markdown>
+            <div className="prose max-w-full font-sans leading-relaxed text-pretty text-muted-foreground dark:prose-invert">
+              <Markdown>{DATA.summary}</Markdown>
             </div>
           </BlurFade>
         </div>
@@ -60,22 +57,22 @@ export default function AboutPage() {
           </BlurFade>
           <div className="flex flex-col gap-8">
             {DATA.education.map((education, index) => (
-              <BlurFade
-                key={education.school}
-                delay={BLUR_FADE_DELAY * 6 + index * 0.05}
-              >
+              <BlurFade key={education.school} delay={BLUR_FADE_DELAY * 6 + index * 0.05}>
                 <Link
                   href={education.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-x-3 justify-between group"
+                  className="group flex items-center justify-between gap-x-3"
                 >
-                  <div className="flex items-center gap-x-3 flex-1 min-w-0">
+                  <div className="flex min-w-0 flex-1 items-center gap-x-3">
                     <LogoImage src={education.logoUrl} alt={education.school} />
-                    <div className="flex-1 min-w-0 flex flex-col gap-0.5">
-                      <div className="font-semibold leading-none flex items-center gap-2">
+                    <div className="flex min-w-0 flex-1 flex-col gap-0.5">
+                      <div className="flex items-center gap-2 leading-none font-semibold">
                         {education.school}
-                        <ArrowUpRight className="h-3.5 w-3.5 text-muted-foreground opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-[opacity,translate] duration-200" aria-hidden />
+                        <ArrowUpRight
+                          className="h-3.5 w-3.5 -translate-x-2 text-muted-foreground opacity-0 transition-[opacity,translate] duration-200 group-hover:translate-x-0 group-hover:opacity-100"
+                          aria-hidden
+                        />
                       </div>
                       <div className="font-sans text-sm text-muted-foreground">
                         {education.degree}
@@ -83,12 +80,8 @@ export default function AboutPage() {
                     </div>
                   </div>
                   {(education.start || education.end) && (
-                    <div className="flex items-center gap-1 text-xs tabular-nums text-muted-foreground text-right flex-none">
-                      <span>
-                        {[education.start, education.end]
-                          .filter(Boolean)
-                          .join(" - ")}
-                      </span>
+                    <div className="flex flex-none items-center gap-1 text-right text-xs text-muted-foreground tabular-nums">
+                      <span>{[education.start, education.end].filter(Boolean).join(" - ")}</span>
                     </div>
                   )}
                 </Link>
@@ -105,9 +98,11 @@ export default function AboutPage() {
           <div className="flex flex-wrap gap-2">
             {DATA.skills.map((skill, id) => (
               <BlurFade key={skill.name} delay={BLUR_FADE_DELAY * 8 + id * 0.05}>
-                <div className="border bg-background border-border ring-2 ring-border/20 rounded-xl h-8 w-fit px-4 flex items-center gap-2">
-                  {skill.icon && <skill.icon className="size-4 rounded overflow-hidden object-contain" />}
-                  <span className="text-foreground text-sm font-medium">{skill.name}</span>
+                <div className="flex h-8 w-fit items-center gap-2 rounded-xl border border-border bg-background px-4 ring-2 ring-border/20">
+                  {skill.icon && (
+                    <skill.icon className="size-4 overflow-hidden rounded object-contain" />
+                  )}
+                  <span className="text-sm font-medium text-foreground">{skill.name}</span>
                 </div>
               </BlurFade>
             ))}

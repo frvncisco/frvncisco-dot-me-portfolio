@@ -3,6 +3,7 @@ paths:
   - "src/**/*.{ts,tsx}"
   - "content-collections.ts"
 ---
+
 # Code style and quality
 
 - TypeScript is `strict`. No `any` (the existing `remark-code-meta.ts` and `code-block.tsx` casts are legacy, don't add more). Prefer explicit types for data shapes (see `Education` and `Hackathon` in `src/data/resume.tsx`).

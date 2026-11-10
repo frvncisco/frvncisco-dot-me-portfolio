@@ -27,20 +27,21 @@ Generate conventional commit messages and execute commits automatically.
 
 ### Types
 
-| Type | Use for |
-|------|---------|
-| `feat` | New feature or functionality |
-| `fix` | Bug fix |
-| `docs` | Documentation only |
-| `style` | Formatting, semicolons, no code change |
+| Type       | Use for                                 |
+| ---------- | --------------------------------------- |
+| `feat`     | New feature or functionality            |
+| `fix`      | Bug fix                                 |
+| `docs`     | Documentation only                      |
+| `style`    | Formatting, semicolons, no code change  |
 | `refactor` | Code change that neither fixes nor adds |
-| `test` | Adding or modifying tests |
-| `chore` | Maintenance, deps, build process |
-| `perf` | Performance improvements |
+| `test`     | Adding or modifying tests               |
+| `chore`    | Maintenance, deps, build process        |
+| `perf`     | Performance improvements                |
 
 ### Scope
 
 Optional. Include when it adds clarity about what area is affected:
+
 - `feat(auth):` - authentication related
 - `fix(api):` - API related
 - `docs:` - scope omitted when obvious
@@ -77,11 +78,13 @@ EOF
 ## Examples
 
 Single file change:
+
 ```
 fix(auth): handle expired tokens gracefully
 ```
 
 Multiple related changes:
+
 ```
 feat(api): add email notifications for shipped orders
 
@@ -90,6 +93,7 @@ Includes tracking number and estimated delivery date.
 ```
 
 Breaking change:
+
 ```
 refactor(config)!: migrate to environment-based configuration
 

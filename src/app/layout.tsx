@@ -69,15 +69,15 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body
         className={cn(
-          "min-h-dvh bg-background font-sans antialiased relative",
+          "relative min-h-dvh bg-background font-sans antialiased",
           inter.variable,
           instrumentSerif.variable,
-          plexMono.variable
+          plexMono.variable,
         )}
       >
         <ThemeProvider attribute="class" defaultTheme="light">
           <TooltipProvider delayDuration={0}>
-            <div className="relative z-10 max-w-2xl mx-auto py-12 pb-24 sm:py-24 px-6">
+            <div className="relative z-10 mx-auto max-w-2xl px-6 py-12 pb-24 sm:py-24">
               {children}
             </div>
             <Navbar />

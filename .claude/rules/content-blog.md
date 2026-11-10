@@ -6,6 +6,7 @@ paths:
   - "src/mdx-components.tsx"
   - "src/components/mdx/**"
 ---
+
 # Blog content
 
 - Posts are `content/<slug>.mdx`; the file name (without `.mdx`) is the URL slug at `/blog/<slug>`. Schema lives in `content-collections.ts` (zod): `title`, `publishedAt` and `summary` are required; `updatedAt`, `author`, `image` are optional. Dates are `YYYY-MM-DD` strings.
