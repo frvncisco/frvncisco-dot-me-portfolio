@@ -40,7 +40,7 @@
     "@content-collections/core": "^0.15.3",
     "@content-collections/next": "^0.2.11",
     "@tailwindcss/typography": "^0.5.20",
-    "@types/node": "^26.6.6",
+    "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "eslint": "^9.39.5",
