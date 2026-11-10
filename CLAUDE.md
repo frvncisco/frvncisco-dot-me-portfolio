@@ -9,7 +9,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 ## Commands
 
 - `pnpm dev` / `pnpm build` / `pnpm start`, `pnpm lint`, `pnpm format` (Prettier, write) / `pnpm format:check`, `pnpm exec tsc --noEmit`.
-- Verification gate before calling work done: `format:check`, `tsc --noEmit`, `lint`, `pnpm audit`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports.
+- Verification gate before calling work done: `format:check`, `tsc --noEmit`, `lint`, `pnpm audit`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports. On a fresh clone, run `build` or `dev` once before `tsc`, because `.content-collections/` is generated.
 - Stop `next dev` before `next build` (they share `.next`).
 - pnpm comes from corepack, pinned by `packageManager` (`pnpm@10.34.9`) in `package.json`. Without the pin, corepack falls back to pnpm 12, which the corepack in Node 24.2 can't run (`MODULE_NOT_FOUND .../bin/pnpm.cjs`). Put Node 24 on PATH first (`export PATH=~/.nvm/versions/node/v24.2.0/bin:$PATH`; `.nvmrc` is `24`). `.claude/launch.json` starts the dev server via `./node_modules/.bin/next dev`.
 
