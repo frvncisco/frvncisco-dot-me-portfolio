@@ -18,7 +18,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 - `src/app/`: routes. `/` (hero), `/about`, `/work`, `/contact`, `/blog`, `/blog/[slug]`, custom `not-found.tsx`, three `opengraph-image.tsx` routes. `layout.tsx` holds fonts, `ThemeProvider`, the content column (`max-w-2xl`, `py-12 pb-24 sm:py-24 px-6`) and the dock `Navbar`.
 - `src/components/section/`: page sections (`work-section`, `projects-section`, `contact-section`, `hackathons-section`). `ui/` is shadcn; `magicui/` is Magic UI (`blur-fade`, `dock`, `flickering-grid`); `mdx/` is MDX code blocks.
 - `src/data/resume.tsx`: the single content config (name, summary, skills, nav, social, work, education, projects).
-- `src/lib/flags.ts`: feature flags. `src/lib/utils.ts`: `cn`, `formatDate`.
+- `src/lib/flags.ts`: feature flags. `src/lib/utils.ts`: `cn`, `formatDate`. `src/lib/og.ts`: fonts and avatar for the `opengraph-image` routes, read from `public/` on disk (Node runtime) so they render without a live domain.
 - `content/*.mdx`: blog posts, compiled by `content-collections.ts` (schema + `compileMDX`). `.content-collections/` is generated and gitignored; import via the `content-collections` alias.
 - `@/*` maps to `src/*`.
 
