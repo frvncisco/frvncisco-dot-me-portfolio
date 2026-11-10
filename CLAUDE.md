@@ -11,7 +11,7 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 - `pnpm dev` / `pnpm build` / `pnpm start`, `pnpm lint`, `pnpm exec tsc --noEmit`.
 - Verification gate before calling work done: `tsc --noEmit`, `lint`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports.
 - Stop `next dev` before `next build` (they share `.next`).
-- Local quirk: corepack's pnpm shim is broken on this machine. Use `npx -y pnpm@10 <cmd>` with Node 24 on PATH (`export PATH=~/.nvm/versions/node/v24.2.0/bin:$PATH`; `.nvmrc` is `24`). `.claude/launch.json` starts the dev server via `./node_modules/.bin/next dev`.
+- pnpm comes from corepack, pinned by `packageManager` (`pnpm@10.34.9`) in `package.json`. Without the pin, corepack falls back to pnpm 12, which the corepack in Node 24.2 can't run (`MODULE_NOT_FOUND .../bin/pnpm.cjs`). Put Node 24 on PATH first (`export PATH=~/.nvm/versions/node/v24.2.0/bin:$PATH`; `.nvmrc` is `24`). `.claude/launch.json` starts the dev server via `./node_modules/.bin/next dev`.
 
 ## Layout
 
