@@ -108,7 +108,7 @@ export default async function Blog({
     "@type": "BlogPosting",
     headline: post.title,
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    dateModified: post.updatedAt ?? post.publishedAt,
     description: post.summary,
     image: post.image
       ? absoluteUrl(post.image, siteUrl)
