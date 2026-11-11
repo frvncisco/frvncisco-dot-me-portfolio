@@ -2,6 +2,7 @@ import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
+import { siteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { IBM_Plex_Mono, Instrument_Serif, Inter } from "next/font/google";
@@ -25,7 +26,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(DATA.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: DATA.name,
     template: `%s | ${DATA.name}`,
@@ -34,7 +35,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: `${DATA.name}`,
     description: DATA.description,
-    url: DATA.url,
+    url: siteUrl,
     siteName: `${DATA.name}`,
     locale: "en_US",
     type: "website",

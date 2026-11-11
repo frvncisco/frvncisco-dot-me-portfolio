@@ -1,4 +1,5 @@
 import { allPosts } from "content-collections";
+import { siteUrl } from "@/lib/site-url";
 import { absoluteUrl, formatDate } from "@/lib/utils";
 import { DATA } from "@/data/resume";
 import type { Metadata } from "next";
@@ -57,11 +58,11 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${DATA.url}/blog/${slug}`,
+      url: `${siteUrl}/blog/${slug}`,
       ...(image && {
         images: [
           {
-            url: absoluteUrl(image, DATA.url),
+            url: absoluteUrl(image, siteUrl),
           },
         ],
       }),
@@ -71,7 +72,7 @@ export async function generateMetadata({
       title,
       description,
       ...(image && {
-        images: [absoluteUrl(image, DATA.url)],
+        images: [absoluteUrl(image, siteUrl)],
       }),
     },
   };
@@ -110,9 +111,9 @@ export default async function Blog({
     dateModified: post.publishedAt,
     description: post.summary,
     image: post.image
-      ? absoluteUrl(post.image, DATA.url)
-      : `${DATA.url}/blog/${slug}/opengraph-image`,
-    url: `${DATA.url}/blog/${slug}`,
+      ? absoluteUrl(post.image, siteUrl)
+      : `${siteUrl}/blog/${slug}/opengraph-image`,
+    url: `${siteUrl}/blog/${slug}`,
     author: {
       "@type": "Person",
       name: DATA.name,
