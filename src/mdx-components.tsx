@@ -6,15 +6,14 @@ export const mdxComponents = {
   MediaContainer,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
   hr: (props: ComponentProps<"hr">) => (
-    <div className="my-10 flex w-full items-center" {...props}>
-      <div
-        className="h-px flex-1 bg-border"
-        style={{
-          maskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-          WebkitMaskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
-        }}
-      />
-    </div>
+    <hr
+      className="my-10! h-px w-full border-0 bg-border"
+      style={{
+        maskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+        WebkitMaskImage: "linear-gradient(90deg, transparent, black 8%, black 92%, transparent)",
+      }}
+      {...props}
+    />
   ),
   table: (props: ComponentProps<"table">) => (
     <div className="my-6 overflow-hidden rounded-xl border border-border">
