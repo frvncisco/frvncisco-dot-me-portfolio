@@ -35,6 +35,11 @@ export async function generateMetadata({
     slug: string;
   }>;
 }): Promise<Metadata | undefined> {
+  // The page calls notFound() when the blog is off; don't leak the post's metadata either.
+  if (!FEATURE_FLAGS.blog) {
+    return undefined;
+  }
+
   const { slug } = await params;
   const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
 

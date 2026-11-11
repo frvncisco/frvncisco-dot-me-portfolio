@@ -1,4 +1,6 @@
 import { ImageResponse } from "next/og";
+import { notFound } from "next/navigation";
+import { FEATURE_FLAGS } from "@/lib/flags";
 import { getOgAvatar, getOgFonts } from "@/lib/og";
 
 export const alt = "Blog";
@@ -86,6 +88,9 @@ const styles = {
 } as const;
 
 export default async function Image() {
+  // Outside the try: notFound() throws, and the catch below would turn it into a 500.
+  if (!FEATURE_FLAGS.blog) notFound();
+
   try {
     const fontData = await getOgFonts();
     const title = "Blog";
