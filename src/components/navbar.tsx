@@ -71,11 +71,11 @@ export default function Navbar() {
           })}
         <Separator orientation="vertical" className="m-auto h-2/3 w-px bg-border" />
         <Tooltip>
-          <TooltipTrigger asChild>
-            <DockIcon className="size-full cursor-pointer rounded-3xl border border-border bg-background p-0 text-muted-foreground backdrop-blur-3xl transition-colors hover:bg-muted hover:text-foreground">
+          <DockIcon className="size-full cursor-pointer rounded-3xl border border-border bg-background p-0 text-muted-foreground backdrop-blur-3xl transition-colors hover:bg-muted hover:text-foreground">
+            <TooltipTrigger asChild>
               <ModeToggle className="size-full cursor-pointer" />
-            </DockIcon>
-          </TooltipTrigger>
+            </TooltipTrigger>
+          </DockIcon>
           <TooltipContent
             side="top"
             sideOffset={8}
