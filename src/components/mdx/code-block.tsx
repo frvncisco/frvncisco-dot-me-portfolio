@@ -16,6 +16,7 @@ function extractLanguage(className?: string): string {
 
 export function CodeBlock({ children, ...props }: CodeBlockProps) {
   const [copied, setCopied] = useState(false);
+  const [status, setStatus] = useState("");
   const [{ html, className, title }, setRenderState] = useState<{
     html: string;
     className: string;
@@ -23,8 +24,15 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
   }>({ html: "", className: "", title: null });
   const preRef = useRef<HTMLPreElement>(null);
   const copyResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const announceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  useEffect(() => () => clearTimeout(copyResetRef.current ?? undefined), []);
+  useEffect(
+    () => () => {
+      clearTimeout(copyResetRef.current ?? undefined);
+      clearTimeout(announceRef.current ?? undefined);
+    },
+    [],
+  );
 
   useEffect(() => {
     const pre = preRef.current;
@@ -59,17 +67,30 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
       });
   }, [children]);
 
+  // Screen readers only announce a live region when its text changes, so clear it first and
+  // set the message a moment later. Otherwise a second copy within 2s would be silent.
+  const announce = (message: string) => {
+    setStatus("");
+    clearTimeout(announceRef.current ?? undefined);
+    announceRef.current = setTimeout(() => setStatus(message), 100);
+  };
+
   const handleCopy = async () => {
     // Read from <code>, not <pre>: the <pre> also holds the title bar.
     const code = preRef.current?.querySelector("code")?.textContent || "";
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
+      announce("Copied to clipboard");
       // Restart the timer on repeat clicks so the check stays for 2s after the last copy.
       clearTimeout(copyResetRef.current ?? undefined);
-      copyResetRef.current = setTimeout(() => setCopied(false), 2000);
+      copyResetRef.current = setTimeout(() => {
+        setCopied(false);
+        setStatus("");
+      }, 2000);
     } catch (error) {
       console.error("Failed to copy code:", error);
+      announce("Couldn't copy code");
     }
   };
 
@@ -104,7 +125,7 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
       </pre>
       {/* Always mounted so screen readers pick up the text change. */}
       <span role="status" className="sr-only">
-        {copied ? "Copied to clipboard" : ""}
+        {status}
       </span>
     </div>
   );
