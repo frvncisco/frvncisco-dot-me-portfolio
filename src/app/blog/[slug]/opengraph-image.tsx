@@ -101,7 +101,7 @@ export default async function Image({ params }: { params: Promise<{ slug: string
   // An unknown slug 404s like the post page, so unfurlers don't cache a stand-in image.
   if (!FEATURE_FLAGS.blog) notFound();
   const { slug } = await params;
-  const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  const post = allPosts.find((p) => p.slug === slug);
   if (!post) notFound();
 
   try {

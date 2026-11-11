@@ -10,8 +10,9 @@ const posts = defineCollection({
   include: "**/*.mdx",
   schema: z.object({
     title: z.string(),
-    publishedAt: z.string(),
-    updatedAt: z.string().optional(),
+    // Plain ISO dates: a typo like 2025-13-45 would otherwise build and show "Invalid Date".
+    publishedAt: z.iso.date(),
+    updatedAt: z.iso.date().optional(),
     author: z.string().optional(),
     summary: z.string(),
     image: z.string().optional(),
@@ -23,6 +24,7 @@ const posts = defineCollection({
     });
     return {
       ...document,
+      slug: document._meta.path,
       mdx,
     };
   },
