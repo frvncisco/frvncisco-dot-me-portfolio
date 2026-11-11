@@ -165,24 +165,10 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     let animationFrameId: number;
     let gridParams: ReturnType<typeof setupCanvas>;
+    // Honour the OS setting: draw one still frame instead of animating forever.
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    const updateCanvasSize = () => {
-      const newWidth = width || container.clientWidth;
-      const newHeight = height || container.clientHeight;
-      setCanvasSize({ width: newWidth, height: newHeight });
-      gridParams = setupCanvas(canvas, newWidth, newHeight);
-    };
-
-    updateCanvasSize();
-
-    let lastTime = 0;
-    const animate = (time: number) => {
-      if (!isInView) return;
-
-      const deltaTime = (time - lastTime) / 1000;
-      lastTime = time;
-
-      updateSquares(gridParams.squares, deltaTime);
+    const draw = () =>
       drawGrid(
         ctx,
         canvas.width,
@@ -192,7 +178,32 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         gridParams.squares,
         gridParams.dpr,
       );
+
+    const updateCanvasSize = () => {
+      const newWidth = width || container.clientWidth;
+      const newHeight = height || container.clientHeight;
+      setCanvasSize({ width: newWidth, height: newHeight });
+      gridParams = setupCanvas(canvas, newWidth, newHeight);
+      if (reduceMotion) draw();
+    };
+
+    updateCanvasSize();
+
+    // Every frame fills one rect per cell (about 130k on a 1080p screen), so redraw at about
+    // 15fps. flickerChance is scaled by the real elapsed time, so the flicker rate is unchanged.
+    const FRAME_MS = 1000 / 15;
+    let lastTime: number | undefined;
+    const animate = (time: number) => {
+      if (!isInView) return;
+
       animationFrameId = requestAnimationFrame(animate);
+      lastTime ??= time;
+      const elapsed = time - lastTime;
+      if (elapsed < FRAME_MS) return;
+      lastTime = time;
+
+      updateSquares(gridParams.squares, elapsed / 1000);
+      draw();
     };
 
     const resizeObserver = new ResizeObserver(() => {
@@ -210,7 +221,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     intersectionObserver.observe(canvas);
 
-    if (isInView) {
+    if (isInView && !reduceMotion) {
       animationFrameId = requestAnimationFrame(animate);
     }
 
