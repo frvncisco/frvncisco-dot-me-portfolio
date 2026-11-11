@@ -46,6 +46,19 @@ FEATURE_CONTACT=true
 
 Flags are read at build time, so on a host like Vercel, change the environment variable and redeploy. Locally, restart the dev server. The flags live in [`src/lib/flags.ts`](./src/lib/flags.ts).
 
+## Site URL
+
+Absolute URLs (`metadataBase`, `og:url`, the sitemap, `robots.txt`, JSON-LD) come from [`src/lib/site-url.ts`](./src/lib/site-url.ts):
+
+1. `SITE_URL`, if it's set.
+2. On Vercel previews, the preview's own URL.
+3. With `next dev`, `localhost`.
+4. Otherwise, `DATA.url`.
+
+Until the domain in `DATA.url` is connected, set `SITE_URL` on Vercel Production to the project's `*.vercel.app` alias so that link previews work. Once the domain is live, remove the variable. Like the flags, it's read at build time.
+
+`robots.txt` allows crawling only when `VERCEL_ENV` is `production`. Previews, local builds and any host other than Vercel get `Disallow: /`.
+
 ## Editing content
 
 - **Site content** (name, summary, skills, work, education, projects, social links, dock items) is configured in [`src/data/resume.tsx`](./src/data/resume.tsx).

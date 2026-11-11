@@ -15,16 +15,16 @@ Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before c
 
 ## Layout
 
-- `src/app/`: routes. `/` (hero), `/about`, `/work`, `/contact`, `/blog`, `/blog/[slug]`, custom `not-found.tsx`, three `opengraph-image.tsx` routes. `layout.tsx` holds fonts, `ThemeProvider`, the content column (`max-w-2xl`, `py-12 pb-24 sm:py-24 px-6`) and the dock `Navbar`.
+- `src/app/`: routes. `/` (hero), `/about`, `/work`, `/contact`, `/blog`, `/blog/[slug]`, custom `not-found.tsx`, three `opengraph-image.tsx` routes, `sitemap.ts` (lists gated routes and posts only when their flag is on) and `robots.ts` (crawlable only when `VERCEL_ENV` is `production`). `layout.tsx` holds fonts, `ThemeProvider`, the content column (`max-w-2xl`, `py-12 pb-24 sm:py-24 px-6`) and the dock `Navbar`.
 - `src/components/section/`: page sections (`work-section`, `projects-section`, `contact-section`, `hackathons-section`). `ui/` is shadcn; `magicui/` is Magic UI (`blur-fade`, `dock`, `flickering-grid`); `mdx/` is MDX code blocks.
 - `src/data/resume.tsx`: the single content config (name, summary, skills, nav, social, work, education, projects).
-- `src/lib/flags.ts`: feature flags. `src/lib/utils.ts`: `cn`, `formatDate`. `src/lib/og.ts`: fonts and avatar for the `opengraph-image` routes, read from `public/` on disk (Node runtime) so they render without a live domain.
+- `src/lib/flags.ts`: feature flags. `src/lib/utils.ts`: `cn`, `formatDate`. `src/lib/og.ts`: fonts and avatar for the `opengraph-image` routes, read from `public/` on disk (Node runtime) so they render without a live domain. `src/lib/site-url.ts`: `siteUrl`, the base for every absolute URL (`SITE_URL`, then the preview URL, then localhost in dev, then `DATA.url`). Use it instead of `DATA.url` for links.
 - `content/*.mdx`: blog posts, compiled by `content-collections.ts` (schema + `compileMDX`). `.content-collections/` is generated and gitignored; import via the `content-collections` alias.
 - `@/*` maps to `src/*`.
 
 ## Conventions that are easy to get wrong
 
-- **Feature flags**: `/blog`, `/work`, `/contact` are hidden unless `FEATURE_BLOG` / `FEATURE_WORK` / `FEATURE_CONTACT` equals `"true"`. Gated pages call `notFound()`; the dock hides the matching `DATA.navbar` entry (its `flag` field); `blog/[slug]` `generateStaticParams` returns `[]` when off. Flags are read at build time, so changing them on a host needs a redeploy. The `opengraph-image` routes are not gated. See `.env.example`.
+- **Feature flags**: `/blog`, `/work`, `/contact` are hidden unless `FEATURE_BLOG` / `FEATURE_WORK` / `FEATURE_CONTACT` equals `"true"`. Gated pages call `notFound()`; the dock hides the matching `DATA.navbar` entry (its `flag` field); `blog/[slug]` `generateStaticParams` returns `[]` when off. Flags are read at build time, so changing them on a host needs a redeploy. With `FEATURE_BLOG` off, the post `generateMetadata` returns nothing, and `/blog/opengraph-image` and `/blog/[slug]/opengraph-image` call `notFound()` (before their `try`, since `notFound()` throws), so hidden posts don't leak titles. The root `opengraph-image` isn't gated. See `.env.example`.
 - **Fonts**: `--font-sans` Inter (body), `--font-serif` Instrument Serif (all `h1`-`h6`, set in `globals.css`), `--font-mono` IBM Plex Mono (code). Instrument Serif only has weight 400, so `font-synthesis-weight: none` is set; Radix accordion headers are `<h3>` and are reset with `font-sans`.
 - **Homepage**: a `FlickeringGrid` is `fixed inset-0` on `/` only (not in the layout). The hero `main` height subtracts the layout padding (`min-h-[calc(100dvh-9rem)] sm:min-h-[calc(100dvh-12rem)]`) so the page fits one screen.
 - **Tailwind v4** is configured in CSS (`@import "tailwindcss"`, `@theme inline` in `globals.css`). There is no `tailwind.config.ts`; `components.json` still names one, which is stale.

@@ -1,5 +1,7 @@
 import { ImageResponse } from "next/og";
 import { allPosts } from "content-collections";
+import { notFound } from "next/navigation";
+import { FEATURE_FLAGS } from "@/lib/flags";
 import { getOgAvatar, getOgFonts } from "@/lib/og";
 
 export const alt = "Blog Post";
@@ -95,43 +97,16 @@ const styles = {
 } as const;
 
 export default async function Image({ params }: { params: Promise<{ slug: string }> }) {
+  // Outside the try: notFound() throws, and the catch below would turn it into a 500.
+  // An unknown slug 404s like the post page, so unfurlers don't cache a stand-in image.
+  if (!FEATURE_FLAGS.blog) notFound();
+  const { slug } = await params;
+  const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  if (!post) notFound();
+
   try {
     const fontData = await getOgFonts();
-    const { slug } = await params;
-    const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
     const imageUrl = await getOgAvatar();
-
-    if (!post) {
-      return new ImageResponse(
-        <div style={styles.outerWrapper}>
-          <div style={styles.middleWrapper}>
-            <div style={styles.wrapper}>
-              {imageUrl && (
-                <div style={styles.imageSection}>
-                  <img src={imageUrl} alt="Blog Post" style={styles.image} />
-                </div>
-              )}
-              <div style={styles.mainContainer}>
-                <div style={styles.title}>Post Not Found</div>
-              </div>
-            </div>
-          </div>
-        </div>,
-        {
-          ...size,
-          fonts: fontData
-            ? [
-                {
-                  name: "Clash Display",
-                  data: fontData.clashDisplay,
-                  weight: 600,
-                  style: "normal",
-                },
-              ]
-            : undefined,
-        },
-      );
-    }
 
     const title = post.title;
     const description = post.summary || "";
