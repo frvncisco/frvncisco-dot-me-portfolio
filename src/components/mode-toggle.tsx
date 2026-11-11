@@ -18,12 +18,7 @@ export function ThemeIcon({ className }: { className?: string }) {
 // which passes its event handlers, data-state and ref through to the button.
 // Toggles from `resolvedTheme`, not `theme`: a stored theme of "system" would otherwise
 // make the first click set the theme that's already showing.
-export function ModeToggle({
-  className,
-  onClick,
-  children,
-  ...props
-}: React.ComponentProps<typeof Button>) {
+export function ModeToggle({ onClick, ...props }: React.ComponentProps<typeof Button>) {
   const { resolvedTheme, setTheme } = useTheme();
 
   return (
@@ -33,13 +28,10 @@ export function ModeToggle({
       aria-label="Toggle theme"
       size="icon"
       {...props}
-      className={cn(className)}
       onClick={(event) => {
         onClick?.(event);
         setTheme(resolvedTheme === "dark" ? "light" : "dark");
       }}
-    >
-      {children ?? <ThemeIcon className="h-full w-full" />}
-    </Button>
+    />
   );
 }
