@@ -8,8 +8,26 @@ import { DATA } from "@/data/resume";
 // - `next dev` uses localhost.
 // Only server code (metadata, sitemap, robots) imports this, so SITE_URL has no
 // NEXT_PUBLIC_ prefix and is never inlined into client bundles.
+// SITE_URL is hand-typed in the Vercel dashboard, and VERCEL_URL (often copied into it) has
+// no scheme. A bad value would make `new URL()` in the root layout throw and fail every
+// route at build time, so normalize it here and fail with a clear message instead.
+function normalizeSiteUrl(raw: string): string {
+  const value = raw.trim();
+  const withScheme = /^[a-z][a-z\d+.-]*:\/\//i.test(value) ? value : `https://${value}`;
+  let url: URL;
+  try {
+    url = new URL(withScheme);
+  } catch {
+    throw new Error(`SITE_URL is not a valid URL: "${raw}"`);
+  }
+  if (url.protocol !== "https:" && url.protocol !== "http:") {
+    throw new Error(`SITE_URL must use http or https: "${raw}"`);
+  }
+  return url.origin;
+}
+
 function resolveSiteUrl(): string {
-  if (process.env.SITE_URL) return process.env.SITE_URL;
+  if (process.env.SITE_URL?.trim()) return normalizeSiteUrl(process.env.SITE_URL);
 
   const previewHost = process.env.VERCEL_BRANCH_URL ?? process.env.VERCEL_URL;
   if (process.env.VERCEL_ENV === "preview" && previewHost) return `https://${previewHost}`;
