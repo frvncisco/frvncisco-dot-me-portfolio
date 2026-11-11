@@ -57,7 +57,8 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
   }, [children]);
 
   const handleCopy = async () => {
-    const code = preRef.current?.textContent || "";
+    // Read from <code>, not <pre>: the <pre> also holds the title bar.
+    const code = preRef.current?.querySelector("code")?.textContent || "";
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
@@ -81,9 +82,8 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
           variant="outline"
           size="icon"
           className={cn(
-            "absolute right-3 size-8 cursor-pointer rounded-md border border-border text-primary opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100",
+            "absolute right-3 size-8 cursor-pointer rounded-md border border-border text-primary opacity-100 shadow-none transition-opacity lg:opacity-0 lg:group-hover:opacity-100 lg:focus-visible:opacity-100",
             title ? "top-13" : "top-3",
-            props.className,
           )}
           aria-label="Copy code"
         >
