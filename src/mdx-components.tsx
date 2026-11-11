@@ -2,10 +2,6 @@ import { CodeBlock } from "@/components/mdx/code-block";
 import { MediaContainer } from "@/components/mdx/media-container";
 import type { ComponentProps } from "react";
 
-type CodeProps = ComponentProps<"code"> & {
-  "data-language"?: string;
-};
-
 export const mdxComponents = {
   MediaContainer,
   pre: (props: ComponentProps<"pre">) => <CodeBlock {...props} />,
@@ -27,17 +23,4 @@ export const mdxComponents = {
       </div>
     </div>
   ),
-  code: ({ children, ...props }: CodeProps) => {
-    if (props["data-language"]) {
-      return <code {...props}>{children}</code>;
-    }
-    return (
-      <code
-        className="rounded-md bg-muted/60 px-1.5 py-0.5 font-mono text-sm text-foreground/90 dark:bg-muted/40"
-        {...props}
-      >
-        {children}
-      </code>
-    );
-  },
 } as const;

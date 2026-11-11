@@ -154,6 +154,11 @@
     @apply m-0! mx-1! rounded-md! border bg-muted/60 px-1.5 py-0.5 font-mono text-[13px]! text-foreground/90! dark:bg-muted/40;
   }
 
+  /* Code inside a <pre> is a block: the highlighter styles it, not the inline-code chip above. */
+  .prose pre code {
+    @apply mx-0! rounded-none! border-0 bg-transparent p-0 dark:bg-transparent;
+  }
+
   .prose code::before,
   .prose code::after {
     @apply content-none!;
