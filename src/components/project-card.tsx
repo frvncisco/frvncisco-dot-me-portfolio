@@ -34,7 +34,6 @@ interface Props {
   tags: readonly string[];
   link?: string;
   image?: string;
-  video?: string;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -51,17 +50,10 @@ export function ProjectCard({
   tags,
   link,
   image,
-  video,
   links,
   className,
 }: Props) {
-  const media = video ? (
-    <video src={video} autoPlay loop muted playsInline className="h-48 w-full object-cover" />
-  ) : image ? (
-    <ProjectImage src={image} alt={title} />
-  ) : (
-    <div className="h-48 w-full bg-muted" />
-  );
+  const media = <ProjectImage src={image ?? ""} alt={title} />;
 
   return (
     <div

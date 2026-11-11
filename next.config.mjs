@@ -9,13 +9,13 @@ const isDev = process.env.NODE_ENV === "development";
 // React's dev tooling.
 // vercel.live (and its Pusher socket) is the Vercel toolbar on preview deployments; the
 // directives follow https://vercel.com/docs/vercel-toolbar/managing-toolbar.
-// img-src/media-src allow https: because the placeholder projects load external media.
+// img-src allows https: because the placeholder projects load external images.
 const contentSecurityPolicy = [
   "default-src 'self'",
   `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ""} https://vercel.live`,
   "style-src 'self' 'unsafe-inline' https://vercel.live",
   "img-src 'self' data: blob: https:",
-  "media-src 'self' https:",
+  "media-src 'self'",
   "font-src 'self' data: https://vercel.live https://assets.vercel.com",
   `connect-src 'self' https://vercel.live wss://*.pusher.com${isDev ? " ws:" : ""}`,
   "frame-src https://vercel.live",
