@@ -7,8 +7,10 @@ import { cn } from "@/lib/utils";
 
 // Spreads the rest of the props so it can sit under a Radix `TooltipTrigger asChild`,
 // which passes its event handlers, data-state and ref through to the button.
+// Toggles from `resolvedTheme`, not `theme`: a stored theme of "system" would otherwise
+// make the first click set the theme that's already showing.
 export function ModeToggle({ className, onClick, ...props }: React.ComponentProps<typeof Button>) {
-  const { theme, setTheme } = useTheme();
+  const { resolvedTheme, setTheme } = useTheme();
 
   return (
     <Button
@@ -20,7 +22,7 @@ export function ModeToggle({ className, onClick, ...props }: React.ComponentProp
       className={cn(className)}
       onClick={(event) => {
         onClick?.(event);
-        setTheme(theme === "dark" ? "light" : "dark");
+        setTheme(resolvedTheme === "dark" ? "light" : "dark");
       }}
     >
       <SunIcon className="h-full w-full dark:hidden" aria-hidden />
