@@ -2,25 +2,21 @@
 
 # Portfolio site (heyfrancisco.me)
 
-Personal portfolio and blog. Next.js 16 (App Router), React 19, TypeScript 6, Tailwind CSS v4, shadcn/ui (`new-york`) plus Magic UI components, MDX blog via content-collections, `next-themes` for light/dark. Package manager is pnpm. Started from the magicuidesign/portfolio template; much of the content is still template placeholder (see "Placeholder content").
+Personal portfolio and blog. Started from the magicuidesign/portfolio template; much of the content is still template placeholder (see "Placeholder content").
 
 Detailed, topic-specific guidance lives in `.claude/rules/`. Read those before changing the matching area.
 
 ## Commands
 
-- `pnpm dev` / `pnpm build` / `pnpm start`, `pnpm lint`, `pnpm format` (Prettier, write) / `pnpm format:check`, `pnpm exec tsc --noEmit`.
 - Verification gate before calling work done: `format:check`, `tsc --noEmit`, `lint`, `pnpm audit`, then `build` with all flags on (`FEATURE_BLOG=true FEATURE_WORK=true FEATURE_CONTACT=true pnpm build`). `build` type-checks **every** file, including components nothing imports. On a fresh clone, run `build` or `dev` once before `tsc`, because `.content-collections/` is generated.
 - Stop `next dev` before `next build` (they share `.next`).
 - pnpm comes from corepack, pinned by `packageManager` (`pnpm@10.34.9`) in `package.json`. Without the pin, corepack falls back to pnpm 12, which the corepack in Node 24.2 can't run (`MODULE_NOT_FOUND .../bin/pnpm.cjs`). Put Node 24 on PATH first (`export PATH=~/.nvm/versions/node/v24.2.0/bin:$PATH`; `.nvmrc` is `24`). `.claude/launch.json` starts the dev server via `./node_modules/.bin/next dev`.
 
 ## Layout
 
-- `src/app/`: routes. `/` (hero), `/about`, `/work`, `/contact`, `/blog`, `/blog/[slug]`, custom `not-found.tsx`, three `opengraph-image.tsx` routes, `sitemap.ts` (lists gated routes and posts only when their flag is on) and `robots.ts` (crawlable only when `VERCEL_ENV` is `production`). `layout.tsx` holds fonts, `ThemeProvider`, the content column (`max-w-2xl`, `py-12 pb-24 sm:py-24 px-6`) and the dock `Navbar`.
-- `src/components/section/`: page sections (`work-section`, `projects-section`, `contact-section`, `hackathons-section`). `ui/` is shadcn; `magicui/` is Magic UI (`blur-fade`, `dock`, `flickering-grid`); `mdx/` is MDX code blocks.
 - `src/data/resume.tsx`: the single content config (name, summary, skills, nav, social, work, education, projects).
 - `src/lib/flags.ts`: feature flags. `src/lib/utils.ts`: `cn`, `formatDate`. `src/lib/og.ts`: fonts and avatar for the `opengraph-image` routes, read from `public/` on disk (Node runtime) so they render without a live domain. `src/lib/site-url.ts`: `siteUrl`, the base for every absolute URL (`SITE_URL`, then the preview URL, then localhost in dev, then `DATA.url`). Use it instead of `DATA.url` for links.
 - `content/*.mdx`: blog posts, compiled by `content-collections.ts` (schema + `compileMDX`). `.content-collections/` is generated and gitignored; import via the `content-collections` alias.
-- `@/*` maps to `src/*`.
 
 ## Conventions that are easy to get wrong
 
