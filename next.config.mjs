@@ -1,23 +1,26 @@
 import { withContentCollections } from "@content-collections/next";
 
 const isDev = process.env.NODE_ENV === "development";
+const toolbar = process.env.VERCEL_ENV !== "production";
+const live = toolbar ? " https://vercel.live" : "";
 
 // 'unsafe-inline' scripts: Next.js bootstraps with inline scripts and next-themes injects
 // one to set the theme before paint. Nonces would avoid this, but they force every page
 // to render dynamically. 'unsafe-eval' is only needed by React's dev tooling. Code blocks
 // are highlighted at build time, so no WebAssembly runs in the browser.
-// vercel.live (and its Pusher socket) is the Vercel toolbar on preview deployments; the
-// directives follow https://vercel.com/docs/vercel-toolbar/managing-toolbar.
+// vercel.live (and its Pusher socket) is the Vercel toolbar, which only runs on preview
+// deployments, so production doesn't allow those hosts. The directives follow
+// https://vercel.com/docs/vercel-toolbar/managing-toolbar. Local builds count as non-production.
 // img-src allows https: because the placeholder projects load external images.
 const contentSecurityPolicy = [
   "default-src 'self'",
-  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""} https://vercel.live`,
-  "style-src 'self' 'unsafe-inline' https://vercel.live",
+  `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}${live}`,
+  `style-src 'self' 'unsafe-inline'${live}`,
   "img-src 'self' data: blob: https:",
   "media-src 'self'",
-  "font-src 'self' data: https://vercel.live https://assets.vercel.com",
-  `connect-src 'self' https://vercel.live wss://*.pusher.com${isDev ? " ws:" : ""}`,
-  "frame-src https://vercel.live",
+  `font-src 'self' data:${toolbar ? " https://vercel.live https://assets.vercel.com" : ""}`,
+  `connect-src 'self'${live}${toolbar ? " wss://*.pusher.com" : ""}${isDev ? " ws:" : ""}`,
+  `frame-src ${toolbar ? "https://vercel.live" : "'none'"}`,
   "frame-ancestors 'none'",
   "object-src 'none'",
   "base-uri 'self'",
