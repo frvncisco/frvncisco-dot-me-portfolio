@@ -3,7 +3,6 @@ import { allPosts } from "content-collections";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { paginate, normalizePage } from "@/lib/pagination";
 import { ChevronRight } from "lucide-react";
 import { FEATURE_FLAGS } from "@/lib/flags";
 import { formatDate } from "@/lib/utils";
@@ -44,12 +43,12 @@ export default async function BlogPage({
     return 1;
   });
 
-  const totalPages = Math.ceil(sortedPosts.length / PAGE_SIZE);
-  const currentPage = normalizePage(pageParam, totalPages);
-  const { items: paginatedPosts, pagination } = paginate(sortedPosts, {
-    page: currentPage,
-    pageSize: PAGE_SIZE,
-  });
+  const totalPages = Math.max(1, Math.ceil(sortedPosts.length / PAGE_SIZE));
+  const requestedPage = Number.parseInt(pageParam ?? "", 10);
+  const currentPage = Number.isNaN(requestedPage)
+    ? 1
+    : Math.min(Math.max(requestedPage, 1), totalPages);
+  const paginatedPosts = sortedPosts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
     <main id="blog">
@@ -71,7 +70,7 @@ export default async function BlogPage({
             <div className="flex flex-col gap-5">
               {paginatedPosts.map((post, id) => {
                 const slug = post._meta.path.replace(/\.mdx$/, "");
-                const indexNumber = (pagination.page - 1) * PAGE_SIZE + id + 1;
+                const indexNumber = (currentPage - 1) * PAGE_SIZE + id + 1;
                 return (
                   <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>
                     <Link
@@ -103,19 +102,19 @@ export default async function BlogPage({
           </BlurFade>
 
           {/* Pagination Controls */}
-          {pagination.totalPages > 1 && (
+          {totalPages > 1 && (
             <BlurFade delay={BLUR_FADE_DELAY * 4}>
               <nav
                 aria-label="Pagination"
                 className="mt-8 flex flex-row items-center justify-between gap-3"
               >
                 <div className="text-sm text-muted-foreground">
-                  Page {pagination.page} of {pagination.totalPages}
+                  Page {currentPage} of {totalPages}
                 </div>
                 <div className="flex gap-2 sm:justify-end">
-                  {pagination.hasPreviousPage ? (
+                  {currentPage > 1 ? (
                     <Link
-                      href={`/blog?page=${pagination.page - 1}`}
+                      href={`/blog?page=${currentPage - 1}`}
                       className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       Previous
@@ -128,9 +127,9 @@ export default async function BlogPage({
                       Previous
                     </span>
                   )}
-                  {pagination.hasNextPage ? (
+                  {currentPage < totalPages ? (
                     <Link
-                      href={`/blog?page=${pagination.page + 1}`}
+                      href={`/blog?page=${currentPage + 1}`}
                       className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                     >
                       Next
