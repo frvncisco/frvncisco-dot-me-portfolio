@@ -22,6 +22,9 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
     title: string | null;
   }>({ html: "", className: "", title: null });
   const preRef = useRef<HTMLPreElement>(null);
+  const copyResetRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => clearTimeout(copyResetRef.current ?? undefined), []);
 
   useEffect(() => {
     const pre = preRef.current;
@@ -62,7 +65,9 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
     try {
       await navigator.clipboard.writeText(code);
       setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
+      // Restart the timer on repeat clicks so the check stays for 2s after the last copy.
+      clearTimeout(copyResetRef.current ?? undefined);
+      copyResetRef.current = setTimeout(() => setCopied(false), 2000);
     } catch (error) {
       console.error("Failed to copy code:", error);
     }
@@ -97,6 +102,10 @@ export function CodeBlock({ children, ...props }: CodeBlockProps) {
 
         {!html && <div className="p-4">{children}</div>}
       </pre>
+      {/* Always mounted so screen readers pick up the text change. */}
+      <span role="status" className="sr-only">
+        {copied ? "Copied to clipboard" : ""}
+      </span>
     </div>
   );
 }
