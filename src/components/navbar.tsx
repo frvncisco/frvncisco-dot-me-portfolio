@@ -1,5 +1,5 @@
 import { Dock, DockIcon } from "@/components/magicui/dock";
-import { ModeToggle } from "@/components/mode-toggle";
+import { ModeToggle, ThemeIcon } from "@/components/mode-toggle";
 import { Separator } from "@/components/ui/separator";
 import { Tooltip, TooltipArrow, TooltipContent, TooltipTrigger } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
@@ -71,11 +71,15 @@ export default function Navbar() {
           })}
         <Separator orientation="vertical" className="m-auto h-2/3 w-px bg-border" />
         <Tooltip>
-          <DockIcon className="size-full cursor-pointer rounded-3xl border border-border bg-background p-0 text-muted-foreground backdrop-blur-3xl transition-colors hover:bg-muted hover:text-foreground">
-            <TooltipTrigger asChild>
-              <ModeToggle className="size-full cursor-pointer" />
-            </TooltipTrigger>
-          </DockIcon>
+          {/* The button wraps the DockIcon, like the <a> items above, so the whole
+              magnified icon is the click target and the tooltip trigger. */}
+          <TooltipTrigger asChild>
+            <ModeToggle className="h-auto w-auto cursor-pointer rounded-3xl p-0">
+              <DockIcon className="size-full cursor-pointer rounded-3xl border border-border bg-background p-0 text-muted-foreground backdrop-blur-3xl transition-colors hover:bg-muted hover:text-foreground">
+                <ThemeIcon className="size-full" />
+              </DockIcon>
+            </ModeToggle>
+          </TooltipTrigger>
           <TooltipContent
             side="top"
             sideOffset={8}

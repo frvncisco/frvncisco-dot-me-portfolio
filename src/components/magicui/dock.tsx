@@ -56,7 +56,7 @@ const Dock = ({
 };
 
 const DockIcon = ({ className, children }: DockIconProps) => {
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLSpanElement>(null);
   const context = useContext(DockContext);
 
   if (!context) {
@@ -83,8 +83,9 @@ const DockIcon = ({ className, children }: DockIconProps) => {
     SPRING,
   );
 
+  // Spans, not divs: DockIcon sits inside <a> and <button> items, and a <div> isn't valid there.
   return (
-    <motion.div
+    <motion.span
       ref={ref}
       style={{ width: containerSize, height: containerSize }}
       className={cn(
@@ -92,13 +93,13 @@ const DockIcon = ({ className, children }: DockIconProps) => {
         className,
       )}
     >
-      <motion.div
+      <motion.span
         style={{ width: iconSize, height: iconSize }}
         className="flex items-center justify-center"
       >
         {children}
-      </motion.div>
-    </motion.div>
+      </motion.span>
+    </motion.span>
   );
 };
 
