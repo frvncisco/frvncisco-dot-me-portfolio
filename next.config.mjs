@@ -1,74 +1,69 @@
-import { sql } from '@vercel/postgres'
+import { withContentCollections } from "@content-collections/next";
 
+const isDev = process.env.NODE_ENV === "development";
+
+// 'unsafe-inline' scripts: Next.js bootstraps with inline scripts and next-themes injects
+// one to set the theme before paint. Nonces would avoid this, but they force every page
+// to render dynamically. 'wasm-unsafe-eval' lets shiki compile its WebAssembly regex
+// engine for code blocks (it doesn't allow JS eval). 'unsafe-eval' is only needed by
+// React's dev tooling.
+// vercel.live (and its Pusher socket) is the Vercel toolbar on preview deployments; the
+// directives follow https://vercel.com/docs/vercel-toolbar/managing-toolbar.
+// img-src/media-src allow https: because the placeholder projects load external media.
+const contentSecurityPolicy = [
+  "default-src 'self'",
+  `script-src 'self' 'unsafe-inline' 'wasm-unsafe-eval'${isDev ? " 'unsafe-eval'" : ""} https://vercel.live`,
+  "style-src 'self' 'unsafe-inline' https://vercel.live",
+  "img-src 'self' data: blob: https:",
+  "media-src 'self' https:",
+  "font-src 'self' data: https://vercel.live https://assets.vercel.com",
+  `connect-src 'self' https://vercel.live wss://*.pusher.com${isDev ? " ws:" : ""}`,
+  "frame-src https://vercel.live",
+  "frame-ancestors 'none'",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+].join("; ");
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-	experimental: {
-		ppr: false,
-	},
-	async redirects() {
-		if (!process.env.POSTGRES_URL) {
-			return []
-		}
+  reactStrictMode: true,
+  async headers() {
+    return [
+      {
+        source: "/:path*",
+        headers: [
+          {
+            key: "X-Content-Type-Options",
+            value: "nosniff",
+          },
+          {
+            key: "X-Frame-Options",
+            value: "DENY",
+          },
+          {
+            key: "Referrer-Policy",
+            value: "strict-origin-when-cross-origin",
+          },
+          {
+            key: "Permissions-Policy",
+            value: "camera=(), microphone=(), geolocation=()",
+          },
+          {
+            key: "Content-Security-Policy",
+            value: contentSecurityPolicy,
+          },
+          // No `preload` until the site is on its own domain (issue #23). Once it is,
+          // includeSubDomains forces HTTPS on every subdomain of that domain too.
+          {
+            key: "Strict-Transport-Security",
+            value: "max-age=63072000; includeSubDomains",
+          },
+        ],
+      },
+    ];
+  },
+};
 
-		const { rows: redirects } = await sql`
-      SELECT source, destination, permanent
-      FROM redirects;
-    `
-
-		return redirects.map(({ source, destination, permanent }) => ({
-			source,
-			destination,
-			permanent: !!permanent,
-		}))
-	},
-	headers() {
-		return [
-			{
-				source: '/(.*)',
-				headers: securityHeaders,
-			},
-		]
-	},
-}
-
-const ContentSecurityPolicy = `
-    default-src 'self' vercel.live;
-    script-src 'self' 'unsafe-eval' 'unsafe-inline' cdn.vercel-insights.com vercel.live va.vercel-scripts.com;
-    style-src 'self' 'unsafe-inline';
-    img-src * blob: data:;
-    media-src 'none';
-    connect-src *;
-    font-src 'self' data:;
-`
-
-const securityHeaders = [
-	{
-		key: 'Content-Security-Policy',
-		value: ContentSecurityPolicy.replace(/\n/g, ''),
-	},
-	{
-		key: 'Referrer-Policy',
-		value: 'origin-when-cross-origin',
-	},
-	{
-		key: 'X-Frame-Options',
-		value: 'DENY',
-	},
-	{
-		key: 'X-Content-Type-Options',
-		value: 'nosniff',
-	},
-	{
-		key: 'X-DNS-Prefetch-Control',
-		value: 'on',
-	},
-	{
-		key: 'Strict-Transport-Security',
-		value: 'max-age=31536000; includeSubDomains; preload',
-	},
-	{
-		key: 'Permissions-Policy',
-		value: 'camera=(), microphone=(), geolocation=()',
-	},
-]
-
-export default nextConfig
+// withContentCollections must be the outermost plugin
+export default withContentCollections(nextConfig);
