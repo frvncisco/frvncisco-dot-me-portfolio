@@ -15,7 +15,7 @@ const contentSecurityPolicy = [
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob: https:",
   "media-src 'self' https:",
-  "font-src 'self' data:",
+  "font-src 'self' data: https://vercel.live https://assets.vercel.com",
   `connect-src 'self' https://vercel.live wss://*.pusher.com${isDev ? " ws:" : ""}`,
   "frame-src https://vercel.live",
   "frame-ancestors 'none'",
@@ -52,7 +52,8 @@ const nextConfig = {
             key: "Content-Security-Policy",
             value: contentSecurityPolicy,
           },
-          // No `preload` until the site is on its own domain (issue #23).
+          // No `preload` until the site is on its own domain (issue #23). Once it is,
+          // includeSubDomains forces HTTPS on every subdomain of that domain too.
           {
             key: "Strict-Transport-Security",
             value: "max-age=63072000; includeSubDomains",
