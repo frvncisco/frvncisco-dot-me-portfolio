@@ -32,9 +32,7 @@ interface Props {
   description: string;
   dates: string;
   tags: readonly string[];
-  link?: string;
   image?: string;
-  video?: string;
   links?: readonly {
     icon: React.ReactNode;
     type: string;
@@ -49,19 +47,11 @@ export function ProjectCard({
   description,
   dates,
   tags,
-  link,
   image,
-  video,
   links,
   className,
 }: Props) {
-  const media = video ? (
-    <video src={video} autoPlay loop muted playsInline className="h-48 w-full object-cover" />
-  ) : image ? (
-    <ProjectImage src={image} alt={title} />
-  ) : (
-    <div className="h-48 w-full bg-muted" />
-  );
+  const media = <ProjectImage src={image ?? ""} alt={title} />;
 
   return (
     <div
@@ -88,13 +78,7 @@ export function ProjectCard({
         {links && links.length > 0 && (
           <div className="absolute top-2 right-2 flex flex-wrap gap-2">
             {links.map((link, idx) => (
-              <Link
-                href={link.href}
-                key={idx}
-                target="_blank"
-                rel="noopener noreferrer"
-                onClick={(e) => e.stopPropagation()}
-              >
+              <Link href={link.href} key={idx} target="_blank" rel="noopener noreferrer">
                 <Badge
                   className="flex items-center gap-1.5 bg-black text-xs text-white hover:bg-black/90"
                   variant="default"

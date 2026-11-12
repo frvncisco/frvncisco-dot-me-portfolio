@@ -1,6 +1,6 @@
 ---
 name: pr-review
-description: Review a pull request for this portfolio repo against its conventions and report findings. Use when the user says "/pr-review", "review this PR", "review PR #N", or asks for feedback on a branch before merging. Read-only by default; never posts to GitHub unless explicitly asked.
+description: 'Review a pull request for this portfolio repo against its conventions and report findings. Use when the user says "/pr-review", "review this PR", "review PR #N", or asks for feedback on a branch before merging. Read-only by default; never posts to GitHub unless explicitly asked.'
 ---
 
 # PR Review

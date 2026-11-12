@@ -1,3 +1,9 @@
+---
+paths:
+  - "src/**/*.{tsx,css}"
+  - "content/**/*.mdx"
+---
+
 # Accessibility
 
 ## WCAG 2.2 Compliance

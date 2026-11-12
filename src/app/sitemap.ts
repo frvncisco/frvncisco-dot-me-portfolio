@@ -16,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const posts = FEATURE_FLAGS.blog
     ? allPosts.map((post) => ({
-        url: `${siteUrl}/blog/${post._meta.path.replace(/\.mdx$/, "")}`,
+        url: `${siteUrl}/blog/${post.slug}`,
         lastModified: post.updatedAt ?? post.publishedAt,
       }))
     : [];

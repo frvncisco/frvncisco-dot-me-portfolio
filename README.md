@@ -63,7 +63,7 @@ Until the domain in `DATA.url` is connected, set `SITE_URL` on Vercel Production
 
 - **Site content** (name, summary, skills, work, education, projects, social links, dock items) is configured in [`src/data/resume.tsx`](./src/data/resume.tsx).
 - **Logos and images** go in `public/`.
-- **Blog posts** are MDX files in [`content/`](./content). The file name is the URL slug. Frontmatter: `title`, `publishedAt`, `summary` (required) and `updatedAt`, `author`, `image` (optional; `image` is a site-relative path). Start headings at `##`, because the page renders the title.
+- **Blog posts** are MDX files in [`content/`](./content). The file name is the URL slug. Frontmatter: `title`, `publishedAt`, `summary` (required) and `updatedAt`, `author`, `image` (optional; `image` is a site-relative path). Dates are `YYYY-MM-DD`; a malformed date fails the build. Start headings at `##`, because the page renders the title.
 
 ## Project structure
 
@@ -76,7 +76,7 @@ src/
     magicui/      Magic UI components (dock, blur fade, flickering grid)
     mdx/          MDX code blocks and media
   data/resume.tsx single content config
-  lib/            feature flags, helpers
+  lib/            feature flags, site URL, post sorting, OG card renderer, helpers
 content/          blog posts (MDX)
 public/           static assets and OG fonts
 ```
@@ -95,6 +95,8 @@ public/           static assets and OG fonts
 - The project targets Node 24: `.nvmrc`, `engines` (`24.x`, which also sets the Vercel runtime) and `@types/node` (^24). Moving to Node 26 means changing all three together.
 - `packageManager` pins pnpm 10.34.9, so corepack uses the version that wrote the lockfile.
 - Fonts: Instrument Serif (headings), Inter (body), IBM Plex Mono (code).
+- Code blocks are highlighted at build time by `@shikijs/rehype` (a dev dependency that pins its own `shiki`), so the browser loads no highlighter and the CSP has no WebAssembly allowance.
+- The CSP allows the Vercel toolbar hosts (`vercel.live`) everywhere except when `VERCEL_ENV` is `production`.
 - Commits that only reformat are listed in `.git-blame-ignore-revs`. GitHub's blame view skips them automatically. For local `git blame`, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
 - Project guidance for AI coding agents lives in [`CLAUDE.md`](./CLAUDE.md) and [`.claude/`](./.claude).
 
