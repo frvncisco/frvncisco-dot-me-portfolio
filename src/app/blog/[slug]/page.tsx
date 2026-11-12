@@ -9,24 +9,14 @@ import { mdxComponents } from "@/mdx-components";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FEATURE_FLAGS } from "@/lib/flags";
-
-function getSortedPosts() {
-  return [...allPosts].sort((a, b) => {
-    if (new Date(a.publishedAt) > new Date(b.publishedAt)) {
-      return -1;
-    }
-    return 1;
-  });
-}
+import { getSortedPosts } from "@/lib/posts";
 
 export async function generateStaticParams() {
   if (!FEATURE_FLAGS.blog) {
     return [];
   }
 
-  return allPosts.map((post) => ({
-    slug: post._meta.path.replace(/\.mdx$/, ""),
-  }));
+  return allPosts.map((post) => ({ slug: post.slug }));
 }
 
 export async function generateMetadata({
@@ -42,7 +32,7 @@ export async function generateMetadata({
   }
 
   const { slug } = await params;
-  const post = allPosts.find((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  const post = allPosts.find((p) => p.slug === slug);
 
   if (!post) {
     return undefined;
@@ -91,7 +81,7 @@ export default async function Blog({
 
   const { slug } = await params;
   const sortedPosts = getSortedPosts();
-  const currentIndex = sortedPosts.findIndex((p) => p._meta.path.replace(/\.mdx$/, "") === slug);
+  const currentIndex = sortedPosts.findIndex((p) => p.slug === slug);
   const post = sortedPosts[currentIndex];
 
   if (!post) {
@@ -100,8 +90,6 @@ export default async function Blog({
 
   const previousPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
   const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
-
-  const getSlug = (post: (typeof sortedPosts)[0]) => post._meta.path.replace(/\.mdx$/, "");
 
   const jsonLdContent = JSON.stringify({
     "@context": "https://schema.org",
@@ -163,7 +151,7 @@ export default async function Blog({
         <div className="flex flex-col justify-between gap-4 sm:flex-row">
           {previousPost ? (
             <Link
-              href={`/blog/${getSlug(previousPost)}`}
+              href={`/blog/${previousPost.slug}`}
               className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 transition-colors hover:bg-accent/50"
             >
               <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -180,7 +168,7 @@ export default async function Blog({
 
           {nextPost ? (
             <Link
-              href={`/blog/${getSlug(nextPost)}`}
+              href={`/blog/${nextPost.slug}`}
               className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 text-right transition-colors hover:bg-accent/50"
             >
               <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">

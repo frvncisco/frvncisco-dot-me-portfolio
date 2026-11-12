@@ -1,8 +1,30 @@
 "use client";
 
-import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  useSyncExternalStore,
+} from "react";
 
 import { cn } from "@/lib/utils";
+
+const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
+
+// An external store, so turning Reduce Motion on or off while the page is open takes effect.
+function useReducedMotion() {
+  return useSyncExternalStore(
+    (onChange) => {
+      const query = window.matchMedia(REDUCED_MOTION_QUERY);
+      query.addEventListener("change", onChange);
+      return () => query.removeEventListener("change", onChange);
+    },
+    () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
+    () => false,
+  );
+}
 
 interface FlickeringGridProps extends React.HTMLAttributes<HTMLDivElement> {
   squareSize?: number;
@@ -30,6 +52,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
+  const reduceMotion = useReducedMotion();
   const [resolvedColor, setResolvedColor] = useState<string>("rgb(0, 0, 0)");
 
   const resolveColor = useCallback((colorValue: string | undefined): string => {
@@ -165,24 +188,9 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     let animationFrameId: number;
     let gridParams: ReturnType<typeof setupCanvas>;
+    // With reduced motion, draw one still frame instead of animating forever.
 
-    const updateCanvasSize = () => {
-      const newWidth = width || container.clientWidth;
-      const newHeight = height || container.clientHeight;
-      setCanvasSize({ width: newWidth, height: newHeight });
-      gridParams = setupCanvas(canvas, newWidth, newHeight);
-    };
-
-    updateCanvasSize();
-
-    let lastTime = 0;
-    const animate = (time: number) => {
-      if (!isInView) return;
-
-      const deltaTime = (time - lastTime) / 1000;
-      lastTime = time;
-
-      updateSquares(gridParams.squares, deltaTime);
+    const draw = () =>
       drawGrid(
         ctx,
         canvas.width,
@@ -192,7 +200,33 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
         gridParams.squares,
         gridParams.dpr,
       );
+
+    const updateCanvasSize = () => {
+      const newWidth = width || container.clientWidth;
+      const newHeight = height || container.clientHeight;
+      setCanvasSize({ width: newWidth, height: newHeight });
+      gridParams = setupCanvas(canvas, newWidth, newHeight);
+      if (reduceMotion) draw();
+    };
+
+    updateCanvasSize();
+
+    // Every frame fills one rect per cell (about 130k on a 1080p screen), so redraw at about
+    // 15fps. flickerChance is scaled by the real elapsed time, so the flicker rate is unchanged.
+    const FRAME_MS = 1000 / 15;
+    let lastTime: number | undefined;
+    const animate = (time: number) => {
+      if (!isInView) return;
+
       animationFrameId = requestAnimationFrame(animate);
+      lastTime ??= time;
+      const elapsed = time - lastTime;
+      if (elapsed < FRAME_MS) return;
+      lastTime = time;
+
+      // Cap the step: after a hidden tab one huge delta would flip every square at once.
+      updateSquares(gridParams.squares, Math.min(elapsed, 100) / 1000);
+      draw();
     };
 
     const resizeObserver = new ResizeObserver(() => {
@@ -210,7 +244,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
 
     intersectionObserver.observe(canvas);
 
-    if (isInView) {
+    if (isInView && !reduceMotion) {
       animationFrameId = requestAnimationFrame(animate);
     }
 
@@ -219,7 +253,7 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       resizeObserver.disconnect();
       intersectionObserver.disconnect();
     };
-  }, [setupCanvas, updateSquares, drawGrid, width, height, isInView]);
+  }, [setupCanvas, updateSquares, drawGrid, width, height, isInView, reduceMotion]);
 
   return (
     <div ref={containerRef} className={cn(`h-full w-full ${className}`)} {...props}>
