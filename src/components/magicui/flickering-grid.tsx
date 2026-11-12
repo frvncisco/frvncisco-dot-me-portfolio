@@ -13,14 +13,17 @@ import { cn } from "@/lib/utils";
 
 const REDUCED_MOTION_QUERY = "(prefers-reduced-motion: reduce)";
 
+// Module-level so React keeps one subscription instead of resubscribing on every render.
+function subscribeReducedMotion(onChange: () => void) {
+  const query = window.matchMedia(REDUCED_MOTION_QUERY);
+  query.addEventListener("change", onChange);
+  return () => query.removeEventListener("change", onChange);
+}
+
 // An external store, so turning Reduce Motion on or off while the page is open takes effect.
 function useReducedMotion() {
   return useSyncExternalStore(
-    (onChange) => {
-      const query = window.matchMedia(REDUCED_MOTION_QUERY);
-      query.addEventListener("change", onChange);
-      return () => query.removeEventListener("change", onChange);
-    },
+    subscribeReducedMotion,
     () => window.matchMedia(REDUCED_MOTION_QUERY).matches,
     () => false,
   );
@@ -49,6 +52,8 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
   ...props
 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  // Survives effect re-runs so the pattern doesn't re-randomize on scroll, theme change or resize.
+  const squaresRef = useRef<Float32Array<ArrayBuffer>>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const [isInView, setIsInView] = useState(false);
   const [canvasSize, setCanvasSize] = useState({ width: 0, height: 0 });
@@ -206,7 +211,13 @@ export const FlickeringGrid: React.FC<FlickeringGridProps> = ({
       const newHeight = height || container.clientHeight;
       setCanvasSize({ width: newWidth, height: newHeight });
       gridParams = setupCanvas(canvas, newWidth, newHeight);
-      if (reduceMotion) draw();
+      if (squaresRef.current?.length === gridParams.squares.length) {
+        gridParams.squares = squaresRef.current;
+      } else {
+        squaresRef.current = gridParams.squares;
+      }
+      // Resizing the canvas cleared it; redraw now rather than waiting for the next throttled frame.
+      draw();
     };
 
     updateCanvasSize();
