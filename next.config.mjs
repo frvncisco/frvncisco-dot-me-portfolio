@@ -1,7 +1,7 @@
 import { withContentCollections } from "@content-collections/next";
 
 const isDev = process.env.NODE_ENV === "development";
-const toolbar = process.env.VERCEL_ENV !== "production";
+const toolbar = isDev || process.env.VERCEL_ENV === "preview";
 const live = toolbar ? " https://vercel.live" : "";
 
 // 'unsafe-inline' scripts: Next.js bootstraps with inline scripts and next-themes injects
@@ -9,8 +9,9 @@ const live = toolbar ? " https://vercel.live" : "";
 // to render dynamically. 'unsafe-eval' is only needed by React's dev tooling. Code blocks
 // are highlighted at build time, so no WebAssembly runs in the browser.
 // vercel.live (and its Pusher socket) is the Vercel toolbar, which only runs on preview
-// deployments, so production doesn't allow those hosts. The directives follow
-// https://vercel.com/docs/vercel-toolbar/managing-toolbar. Local builds count as non-production.
+// deployments, so only previews and `next dev` allow those hosts. Production and self-hosted builds, where
+// VERCEL_ENV is unset, don't. The directives follow
+// https://vercel.com/docs/vercel-toolbar/managing-toolbar.
 // img-src allows https: because the placeholder projects load external images.
 const contentSecurityPolicy = [
   "default-src 'self'",

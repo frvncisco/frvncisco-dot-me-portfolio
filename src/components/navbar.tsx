@@ -26,6 +26,10 @@ function NavTooltip({ label, children }: { label: string; children: ReactNode })
   );
 }
 
+// Only plain app routes use next/link: not //host URLs or files like /resume.pdf, which need a
+// real navigation.
+const isInternalPath = (href: string) => /^\/(?!\/)[^.]*$/.test(href);
+
 // Internal paths use next/link so a click is a client-side navigation, not a full page load.
 function NavLink({
   href,
@@ -44,7 +48,7 @@ function NavLink({
 
   return (
     <NavTooltip label={label}>
-      {href.startsWith("/") ? (
+      {isInternalPath(href) ? (
         <Link href={href} aria-label={label}>
           {icon}
         </Link>
