@@ -36,7 +36,7 @@ Open <http://localhost:3000>.
 
 ## Feature flags
 
-`/blog`, `/work` and `/contact` are hidden by default: they return a 404 and their dock icons are removed. Turn one on by setting its variable to `true` (see [`.env.example`](./.env.example)):
+`/blog`, `/work` and `/contact` are hidden by default: they return a 404 and their nav links are removed. Turn one on by setting its variable to `true` (see [`.env.example`](./.env.example)):
 
 ```bash
 FEATURE_BLOG=true
@@ -61,7 +61,7 @@ Until the domain in `DATA.url` is connected, set `SITE_URL` on Vercel Production
 
 ## Editing content
 
-- **Site content** (name, summary, skills, work, education, projects, social links, dock items) is configured in [`src/data/resume.tsx`](./src/data/resume.tsx).
+- **Site content** (name, summary, skills, work, education, projects, social links, nav items) is configured in [`src/data/resume.tsx`](./src/data/resume.tsx).
 - **Logos and images** go in `public/`.
 - **Blog posts** are MDX files in [`content/`](./content). The file name is the URL slug. Frontmatter: `title`, `publishedAt`, `summary` (required) and `updatedAt`, `author`, `image` (optional; `image` is a site-relative path). Dates are `YYYY-MM-DD`; a malformed date fails the build. Start headings at `##`, because the page renders the title.
 
@@ -73,7 +73,7 @@ src/
   components/
     section/      page sections (work, projects, contact, hackathons)
     ui/           shadcn/ui components
-    magicui/      Magic UI components (dock, blur fade, flickering grid)
+    magicui/      Magic UI components (blur fade, flickering grid, dither field)
     mdx/          MDX code blocks and media
   data/resume.tsx single content config
   lib/            feature flags, site URL, post sorting, OG card renderer, helpers
@@ -94,7 +94,7 @@ public/           static assets and OG fonts
 
 - The project targets Node 24: `.nvmrc`, `engines` (`24.x`, which also sets the Vercel runtime) and `@types/node` (^24). Moving to Node 26 means changing all three together.
 - `packageManager` pins pnpm 10.34.9, so corepack uses the version that wrote the lockfile.
-- Fonts: Instrument Serif (headings), Inter (body), IBM Plex Mono (code).
+- Fonts: Fraunces (headings), Geist Sans (body), Geist Mono (code), Geist Pixel Square and Line (special cases), Geist fonts from the `geist` package, Fraunces from Google Fonts.
 - Code blocks are highlighted at build time by `@shikijs/rehype` (a dev dependency that pins its own `shiki`), so the browser loads no highlighter and the CSP has no WebAssembly allowance.
 - The CSP allows the Vercel toolbar hosts (`vercel.live`) everywhere except when `VERCEL_ENV` is `production`.
 - Commits that only reformat are listed in `.git-blame-ignore-revs`. GitHub's blame view skips them automatically. For local `git blame`, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
