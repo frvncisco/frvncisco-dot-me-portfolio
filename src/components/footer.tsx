@@ -22,7 +22,7 @@ export default function Footer() {
 
         <a
           href={`mailto:${DATA.contact.email}`}
-          className={`group flex min-h-56 flex-col justify-between rounded-3xl bg-(--pixel-blue) p-6 text-white sm:p-8 ${ringClass}`}
+          className={`group flex min-h-56 flex-col justify-between rounded-3xl bg-(--cta) p-6 text-white sm:p-8 ${ringClass}`}
         >
           <span aria-hidden className={`${labelClass} text-white/80`}>
             Let&rsquo;s talk

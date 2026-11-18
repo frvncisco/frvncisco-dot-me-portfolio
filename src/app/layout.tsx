@@ -72,14 +72,8 @@ export default function RootLayout({
       )}
     >
       <body className="relative min-h-dvh bg-background font-sans antialiased">
-        {/* Dark mode is switched off for now: forcedTheme wins over a saved preference too. Remove it
-            (and bring back the ModeToggle from git history) to turn dark mode on again. */}
-        <ThemeProvider
-          attribute="class"
-          defaultTheme="light"
-          forcedTheme="light"
-          enableSystem={false}
-        >
+        {/* Light by default, ignoring the OS setting; the nav's ThemeToggle switches to dark. */}
+        <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
           {/* The nav is fixed, so it comes first in the DOM to be first in tab and reading order. */}
           <a
             href="#content"
