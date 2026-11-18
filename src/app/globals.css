@@ -64,6 +64,13 @@
   --pixel-pink: #c4207a;
   --pixel-blue: #3a47d6;
   --pixel-teal: #006861;
+  /* Top nav bar: a dark glass bar in both themes. Muted links are 4.8:1 on it. */
+  --nav-bg: oklch(0.4 0 0 / 0.92);
+  --nav-fg: oklch(0.985 0 0);
+  --nav-fg-muted: oklch(0.985 0 0 / 0.75);
+  --nav-highlight: oklch(1 0 0 / 0.14);
+  /* Footer CTA card: the same blue in both themes, with white text (6.9:1). */
+  --cta: #3a47d6;
   --measure-prose: 65ch;
   --measure-sub: 36rem;
 }
@@ -158,6 +165,17 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.556 0 0);
+  /* Hero at dusk: a navy sky with lavender clouds, and the pixel letters at their bright
+     supergroup.chat hues (they pass 3:1 on the dark sky, where the light-mode set would not). */
+  --sky: #1b2150;
+  --sky-haze: #272960;
+  --sky-mist: #353373;
+  --sky-cloud: #4a4290;
+  --pixel-lime: #c8ef3a;
+  --pixel-orange: #ff7a3d;
+  --pixel-pink: #ffb2ed;
+  --pixel-blue: #8d97ff;
+  --pixel-teal: #3fd1c2;
   --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
   --chart-3: oklch(0.769 0.188 70.08);
@@ -323,4 +341,9 @@
   .prose :where(tbody tr:last-child td):not(:where([class~="not-prose"] *)) {
     @apply border-b-0;
   }
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { Container } from "@/components/container";
+import { ThemeToggle } from "@/components/theme-toggle";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -10,66 +11,57 @@ import {
 import { motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState, type FocusEvent, type SyntheticEvent } from "react";
+import { useState, type FocusEvent } from "react";
 
 type NavItem = { href: string; label: string };
 
 const EASE = [0.4, 0, 0.2, 1] as const;
 
+// px steps down with the width: five links plus the toggle must fit a 320px phone.
 const linkClass =
-  "relative block rounded-sm px-1.5 py-1 text-sm text-foreground/70 transition-colors sm:px-2 after:absolute after:inset-x-0 after:-inset-y-2 after:content-[''] hover:text-foreground focus-visible:text-foreground focus-visible:ring-2 focus-visible:ring-ring focus-visible:outline-hidden data-[active]:text-foreground data-[active]:underline data-[active]:underline-offset-4";
+  "relative isolate block rounded-lg px-1 py-1.5 text-sm font-medium text-(--nav-fg-muted) transition-colors min-[360px]:px-2 sm:px-3 after:absolute after:inset-x-0 after:-inset-y-1 after:content-[''] hover:text-(--nav-fg) focus-visible:text-(--nav-fg) focus-visible:ring-2 focus-visible:ring-(--nav-fg) focus-visible:outline-hidden data-[active]:text-(--nav-fg)";
 
 export function NavPill({ links }: { links: NavItem[] }) {
   const pathname = usePathname();
-  // The hover highlight belongs to the link under the pointer or focus. `slide` is false for the
-  // first link after it was hidden, so it appears in place instead of sweeping in from the last one.
-  const [highlight, setHighlight] = useState({ x: 0, width: 0, shown: false, slide: false });
-
-  const show = (event: SyntheticEvent<HTMLElement>) => {
-    const { offsetLeft, offsetWidth } = event.currentTarget;
-    setHighlight((current) => ({
-      x: offsetLeft,
-      width: offsetWidth,
-      shown: true,
-      slide: current.shown,
-    }));
-  };
-  const hide = () => setHighlight((current) => ({ ...current, shown: false, slide: false }));
-  const hideUnlessInside = (event: FocusEvent<HTMLElement>) => {
-    if (!event.currentTarget.contains(event.relatedTarget)) hide();
-  };
+  const [hovered, setHovered] = useState<string | null>(null);
 
   const isActive = (href: string) =>
     href === "/" ? pathname === "/" : pathname === href || pathname.startsWith(`${href}/`);
 
+  // The highlight rests on the current page and follows the pointer or focus; motion's shared
+  // layout animation slides it between links. It is in the server HTML for the current page.
+  const highlighted = hovered ?? links.find(({ href }) => isActive(href))?.href;
+
+  const clear = () => setHovered(null);
+  const clearUnlessInside = (event: FocusEvent<HTMLElement>) => {
+    if (!event.currentTarget.contains(event.relatedTarget)) clear();
+  };
+
   return (
     <div className="pointer-events-none fixed inset-x-0 top-0 z-30 py-4">
-      <Container className="flex items-center justify-center sm:justify-start">
+      <Container>
         {/* CSS, not motion: a motion `initial` is server-rendered as opacity 0, so the nav would stay
             invisible until hydration (or forever without JS). */}
-        <div className="pointer-events-auto motion-safe:animate-[nav-in_0.3s_ease-out_both]">
-          <NavigationMenu
-            className="flex-none rounded-lg border border-border bg-background/70 p-1 shadow-md backdrop-blur-md"
-            onMouseLeave={hide}
-            onBlur={hideUnlessInside}
-          >
-            <motion.div
-              aria-hidden
-              className="absolute top-1 left-1 z-0 h-7 rounded-sm bg-foreground/10" // left-1 = the pill's p-1; offsetLeft is measured from the list, inside it
-              initial={false}
-              animate={{ x: highlight.x, width: highlight.width, opacity: highlight.shown ? 1 : 0 }}
-              transition={{
-                duration: 0.15,
-                ease: EASE,
-                x: { duration: highlight.slide ? 0.15 : 0 },
-                width: { duration: highlight.slide ? 0.15 : 0 },
-              }}
-            />
-            <NavigationMenuList className="relative z-10 space-x-0">
+        <div className="pointer-events-auto flex items-center justify-between rounded-xl bg-(--nav-bg) p-1 shadow-lg ring-1 ring-white/10 backdrop-blur-md motion-safe:animate-[nav-in_0.3s_ease-out_both]">
+          <NavigationMenu className="flex-none" onMouseLeave={clear} onBlur={clearUnlessInside}>
+            <NavigationMenuList className="space-x-0">
               {links.map(({ href, label }) => (
                 <NavigationMenuItem key={href}>
                   <NavigationMenuLink asChild active={isActive(href)}>
-                    <Link href={href} className={linkClass} onMouseEnter={show} onFocus={show}>
+                    <Link
+                      href={href}
+                      className={linkClass}
+                      onMouseEnter={() => setHovered(href)}
+                      onFocus={() => setHovered(href)}
+                    >
+                      {highlighted === href && (
+                        <motion.span
+                          aria-hidden
+                          layoutId="nav-highlight"
+                          className="absolute inset-0 -z-10 rounded-lg bg-(--nav-highlight)"
+                          transition={{ duration: 0.15, ease: EASE }}
+                        />
+                      )}
                       {label}
                     </Link>
                   </NavigationMenuLink>
@@ -77,6 +69,7 @@ export function NavPill({ links }: { links: NavItem[] }) {
               ))}
             </NavigationMenuList>
           </NavigationMenu>
+          <ThemeToggle className="relative grid size-8 place-items-center rounded-lg text-(--nav-fg-muted) transition-colors after:absolute after:-inset-1 after:content-[''] hover:text-(--nav-fg) focus-visible:text-(--nav-fg) focus-visible:ring-2 focus-visible:ring-(--nav-fg) focus-visible:outline-hidden [&_svg]:size-4" />
         </div>
       </Container>
     </div>
