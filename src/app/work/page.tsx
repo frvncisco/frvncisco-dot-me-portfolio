@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import BlurFade from "@/components/magicui/blur-fade";
 import ProjectsSection from "@/components/section/projects-section";
 import type { Metadata } from "next";
@@ -28,12 +29,12 @@ export default function WorkPage() {
   }
 
   return (
-    <main className="relative flex min-h-dvh flex-col gap-14">
+    <Container as="main" className="relative flex flex-col gap-14">
       <div>
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ProjectsSection />
         </BlurFade>
       </div>
-    </main>
+    </Container>
   );
 }

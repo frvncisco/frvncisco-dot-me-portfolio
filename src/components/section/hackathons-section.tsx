@@ -17,9 +17,7 @@ export default function HackathonsSection() {
             <div className="h-px flex-1 bg-linear-to-l from-transparent from-5% via-border via-95% to-transparent" />
           </div>
           <div className="flex flex-col items-center justify-center gap-y-3">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl">
-              I like building things
-            </h2>
+            <h2 className="text-3xl sm:text-4xl">I like building things</h2>
             <p className="text-center text-balance text-muted-foreground md:text-lg/relaxed lg:text-base/relaxed xl:text-lg/relaxed">
               During my time in university, I attended {DATA.hackathons.length}+ hackathons. People
               from around the country would come together and build incredible things in 2-3 days.

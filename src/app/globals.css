@@ -5,6 +5,11 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
+  --font-sans: var(--font-geist-sans);
+  --font-serif: var(--font-fraunces);
+  --font-mono: var(--font-geist-mono);
+  --font-pixel-square: var(--font-geist-pixel-square);
+  --font-pixel-line: var(--font-geist-pixel-line);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -40,6 +45,44 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  --container: 80rem;
+  --gutter: 1.5rem;
+  /* Hero sky (peach): the base colour, then the dither ramp up to the cloud highlights. */
+  --sky: #f2c9b4;
+  --sky-haze: #f5d4c1;
+  --sky-mist: #f9e0d1;
+  --sky-cloud: #fff3e8;
+  /* One colour per letter of the hero's pixel word. Same hues as supergroup.chat's "Super", deepened
+     until each passes 3:1 (large text) on the sky and the clouds. */
+  --pixel-lime: #4f7a0a;
+  --pixel-orange: #c93a08;
+  --pixel-pink: #c4207a;
+  --pixel-blue: #3a47d6;
+  --pixel-teal: #006861;
+  --measure-prose: 65ch;
+  --measure-sub: 36rem;
+}
+
+@keyframes nav-in {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+}
+
+@media (min-width: 640px) {
+  :root {
+    --gutter: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  :root {
+    --gutter: 3rem;
+  }
 }
 
 :root {
@@ -118,11 +161,15 @@
     @apply border-border;
   }
 
+  /* The nav is fixed (about 68px), so anchors and focus scrolling must clear it. */
+  html {
+    scroll-padding-top: 5rem;
+  }
+
   body {
     @apply bg-background text-foreground;
   }
 
-  /* Instrument Serif ships a single 400 weight; don't fake-bold it. */
   h1,
   h2,
   h3,
@@ -130,7 +177,18 @@
   h5,
   h6 {
     font-family: var(--font-serif);
-    font-synthesis-weight: none;
+    font-optical-sizing: auto;
+    font-variation-settings:
+      "SOFT" 0,
+      "WONK" 0;
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  h1,
+  h2,
+  h3 {
+    letter-spacing: -0.02em;
   }
 
   /* Shiki dual theme support */
@@ -165,27 +223,27 @@
   }
 
   .prose h1 {
-    @apply text-3xl! leading-tight! font-semibold! tracking-tight!;
+    @apply text-3xl! leading-tight! font-semibold! tracking-[-0.02em]!;
   }
 
   .prose h2 {
-    @apply text-2xl! leading-tight! font-semibold! tracking-tight!;
+    @apply text-2xl! leading-tight! font-semibold! tracking-[-0.02em]!;
   }
 
   .prose h3 {
-    @apply text-xl! leading-tight! font-semibold! tracking-tight!;
+    @apply text-xl! leading-tight! font-semibold! tracking-[-0.02em]!;
   }
 
   .prose h4 {
-    @apply text-base! leading-tight! font-medium! tracking-tight!;
+    @apply text-base! leading-tight! font-medium!;
   }
 
   .prose h5 {
-    @apply text-base! leading-tight! font-medium! tracking-tight!;
+    @apply text-base! leading-tight! font-medium!;
   }
 
   .prose h6 {
-    @apply text-base! leading-tight! font-medium! tracking-tight!;
+    @apply text-base! leading-tight! font-medium!;
   }
 
   .prose a {

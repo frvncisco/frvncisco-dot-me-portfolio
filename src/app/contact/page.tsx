@@ -1,3 +1,4 @@
+import { Container } from "@/components/container";
 import BlurFade from "@/components/magicui/blur-fade";
 import ContactSection from "@/components/section/contact-section";
 import type { Metadata } from "next";
@@ -28,12 +29,12 @@ export default function ContactPage() {
   }
 
   return (
-    <main className="relative flex min-h-dvh flex-col gap-14">
-      <section id="contact">
+    <Container as="main" className="relative">
+      <section id="contact" className="max-w-(--measure-prose)">
         <BlurFade delay={BLUR_FADE_DELAY}>
           <ContactSection />
         </BlurFade>
       </section>
-    </main>
+    </Container>
   );
 }

@@ -20,8 +20,8 @@ export default function ContactSection() {
         />
       </div>
       <div className="relative flex flex-col items-center gap-4 text-center">
-        <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl">Get in Touch</h1>
-        <p className="mx-auto max-w-lg text-balance text-muted-foreground">
+        <h1 className="text-3xl sm:text-5xl">Get in touch</h1>
+        <p className="max-w-(--measure-sub) text-balance text-muted-foreground">
           Want to chat? Just shoot me a message and I&rsquo;ll respond whenever I can. I will ignore
           all soliciting.
         </p>
