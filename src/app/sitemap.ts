@@ -10,13 +10,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     "",
     "/about",
     ...(FEATURE_FLAGS.work ? ["/work"] : []),
-    ...(FEATURE_FLAGS.contact ? ["/contact"] : []),
-    ...(FEATURE_FLAGS.blog ? ["/blog"] : []),
+    ...(FEATURE_FLAGS.blog ? ["/writings"] : []),
   ].map((path) => ({ url: `${siteUrl}${path}` }));
 
   const posts = FEATURE_FLAGS.blog
     ? allPosts.map((post) => ({
-        url: `${siteUrl}/blog/${post.slug}`,
+        url: `${siteUrl}/writings/${post.slug}`,
         lastModified: post.updatedAt ?? post.publishedAt,
       }))
     : [];

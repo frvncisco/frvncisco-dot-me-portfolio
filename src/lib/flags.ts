@@ -11,7 +11,6 @@
 export const FEATURE_FLAGS = {
   blog: process.env.FEATURE_BLOG === "true",
   work: process.env.FEATURE_WORK === "true",
-  contact: process.env.FEATURE_CONTACT === "true",
 } as const;
 
 export type FeatureFlag = keyof typeof FEATURE_FLAGS;
