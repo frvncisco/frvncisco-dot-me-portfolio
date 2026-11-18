@@ -50,6 +50,8 @@
 :root {
   --container: 80rem;
   --gutter: 1.5rem;
+  /* Top padding of every page, under the fixed nav. The hero cancels it to start at the very top. */
+  --page-pt: 5rem;
   /* Hero sky (peach): the base colour, then the dither ramp up to the cloud highlights. */
   --sky: #f2c9b4;
   --sky-haze: #f5d4c1;
@@ -66,6 +68,20 @@
   --measure-sub: 36rem;
 }
 
+@keyframes blur-fade {
+  from {
+    opacity: 0;
+    filter: blur(var(--bf-blur));
+    transform: translateY(var(--bf-y));
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blur-fade {
+    animation: blur-fade var(--bf-duration) ease-out var(--bf-delay) both;
+  }
+}
+
 @keyframes nav-in {
   from {
     opacity: 0;
@@ -75,6 +91,7 @@
 
 @media (min-width: 640px) {
   :root {
+    --page-pt: 6rem;
     --gutter: 2rem;
   }
 }

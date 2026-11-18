@@ -12,46 +12,6 @@ import { cn } from "@/lib/utils";
  * a pattern; the `pattern` prop type follows.
  */
 const PATTERNS = {
-  // A low sun on the bottom edge, with haze bands that drift up through it.
-  horizon: `
-    float r = max(min(size.x * 0.42, size.y * 0.8), 90.0);
-    vec2 d = (p - vec2(0.5 * size.x, -0.15 * r)) / vec2(1.25 * r, r);
-    float wobble = fbm(vec2(atan(d.y, d.x) * 1.8, t * 0.04)) - 0.5;
-    float rim = length(d) * (1.0 + 0.14 * wobble);
-    float sun = exp(-3.4 * max(rim - 0.42, 0.0)) * 0.78;
-    float h = p.y / r;
-    float drift = (fbm(vec2(p.x / 320.0, t * 0.03)) - 0.5) * 2.4;
-    float band = 0.5 + 0.5 * sin(log(1.0 + 7.0 * h) * 8.0 - t * 0.45 + drift);
-    float haze = smoothstep(0.25, 0.95, band) * exp(-1.9 * h) * 0.5;
-    float ground = exp(-p.y / 22.0) * 0.32;
-    float sides = smoothstep(0.0, 0.2, p.x / size.x) * smoothstep(1.0, 0.8, p.x / size.x);
-    return (sun * (1.0 + haze) + haze * 0.35 + ground) * sides * (1.0 + 0.04 * sin(t * 0.4));
-  `,
-  // A soft orb in the middle that breathes and wanders a little.
-  glow: `
-    vec2 c = 0.5 * size + vec2(sin(t * 0.21), cos(t * 0.17)) * 0.05 * size;
-    float r = 0.5 * min(size.x, size.y);
-    float d = length(p - c) / r;
-    float n = fbm(p / 170.0 + vec2(t * 0.05, -t * 0.04));
-    return exp(-1.7 * d * d) * (0.75 + 0.45 * n) + 0.12 * n * exp(-d);
-  `,
-  // Curtains of light that hang from the top and sway.
-  aurora: `
-    float sway = fbm(vec2(p.x / 600.0, t * 0.05));
-    float d = p.y / size.y - (0.45 + 0.35 * (sway - 0.5));
-    float curtain = d > 0.0 ? exp(-d * 4.0) : exp(d * 22.0);
-    float rays = fbm(vec2(p.x / 70.0 + sway * 6.0, p.y / 900.0 - t * 0.08));
-    float shimmer = fbm(vec2(p.x / 40.0 - t * 0.05, 3.0));
-    return curtain * (0.25 + 0.75 * smoothstep(0.3, 0.75, rays)) * (0.6 + 0.5 * shimmer);
-  `,
-  // Slow diagonal swells, like dunes or contour lines.
-  waves: `
-    vec2 q = p / 32.0;
-    float warp = fbm(q * 0.09 + vec2(t * 0.035, t * 0.02));
-    float s = 0.5 + 0.5 * sin(q.x * 0.9 + q.y * 0.6 + warp * 5.0 - t * 0.4);
-    float crest = s * s * s * s;
-    return crest * (0.5 + 0.5 * p.y / size.y) + 0.12 * warp;
-  `,
   // Drifting clouds that fill the whole area evenly.
   clouds: `
     float n = fbm(p / 210.0 + vec2(t * 0.03, t * 0.012));
@@ -68,7 +28,7 @@ export type DitherColor = string | readonly [string, string, string];
 export interface DitherFieldProps extends Omit<React.ComponentPropsWithoutRef<"div">, "color"> {
   /**
    * The procedural light field that the dots follow.
-   * @default "horizon"
+   * @default "clouds"
    */
   pattern?: DitherPattern;
   /**
@@ -448,7 +408,7 @@ const ease = (from: number, to: number, rate: number, dt: number) =>
  * coloured from a three-stop ramp. Children render above the dots.
  */
 export function DitherField({
-  pattern = "horizon",
+  pattern = "clouds",
   src,
   color = "currentColor",
   dotSize = 1,

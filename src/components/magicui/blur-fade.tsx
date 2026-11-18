@@ -1,66 +1,39 @@
-"use client";
-
-import { AnimatePresence, motion, useInView, type UseInViewOptions, Variants } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useRef } from "react";
+import type { CSSProperties } from "react";
 
 interface BlurFadeProps {
   children: React.ReactNode;
   className?: string;
-  variant?: {
-    hidden: { y: number };
-    visible: { y: number };
-  };
   duration?: number;
   delay?: number;
   yOffset?: number;
-  inView?: boolean;
-  inViewMargin?: UseInViewOptions["margin"];
   blur?: string;
 }
-const BlurFade = ({
+
+// A CSS animation (see `.blur-fade` in globals.css), not motion: motion's `initial` is rendered
+// into the server HTML as opacity 0, so the content stayed invisible until hydration. Under
+// reduced motion the animation is off and the content simply shows.
+export default function BlurFade({
   children,
   className,
-  variant,
   duration = 0.4,
   delay = 0,
   yOffset = 6,
-  inView = false,
-  inViewMargin = "-50px",
   blur = "6px",
-}: BlurFadeProps) => {
-  const ref = useRef(null);
-  const inViewResult = useInView(ref, {
-    once: true,
-    ...(inViewMargin ? { margin: inViewMargin } : {}),
-  });
-  const isInView = !inView || inViewResult;
-  const defaultVariants: Variants = {
-    hidden: { y: -yOffset, opacity: 0, filter: `blur(${blur})` },
-    visible: { y: 0, opacity: 1, filter: `blur(0px)` },
-  };
-  const combinedVariants = variant || defaultVariants;
+}: BlurFadeProps) {
   return (
-    <AnimatePresence>
-      <motion.div
-        ref={ref}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-        exit="hidden"
-        variants={combinedVariants}
-        transition={{
-          delay: 0.04 + delay,
-          duration,
-          ease: "easeOut",
-        }}
-        // MotionConfig drops the transform under reduced motion but not the blur. The server can't know
-        // the preference, so this has to be CSS: it also wins over the inline filter at first paint.
-        className={cn("motion-reduce:filter-none!", className)}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
+    <div
+      className={cn("blur-fade", className)}
+      style={
+        {
+          "--bf-duration": `${duration}s`,
+          "--bf-delay": `${0.04 + delay}s`,
+          "--bf-y": `${-yOffset}px`,
+          "--bf-blur": blur,
+        } as CSSProperties
+      }
+    >
+      {children}
+    </div>
   );
-};
-
-export default BlurFade;
+}
