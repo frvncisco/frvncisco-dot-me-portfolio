@@ -9,15 +9,15 @@ import { getSortedPosts } from "@/lib/posts";
 import { formatDate } from "@/lib/utils";
 
 export const metadata: Metadata = {
-  title: "Blog",
+  title: "Writings",
   description: "Thoughts on software development, life, and more.",
   openGraph: {
-    title: "Blog",
+    title: "Writings",
     description: "Thoughts on software development, life, and more.",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Blog",
+    title: "Writings",
     description: "Thoughts on software development, life, and more.",
   },
 };
@@ -46,11 +46,11 @@ export default async function BlogPage({
   const paginatedPosts = sortedPosts.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   return (
-    <Container as="main" id="blog">
+    <Container as="main" id="writings">
       <div className="max-w-(--measure-prose)">
         <BlurFade delay={BLUR_FADE_DELAY}>
           <h1 className="mb-2 text-2xl">
-            Blog{" "}
+            Writings{" "}
             <span className="ml-1 rounded-md border border-border bg-card px-2 py-1 text-sm text-muted-foreground">
               {sortedPosts.length} posts
             </span>
@@ -71,7 +71,7 @@ export default async function BlogPage({
                     <BlurFade delay={BLUR_FADE_DELAY * 3 + id * 0.05} key={slug}>
                       <Link
                         className="group flex cursor-pointer items-start gap-x-2 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
-                        href={`/blog/${slug}`}
+                        href={`/writings/${slug}`}
                       >
                         <span className="mt-[5px] font-mono text-xs font-medium tabular-nums">
                           {String(indexNumber).padStart(2, "0")}.
@@ -110,7 +110,7 @@ export default async function BlogPage({
                   <div className="flex gap-2 sm:justify-end">
                     {currentPage > 1 ? (
                       <Link
-                        href={`/blog?page=${currentPage - 1}`}
+                        href={`/writings?page=${currentPage - 1}`}
                         className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                       >
                         Previous
@@ -125,7 +125,7 @@ export default async function BlogPage({
                     )}
                     {currentPage < totalPages ? (
                       <Link
-                        href={`/blog?page=${currentPage + 1}`}
+                        href={`/writings?page=${currentPage + 1}`}
                         className="flex h-8 w-fit items-center justify-center rounded-lg border border-border px-2 text-sm transition-colors hover:bg-accent/50 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                       >
                         Next
@@ -146,9 +146,7 @@ export default async function BlogPage({
         ) : (
           <BlurFade delay={BLUR_FADE_DELAY * 2}>
             <div className="flex flex-col items-center justify-center rounded-xl border border-border px-4 py-12">
-              <p className="text-center text-muted-foreground">
-                No blog posts yet. Check back soon!
-              </p>
+              <p className="text-center text-muted-foreground">No writings yet. Check back soon!</p>
             </div>
           </BlurFade>
         )}

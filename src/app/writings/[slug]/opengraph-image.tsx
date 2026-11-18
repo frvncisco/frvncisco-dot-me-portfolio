@@ -4,7 +4,7 @@ import { FEATURE_FLAGS } from "@/lib/flags";
 import { renderOg } from "@/lib/og";
 import { formatDate } from "@/lib/utils";
 
-export const alt = "Blog Post";
+export const alt = "Writing";
 export const size = {
   width: 1200,
   height: 630,

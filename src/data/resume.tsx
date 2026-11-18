@@ -38,8 +38,7 @@ export const DATA = {
     { href: "/", label: "Home", flag: null },
     { href: "/about", label: "About", flag: null },
     { href: "/work", label: "Work", flag: "work" },
-    { href: "/contact", label: "Contact", flag: "contact" },
-    { href: "/blog", label: "Blog", flag: "blog" },
+    { href: "/writings", label: "Writings", flag: "blog" },
   ] as const,
   contact: {
     email: "santana.francisco@pm.me",

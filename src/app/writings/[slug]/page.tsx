@@ -27,7 +27,7 @@ export async function generateMetadata({
     slug: string;
   }>;
 }): Promise<Metadata | undefined> {
-  // The page calls notFound() when the blog is off; don't leak the post's metadata either.
+  // The page calls notFound() when writings are off; don't leak the post's metadata either.
   if (!FEATURE_FLAGS.blog) {
     return undefined;
   }
@@ -49,7 +49,7 @@ export async function generateMetadata({
       description,
       type: "article",
       publishedTime,
-      url: `${siteUrl}/blog/${slug}`,
+      url: `${siteUrl}/writings/${slug}`,
       ...(image && {
         images: [
           {
@@ -101,8 +101,8 @@ export default async function Blog({
     description: post.summary,
     image: post.image
       ? absoluteUrl(post.image, siteUrl)
-      : `${siteUrl}/blog/${slug}/opengraph-image`,
-    url: `${siteUrl}/blog/${slug}`,
+      : `${siteUrl}/writings/${slug}/opengraph-image`,
+    url: `${siteUrl}/writings/${slug}`,
     author: {
       "@type": "Person",
       name: DATA.name,
@@ -110,7 +110,7 @@ export default async function Blog({
   }).replace(/</g, "\\u003c");
 
   return (
-    <Container as="main" id="blog">
+    <Container as="main" id="writings">
       <div className="max-w-(--measure-prose)">
         <script
           type="application/ld+json"
@@ -121,12 +121,12 @@ export default async function Blog({
         />
         <div className="flex items-center justify-start gap-4">
           <Link
-            href="/blog"
+            href="/writings"
             className="group mb-6 inline-flex items-center gap-1 rounded-lg border border-border px-2 py-1 text-sm text-muted-foreground transition-colors hover:text-foreground"
-            aria-label="Back to Blog"
+            aria-label="Back to Writings"
           >
             <ChevronLeft className="size-3 transition-transform group-hover:-translate-x-px" />
-            Back to Blog
+            Back to Writings
           </Link>
         </div>
         <div className="flex flex-col gap-4">
@@ -151,7 +151,7 @@ export default async function Blog({
           <div className="flex flex-col justify-between gap-4 sm:flex-row">
             {previousPost ? (
               <Link
-                href={`/blog/${previousPost.slug}`}
+                href={`/writings/${previousPost.slug}`}
                 className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 transition-colors hover:bg-accent/50"
               >
                 <span className="flex items-center gap-1 text-xs text-muted-foreground">
@@ -168,7 +168,7 @@ export default async function Blog({
 
             {nextPost ? (
               <Link
-                href={`/blog/${nextPost.slug}`}
+                href={`/writings/${nextPost.slug}`}
                 className="group flex flex-1 flex-col gap-1 rounded-lg border border-border p-4 text-right transition-colors hover:bg-accent/50"
               >
                 <span className="flex items-center justify-end gap-1 text-xs text-muted-foreground">
