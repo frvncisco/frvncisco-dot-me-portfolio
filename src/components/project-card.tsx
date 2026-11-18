@@ -94,7 +94,7 @@ export function ProjectCard({
       <div className="flex flex-1 flex-col gap-3 p-6">
         <div className="flex items-start justify-between gap-2">
           <div className="flex flex-col gap-1">
-            <h2 className="text-xl font-semibold">{title}</h2>
+            <h2 className="text-xl">{title}</h2>
             <time className="text-xs text-muted-foreground">{dates}</time>
           </div>
           {href && (
@@ -117,7 +117,7 @@ export function ProjectCard({
             {tags.map((tag) => (
               <Badge
                 key={tag}
-                className="h-6 w-fit border border-border px-2 text-[11px] font-medium"
+                className="h-6 w-fit border border-border px-2 text-xs font-medium"
                 variant="outline"
               >
                 {tag}

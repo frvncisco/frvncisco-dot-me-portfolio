@@ -18,7 +18,7 @@ const IMAGE_MIME_TYPES: Record<string, string> = {
 // for every request is wasted I/O, so each is read once per server instance.
 // A failed read is cleared instead of cached, so a transient error doesn't
 // leave OG images without the avatar or fonts until the server restarts.
-type OgFonts = { cabinetGrotesk: Buffer; clashDisplay: Buffer };
+type OgFonts = { geistSans: Buffer; fraunces: Buffer };
 
 let avatarPromise: Promise<string | undefined> | undefined;
 let fontsPromise: Promise<OgFonts | null> | undefined;
@@ -50,11 +50,11 @@ async function loadAvatar(): Promise<string | undefined> {
 
 async function loadFonts(): Promise<OgFonts | null> {
   try {
-    const [cabinetGrotesk, clashDisplay] = await Promise.all([
-      readFile(publicPath("fonts/CabinetGrotesk-Medium.ttf")),
-      readFile(publicPath("fonts/ClashDisplay-Semibold.ttf")),
+    const [geistSans, fraunces] = await Promise.all([
+      readFile(publicPath("fonts/Geist-Regular.ttf")),
+      readFile(publicPath("fonts/Fraunces-Regular.ttf")),
     ]);
-    return { cabinetGrotesk, clashDisplay };
+    return { geistSans, fraunces };
   } catch (error) {
     console.error("Failed to load OG fonts:", error);
     fontsPromise = undefined;
@@ -119,9 +119,9 @@ const styles = {
     objectFit: "cover",
   },
   title: {
-    fontFamily: "Clash Display",
-    fontSize: "48px",
-    fontWeight: "600",
+    fontFamily: "Fraunces",
+    fontSize: "52px",
+    fontWeight: "400",
     lineHeight: "1.1",
     textAlign: "left",
     color: "#000000",
@@ -188,13 +188,8 @@ export async function renderOg({
         ...size,
         fonts: fontData
           ? [
-              {
-                name: "Cabinet Grotesk",
-                data: fontData.cabinetGrotesk,
-                weight: 400,
-                style: "normal",
-              },
-              { name: "Clash Display", data: fontData.clashDisplay, weight: 600, style: "normal" },
+              { name: "Geist", data: fontData.geistSans, weight: 400, style: "normal" },
+              { name: "Fraunces", data: fontData.fraunces, weight: 400, style: "normal" },
             ]
           : undefined,
       },
