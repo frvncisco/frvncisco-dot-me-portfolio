@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useInView, type UseInViewOptions, Variants } from "motion/react";
+import { cn } from "@/lib/utils";
 import { useRef } from "react";
 
 interface BlurFadeProps {
@@ -52,7 +53,9 @@ const BlurFade = ({
           duration,
           ease: "easeOut",
         }}
-        className={className}
+        // MotionConfig drops the transform under reduced motion but not the blur. The server can't know
+        // the preference, so this has to be CSS: it also wins over the inline filter at first paint.
+        className={cn("motion-reduce:filter-none!", className)}
       >
         {children}
       </motion.div>
