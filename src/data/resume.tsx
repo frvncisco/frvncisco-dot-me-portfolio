@@ -5,17 +5,6 @@ import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Typescript } from "@/components/ui/svgs/typescript";
-import { BriefcaseIcon, HomeIcon, MailIcon, NotebookIcon, UserIcon } from "lucide-react";
-
-type Hackathon = {
-  title: string;
-  dates?: string;
-  location?: string;
-  description?: string;
-  image?: string;
-  mlh?: string;
-  links?: { title: string; href: string; icon: React.ReactNode }[];
-};
 
 type Education = {
   school: string;
@@ -46,36 +35,35 @@ export const DATA = {
     { name: "Docker", icon: Docker },
   ],
   navbar: [
-    { href: "/", icon: HomeIcon, label: "Home", flag: null },
-    { href: "/about", icon: UserIcon, label: "About", flag: null },
-    { href: "/work", icon: BriefcaseIcon, label: "Work", flag: "work" },
-    { href: "/contact", icon: MailIcon, label: "Contact", flag: "contact" },
-    { href: "/blog", icon: NotebookIcon, label: "Blog", flag: "blog" },
+    { href: "/", label: "Home", flag: null },
+    { href: "/about", label: "About", flag: null },
+    { href: "/work", label: "Work", flag: "work" },
+    { href: "/writings", label: "Writings", flag: "blog" },
   ] as const,
   contact: {
-    email: "hello@example.com",
+    email: "santana.francisco@pm.me",
     tel: "+123456789",
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://dub.sh/dillion-github",
-        icon: Icons.github,
-        navbar: true,
+        url: "https://github.com/frvncisco",
+        footer: true,
       },
 
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://dub.sh/dillion-linkedin",
-        icon: Icons.linkedin,
-
-        navbar: true,
+        url: "https://www.linkedin.com/in/santanafrancisco/",
+        footer: true,
+      },
+      Instagram: {
+        name: "Instagram",
+        url: "https://www.instagram.com/francisco.creates/",
+        footer: true,
       },
       email: {
         name: "Send Email",
         url: "#",
-        icon: Icons.email,
-
-        navbar: false,
+        footer: false,
       },
     },
   },
@@ -237,5 +225,4 @@ export const DATA = {
       image: "",
     },
   ],
-  hackathons: [] as Hackathon[],
 };

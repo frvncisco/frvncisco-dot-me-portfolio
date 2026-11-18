@@ -8,12 +8,13 @@ export default function NotFound() {
     <main className="flex min-h-[calc(100dvh-12rem)] flex-col">
       <div className="flex flex-1 items-center justify-center p-8">
         <div className="relative flex max-w-md flex-col items-center text-center">
-          <h1 className="absolute -top-40 left-1/2 -translate-x-1/2 bg-linear-to-b from-primary/30 to-secondary/10 mask-[linear-gradient(to_bottom,black,black_20%,transparent_80%)] bg-clip-text font-mono text-[200px] font-semibold tracking-tighter text-transparent uppercase [-webkit-text-stroke:3px_color-mix(in_oklch,var(--primary)_60%,transparent)]">
+          <div
+            aria-hidden="true"
+            className="absolute -top-40 left-1/2 -translate-x-1/2 bg-linear-to-b from-primary/30 to-secondary/10 mask-[linear-gradient(to_bottom,black,black_20%,transparent_80%)] bg-clip-text font-mono text-[clamp(120px,48vw,200px)] font-semibold tracking-tighter text-transparent uppercase [-webkit-text-stroke:3px_color-mix(in_oklch,var(--primary)_60%,transparent)]"
+          >
             404
-          </h1>
-          <h2 className="mb-2 text-4xl font-semibold tracking-tight text-foreground">
-            Page Not Found
-          </h2>
+          </div>
+          <h1 className="mb-2 text-4xl text-foreground">Page not found</h1>
           <p className="mb-8 font-medium tracking-tight text-balance text-muted-foreground">
             The page you&rsquo;re looking for doesn&rsquo;t exist or may have been moved.
           </p>
