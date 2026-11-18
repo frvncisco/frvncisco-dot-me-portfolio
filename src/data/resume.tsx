@@ -5,7 +5,6 @@ import { Nodejs } from "@/components/ui/svgs/nodejs";
 import { Python } from "@/components/ui/svgs/python";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Typescript } from "@/components/ui/svgs/typescript";
-import { BriefcaseIcon, HomeIcon, MailIcon, NotebookIcon, UserIcon } from "lucide-react";
 
 type Hackathon = {
   title: string;
@@ -46,11 +45,11 @@ export const DATA = {
     { name: "Docker", icon: Docker },
   ],
   navbar: [
-    { href: "/", icon: HomeIcon, label: "Home", flag: null },
-    { href: "/about", icon: UserIcon, label: "About", flag: null },
-    { href: "/work", icon: BriefcaseIcon, label: "Work", flag: "work" },
-    { href: "/contact", icon: MailIcon, label: "Contact", flag: "contact" },
-    { href: "/blog", icon: NotebookIcon, label: "Blog", flag: "blog" },
+    { href: "/", label: "Home", flag: null },
+    { href: "/about", label: "About", flag: null },
+    { href: "/work", label: "Work", flag: "work" },
+    { href: "/contact", label: "Contact", flag: "contact" },
+    { href: "/blog", label: "Blog", flag: "blog" },
   ] as const,
   contact: {
     email: "hello@example.com",
@@ -58,23 +57,23 @@ export const DATA = {
     social: {
       GitHub: {
         name: "GitHub",
-        url: "https://dub.sh/dillion-github",
-        icon: Icons.github,
+        url: "https://github.com/frvncisco",
         navbar: true,
       },
 
       LinkedIn: {
         name: "LinkedIn",
-        url: "https://dub.sh/dillion-linkedin",
-        icon: Icons.linkedin,
-
+        url: "https://www.linkedin.com/in/santanafrancisco/",
+        navbar: true,
+      },
+      Instagram: {
+        name: "Instagram",
+        url: "https://www.instagram.com/francisco.creates/",
         navbar: true,
       },
       email: {
         name: "Send Email",
         url: "#",
-        icon: Icons.email,
-
         navbar: false,
       },
     },
