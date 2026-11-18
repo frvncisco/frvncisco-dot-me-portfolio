@@ -6,16 +6,6 @@ import { Python } from "@/components/ui/svgs/python";
 import { ReactLight } from "@/components/ui/svgs/reactLight";
 import { Typescript } from "@/components/ui/svgs/typescript";
 
-type Hackathon = {
-  title: string;
-  dates?: string;
-  location?: string;
-  description?: string;
-  image?: string;
-  mlh?: string;
-  links?: { title: string; href: string; icon: React.ReactNode }[];
-};
-
 type Education = {
   school: string;
   href: string;
@@ -52,29 +42,29 @@ export const DATA = {
     { href: "/blog", label: "Blog", flag: "blog" },
   ] as const,
   contact: {
-    email: "hello@example.com",
+    email: "santana.francisco@pm.me",
     tel: "+123456789",
     social: {
       GitHub: {
         name: "GitHub",
         url: "https://github.com/frvncisco",
-        navbar: true,
+        footer: true,
       },
 
       LinkedIn: {
         name: "LinkedIn",
         url: "https://www.linkedin.com/in/santanafrancisco/",
-        navbar: true,
+        footer: true,
       },
       Instagram: {
         name: "Instagram",
         url: "https://www.instagram.com/francisco.creates/",
-        navbar: true,
+        footer: true,
       },
       email: {
         name: "Send Email",
         url: "#",
-        navbar: false,
+        footer: false,
       },
     },
   },
@@ -236,5 +226,4 @@ export const DATA = {
       image: "",
     },
   ],
-  hackathons: [] as Hackathon[],
 };

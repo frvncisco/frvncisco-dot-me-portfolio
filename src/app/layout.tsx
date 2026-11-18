@@ -1,21 +1,22 @@
-import FooterLinks from "@/components/footer-links";
+import Footer from "@/components/footer";
 import Navbar from "@/components/navbar";
 import { ThemeProvider } from "@/components/theme-provider";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { DATA } from "@/data/resume";
 import { siteUrl } from "@/lib/site-url";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
-import { Fraunces } from "next/font/google";
+import localFont from "next/font/local";
 import { GeistMono } from "geist/font/mono";
 import { GeistPixelLine } from "geist/font/pixel/line";
 import { GeistPixelSquare } from "geist/font/pixel/square";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  subsets: ["latin"],
-  axes: ["opsz", "SOFT", "WONK"],
+// Self-hosted (latin subset, Google Fonts' variable file with the opsz, wght, SOFT and WONK axes), so
+// the build doesn't need to reach Google. The variation settings are in globals.css.
+const fraunces = localFont({
+  src: "../../public/fonts/Fraunces-Variable.woff2",
+  weight: "100 900",
   variable: "--font-fraunces",
 });
 
@@ -72,27 +73,25 @@ export default function RootLayout({
     >
       <body className="relative min-h-dvh bg-background font-sans antialiased">
         {/* Dark mode is switched off for now: forcedTheme wins over a saved preference too. Remove it
-            (and restore the ModeToggle) to bring dark mode back. */}
+            (and bring back the ModeToggle from git history) to turn dark mode on again. */}
         <ThemeProvider
           attribute="class"
           defaultTheme="light"
           forcedTheme="light"
           enableSystem={false}
         >
-          <TooltipProvider delayDuration={0}>
-            {/* The nav is fixed, so it comes first in the DOM to be first in tab and reading order. */}
-            <a
-              href="#content"
-              className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-[4.5rem] focus-visible:left-6 focus-visible:z-40 focus-visible:rounded-lg focus-visible:border focus-visible:border-border focus-visible:bg-background focus-visible:px-3 focus-visible:py-2 focus-visible:text-sm focus-visible:shadow-md focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-hidden"
-            >
-              Skip to content
-            </a>
-            <Navbar />
-            <div id="content" className="relative z-10 pt-20 pb-12 sm:py-24">
-              {children}
-            </div>
-            <FooterLinks />
-          </TooltipProvider>
+          {/* The nav is fixed, so it comes first in the DOM to be first in tab and reading order. */}
+          <a
+            href="#content"
+            className="sr-only focus-visible:not-sr-only focus-visible:fixed focus-visible:top-[4.5rem] focus-visible:left-6 focus-visible:z-40 focus-visible:rounded-lg focus-visible:border focus-visible:border-border focus-visible:bg-background focus-visible:px-3 focus-visible:py-2 focus-visible:text-sm focus-visible:shadow-md focus-visible:ring-2 focus-visible:ring-foreground focus-visible:outline-hidden"
+          >
+            Skip to content
+          </a>
+          <Navbar />
+          <div id="content" className="relative z-10 pt-(--page-pt) pb-12 sm:pb-24">
+            {children}
+          </div>
+          <Footer />
         </ThemeProvider>
       </body>
     </html>
