@@ -6,13 +6,12 @@ Built with [Next.js](https://nextjs.org) 16 (App Router), React 19, TypeScript, 
 
 ## Pages
 
-| Route                   | Contents                                  | Gated by          |
-| ----------------------- | ----------------------------------------- | ----------------- |
-| `/`                     | Hero                                      | always on         |
-| `/about`                | About, work experience, education, skills | always on         |
-| `/work`                 | Projects                                  | `FEATURE_WORK`    |
-| `/contact`              | Contact                                   | `FEATURE_CONTACT` |
-| `/blog`, `/blog/[slug]` | MDX blog                                  | `FEATURE_BLOG`    |
+| Route                           | Contents                                  | Gated by       |
+| ------------------------------- | ----------------------------------------- | -------------- |
+| `/`                             | Hero                                      | always on      |
+| `/about`                        | About, work experience, education, skills | always on      |
+| `/work`                         | Projects                                  | `FEATURE_WORK` |
+| `/writings`, `/writings/[slug]` | MDX writings (the blog)                   | `FEATURE_BLOG` |
 
 ## Getting started
 
@@ -37,12 +36,11 @@ Open <http://localhost:3000>.
 
 ## Feature flags
 
-`/blog`, `/work` and `/contact` are hidden by default: they return a 404 and their nav links are removed. Turn one on by setting its variable to `true` (see [`.env.example`](./.env.example)):
+`/writings` and `/work` are hidden by default: they return a 404 and their nav links are removed. Turn one on by setting its variable to `true` (see [`.env.example`](./.env.example)):
 
 ```bash
 FEATURE_BLOG=true
 FEATURE_WORK=true
-FEATURE_CONTACT=true
 ```
 
 Flags are read at build time, so on a host like Vercel, change the environment variable and redeploy. Locally, restart the dev server. The flags live in [`src/lib/flags.ts`](./src/lib/flags.ts).
@@ -72,9 +70,9 @@ Until the domain in `DATA.url` is connected, set `SITE_URL` on Vercel Production
 src/
   app/            routes, layout, global CSS, 404, OG images
   components/
-    section/      page sections (work, projects, contact)
+    section/      page sections (work, projects)
     ui/           shadcn/ui components
-    magicui/      Magic UI components (blur fade, flickering grid, dither field)
+    magicui/      Magic UI components (blur fade, dither field, animated theme toggler)
     mdx/          MDX code blocks and media
   data/resume.tsx single content config
   lib/            feature flags, site URL, post sorting, OG card renderer, helpers
