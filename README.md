@@ -33,6 +33,7 @@ Open <http://localhost:3000>.
 | `pnpm lint`              | Run ESLint (`pnpm lint:fix` to autofix)                           |
 | `pnpm format`            | Format the repo with Prettier (`pnpm format:check` to check only) |
 | `pnpm exec tsc --noEmit` | Type-check only                                                   |
+| `pnpm test`              | Unit tests (Node's built-in runner, pure library code)            |
 
 ## Feature flags
 
@@ -71,7 +72,7 @@ Until the domain in `DATA.url` is connected, set `SITE_URL` on Vercel Production
 src/
   app/            routes, layout, global CSS, 404, OG images
   components/
-    section/      page sections (work, projects, contact, hackathons)
+    section/      page sections (work, projects, contact)
     ui/           shadcn/ui components
     magicui/      Magic UI components (blur fade, flickering grid, dither field)
     mdx/          MDX code blocks and media
@@ -94,7 +95,7 @@ public/           static assets and OG fonts
 
 - The project targets Node 24: `.nvmrc`, `engines` (`24.x`, which also sets the Vercel runtime) and `@types/node` (^24). Moving to Node 26 means changing all three together.
 - `packageManager` pins pnpm 10.34.9, so corepack uses the version that wrote the lockfile.
-- Fonts: Fraunces (headings), Geist Sans (body), Geist Mono (code), Geist Pixel Square and Line (special cases), Geist fonts from the `geist` package, Fraunces from Google Fonts.
+- Fonts: Fraunces (headings), Geist Sans (body), Geist Mono (code), Geist Pixel Square and Line (special cases), Geist fonts from the `geist` package, Fraunces self-hosted as a variable font in `public/fonts`.
 - Code blocks are highlighted at build time by `@shikijs/rehype` (a dev dependency that pins its own `shiki`), so the browser loads no highlighter and the CSP has no WebAssembly allowance.
 - The CSP allows the Vercel toolbar hosts (`vercel.live`) everywhere except when `VERCEL_ENV` is `production`.
 - Commits that only reformat are listed in `.git-blame-ignore-revs`. GitHub's blame view skips them automatically. For local `git blame`, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once.
